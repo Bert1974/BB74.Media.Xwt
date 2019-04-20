@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Media.OpenTK", "Media.OpenTK\Media.OpenTK.csproj", "{D7CAD493-7F4B-4C83-A592-8D071B01CF28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Media.OpenTK.XamMac", "Media.OpenTK.XamMac\Media.OpenTK.XamMac.csproj", "{D1713229-CA4A-4E30-8C21-626F0416B012}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaExample.XamMac", "MediaExample\MediaExample.XamMac.csproj", "{74E6BB7D-239B-4D30-ADF7-5A0A84C8B6BB}"
+EndProject
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Media.OpenTK.GTK", "Media.OpenTK.GTK\Media.OpenTK.GTK.csproj", "{18C2D16A-2FA8-473D-9024-14E4030C1DA7}"
+EndProject
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Media.OpenTK.WPF", "Media.OpenTK.WPF\Media.OpenTK.WPF.csproj", "{CBB3E6C6-0D67-442A-AC02-749C6185C59A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaExample.XamMac.Lib", "MediaExample\MediaExample.XamMac.Lib.csproj", "{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7CAD493-7F4B-4C83-A592-8D071B01CF28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7CAD493-7F4B-4C83-A592-8D071B01CF28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7CAD493-7F4B-4C83-A592-8D071B01CF28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7CAD493-7F4B-4C83-A592-8D071B01CF28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1713229-CA4A-4E30-8C21-626F0416B012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1713229-CA4A-4E30-8C21-626F0416B012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1713229-CA4A-4E30-8C21-626F0416B012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1713229-CA4A-4E30-8C21-626F0416B012}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74E6BB7D-239B-4D30-ADF7-5A0A84C8B6BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74E6BB7D-239B-4D30-ADF7-5A0A84C8B6BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74E6BB7D-239B-4D30-ADF7-5A0A84C8B6BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74E6BB7D-239B-4D30-ADF7-5A0A84C8B6BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18C2D16A-2FA8-473D-9024-14E4030C1DA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18C2D16A-2FA8-473D-9024-14E4030C1DA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18C2D16A-2FA8-473D-9024-14E4030C1DA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18C2D16A-2FA8-473D-9024-14E4030C1DA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBB3E6C6-0D67-442A-AC02-749C6185C59A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBB3E6C6-0D67-442A-AC02-749C6185C59A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBB3E6C6-0D67-442A-AC02-749C6185C59A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBB3E6C6-0D67-442A-AC02-749C6185C59A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C45E1D9F-D0CD-4A02-93CF-82329DBB17F9}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,16 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/BB74.Media.Xwt/v15
+/Media.OpenTK/bin
+/Media.OpenTK/obj
+/Media.OpenTK.GTK/bin
+/Media.OpenTK.GTK/obj
+/Media.OpenTK.WPF/bin
+/Media.OpenTK.WPF/obj
+/Media.OpenTK.XamMac/bin/Debug
+/Media.OpenTK.XamMac/obj
+/MediaExample/bin
+/MediaExample/obj
+/packages
