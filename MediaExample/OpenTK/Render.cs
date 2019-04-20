@@ -1,10 +1,12 @@
 ﻿using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using Xwt;
 
@@ -292,7 +294,7 @@ namespace DockExample.OpenTK
         }
 #endif
     }
-    class MovieRender : IWxtRenderer
+    public abstract class MovieRender : IWxtRenderer
     {
         public IWxtDisplay /*IRenderer.*/Display { get; set; }
         public size VideoSize { get; private set; }
@@ -305,7 +307,7 @@ namespace DockExample.OpenTK
         private Thread thread;
         private long time, videotime, TimeBase;
         private bool paused;
-        private opentkdoc testdoc;
+        protected opentkdoc testdoc;
 
         private ConcurrentQueue<IRenderFrame> previewqueue = new ConcurrentQueue<IRenderFrame>(), framepool = new ConcurrentQueue<IRenderFrame>();
         private CancellationTokenSource cancelpreview = new CancellationTokenSource();
@@ -332,7 +334,7 @@ namespace DockExample.OpenTK
             }
             GC.SuppressFinalize(this);
         }
-        public void Initialize(size videosize, long timebase)
+        public virtual void Initialize(size videosize, long timebase)
         {
             this.TimeBase = timebase;
             this.VideoSize = videosize;
@@ -354,8 +356,6 @@ namespace DockExample.OpenTK
         }
         void main()
         {
-            int test = 0;
-
             while (true)
             {
                 int waitres = WaitHandle.WaitAny(new WaitHandle[] { this.stopevent, this.pauseevent, this.readyevent }, -1, false);
@@ -388,31 +388,8 @@ namespace DockExample.OpenTK
                                 frame.Set(this.Display.Renderer.AlphaFormat);
                                 frame.Set(this.videotime, this.VideoSize.width, this.VideoSize.height, 0);
 
-                                var c = (test++ % 25) / 25f;
+                                Render(frame, this.videotime);
 
-                                var cc = new Xwt.Drawing.Color(c, c, c, 255);
-                                // render
-                                var state = this.Display.Renderer.StartRender(frame, Rectangle.Zero);
-
-                                GL.ClearColor((float)cc.Red, (float)cc.Green, (float)cc.Blue, (float)cc.Alpha);
-                                GL.Clear(ClearBufferMask.ColorBufferBit/*ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit*/); // We're not using stencil buffer so why bother with clearing?            
-
-                                GL.Disable(EnableCap.DepthTest);
-                                //     GL.Disable(EnableCap.Lighting);
-
-                                //          ES30.GL.Enable(OpenTK.Graphics.ES30.EnableCap.DepthTest);
-                                //        ES30.GL.Enable(ES30.EnableCap.Blend);
-                                //        ES30.GL.BlendFunc(ES30.BlendingFactorSrc.SrcAlpha, ES30.BlendingFactorDest.OneMinusSrcAlpha);
-
-                                GL.Disable(EnableCap.StencilTest);
-
-                                /* GL.UseProgram(shaderProgram);
-                                 GL.BindBuffer(BufferTarget.ArrayBuffer, buf_vertices);
-
-                                 GL.DrawArrays(PrimitiveType.Triangles, 0, 3);*/
-
-                                //  return destination;
-                                this.Display.Renderer.EndRender(state);
                                 //   int width = this.VideoSize.width, height = this.VideoSize.height;
                                 //   GL.Viewport(0, 0, width, height);
 
@@ -461,25 +438,28 @@ namespace DockExample.OpenTK
                 }
             }
         }
-        /* public void SyncState(DisplayStates state)
-         {
-             switch (state)
-             {
-                 case DisplayStates.Stopped:
-                     return;
-                 case DisplayStates.Paused:
-                     {
-                     }
-                     return;
-                 case DisplayStates.Running:
-                     {
-                     }
-                     return;
-             }
-             throw new NotImplementedException();
-         }*/
 
-        public void Stop()
+        public abstract void Render(IRenderFrame frame, long videotime);
+
+        /* public void SyncState(DisplayStates state)
+{
+switch (state)
+{
+case DisplayStates.Stopped:
+return;
+case DisplayStates.Paused:
+{
+}
+return;
+case DisplayStates.Running:
+{
+}
+return;
+}
+throw new NotImplementedException();
+}*/
+
+        public virtual void Stop()
         {
             this.pauseevent.Set();
             this.pausedevent.WaitOne(-1, false);
@@ -493,7 +473,7 @@ namespace DockExample.OpenTK
        //     this.runningevent.Reset();
         }
 
-        public void Pause(long time)
+        public virtual void Pause(long time)
         {
             this.time = time;
             this.videotime = time;
@@ -503,7 +483,7 @@ namespace DockExample.OpenTK
             //   this.runningevent.Set();
         }
 
-        public void Play(long time)
+        public virtual void Play(long time)
         {
             this.time = time;
             this.videotime = time;

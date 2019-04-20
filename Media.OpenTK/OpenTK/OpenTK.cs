@@ -1,13 +1,13 @@
-﻿using BaseLib.Media.Display;
-using BaseLib.Media.Video;
-using OpenTK;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL4;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using BaseLib.Media.Display;
+using BaseLib.Media.Video;
+using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL4;
 using Xwt;
 
 namespace BaseLib.Media.OpenTK
@@ -80,7 +80,7 @@ namespace BaseLib.Media.OpenTK
         void main()
         {
             Texcoord = texcoord;
-            gl_Position = vec4(position, 0.0, 1.0);
+            gl_Position = vec4(position.x,-position.y, 0.0, 1.0);
         }";
 
         const string shaderfragment = @"#version 150 core

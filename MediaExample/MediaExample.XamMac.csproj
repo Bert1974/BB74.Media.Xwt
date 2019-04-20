@@ -79,11 +79,6 @@
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="packages.config" />
-    <None Include="OpenTK\Interfaces.cs" />
-    <None Include="OpenTK\Render.cs" />
-    <None Include="OpenTK\testdoc.cs" />
-    <None Include="OpenTK\Time.cs" />
-    <None Include="testdoc2.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="documents.cs" />
