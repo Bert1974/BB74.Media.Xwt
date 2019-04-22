@@ -465,7 +465,7 @@ namespace BaseLib.Display.WPF
 
                    // this.owner.device.BeginScene();
 
-                    using (var dl = this.owner.opentk.GetDrawLock())
+                    using (var dl = this.owner.opentk.GetDrawLock()) // render using opengl
                     {
                         this.owner.renderer.render(null, global::Xwt.Rectangle.Zero);
                     }
@@ -603,7 +603,7 @@ namespace BaseLib.Display.WPF
             });
 
             this._layer = new layer(this);
-
+            this._layer?.rec.Arrange(new Rect(0, 0, this.window.ActualWidth, this.window.ActualHeight));
 
             this.window.Children.Add((FrameworkElement)_layer);
 
