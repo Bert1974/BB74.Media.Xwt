@@ -75,7 +75,6 @@
     <Compile Include="mainwindow.cs" />
     <Compile Include="OpenTK\Interfaces.cs" />
     <Compile Include="OpenTK\Render.cs" />
-    <Compile Include="shader.cs" />
     <Compile Include="testdoc2.cs" />
     <Compile Include="OpenTK\testdoc.cs" />
     <Compile Include="OpenTK\Time.cs" />

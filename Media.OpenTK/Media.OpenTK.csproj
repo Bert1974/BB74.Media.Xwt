@@ -74,7 +74,9 @@
     <Compile Include="OpenTK\OpenTK.cs" />
     <Compile Include="OpenTK\RenderFrame.cs" />
     <Compile Include="OpenTK\shader.cs" />
+    <Compile Include="OpenTK\shader2.cs" />
     <Compile Include="OpenTK\VideoFrame.cs" />
+    <Compile Include="Platform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Threading\ReaderWriterLockNoThreading.cs" />
     <Compile Include="Threading\WorkerThread.cs" />
