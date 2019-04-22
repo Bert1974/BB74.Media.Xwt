@@ -99,8 +99,8 @@
       <Project>{D1713229-CA4A-4E30-8C21-626F0416B012}</Project>
       <Name>Media.OpenTK.XamMac</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SimpleExample.XamMac.lib\SimpleExample.XamMac.lib.csproj">
-      <Project>{9a3209a7-5067-4024-91d8-0ee4add95ba8}</Project>
+    <ProjectReference Include="SimpleExample.XamMac.lib.csproj">
+      <Project>{9A3209A7-5067-4024-91D8-0EE4ADD95BA8}</Project>
       <Name>SimpleExample.XamMac.lib</Name>
     </ProjectReference>
   </ItemGroup>

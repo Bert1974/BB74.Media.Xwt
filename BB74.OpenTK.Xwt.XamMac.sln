@@ -11,10 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaExample.XamMac", "Medi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaExample.XamMac.Lib", "MediaExample\MediaExample.XamMac.Lib.csproj", "{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Media.OpenTK.GTK", "Media.OpenTK.GTK\Media.OpenTK.GTK.csproj", "{EFD07F85-AF34-4CB3-82E3-DD3D15EC011B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Media.OpenTK.WPF", "Media.OpenTK.WPF\Media.OpenTK.WPF.csproj", "{5AB2E51D-9DD2-4650-9AA0-03FB811A3255}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleExample.XamMac", "SimpleExample\SimpleExample.XamMac.csproj", "{74E6BB7D-239B-4D30-ADF7-5A0A84C8B6DE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{A29650EB-93C2-42EE-9AB9-7A2FB7979622}"
@@ -23,7 +19,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DockPanelExample", "DockPan
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SimpleTriangle", "SimpleTriangle", "{F925CD16-ABB0-4FDF-B322-CB770CC20281}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleExample.XamMac.lib", "SimpleExample.XamMac.lib\SimpleExample.XamMac.lib.csproj", "{9A3209A7-5067-4024-91D8-0EE4ADD95BA8}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Media.OpenTK.GTK", "Media.OpenTK.GTK\Media.OpenTK.GTK.csproj", "{164050EC-6ACB-491E-83FE-3B1E860D4F57}"
+EndProject
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Media.OpenTK.WPF", "Media.OpenTK.WPF\Media.OpenTK.WPF.csproj", "{4A3F604A-5A4B-49C1-B344-BBEAC6DF56F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleExample.XamMac.lib", "SimpleExample\SimpleExample.XamMac.lib.csproj", "{9A3209A7-5067-4024-91D8-0EE4ADD95BA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,18 +47,18 @@ Global
 		{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EFD07F85-AF34-4CB3-82E3-DD3D15EC011B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EFD07F85-AF34-4CB3-82E3-DD3D15EC011B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EFD07F85-AF34-4CB3-82E3-DD3D15EC011B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EFD07F85-AF34-4CB3-82E3-DD3D15EC011B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5AB2E51D-9DD2-4650-9AA0-03FB811A3255}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5AB2E51D-9DD2-4650-9AA0-03FB811A3255}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5AB2E51D-9DD2-4650-9AA0-03FB811A3255}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5AB2E51D-9DD2-4650-9AA0-03FB811A3255}.Release|Any CPU.Build.0 = Release|Any CPU
 		{74E6BB7D-239B-4D30-ADF7-5A0A84C8B6DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{74E6BB7D-239B-4D30-ADF7-5A0A84C8B6DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74E6BB7D-239B-4D30-ADF7-5A0A84C8B6DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74E6BB7D-239B-4D30-ADF7-5A0A84C8B6DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{164050EC-6ACB-491E-83FE-3B1E860D4F57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{164050EC-6ACB-491E-83FE-3B1E860D4F57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{164050EC-6ACB-491E-83FE-3B1E860D4F57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{164050EC-6ACB-491E-83FE-3B1E860D4F57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A3F604A-5A4B-49C1-B344-BBEAC6DF56F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A3F604A-5A4B-49C1-B344-BBEAC6DF56F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A3F604A-5A4B-49C1-B344-BBEAC6DF56F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A3F604A-5A4B-49C1-B344-BBEAC6DF56F5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9A3209A7-5067-4024-91D8-0EE4ADD95BA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9A3209A7-5067-4024-91D8-0EE4ADD95BA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A3209A7-5067-4024-91D8-0EE4ADD95BA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
