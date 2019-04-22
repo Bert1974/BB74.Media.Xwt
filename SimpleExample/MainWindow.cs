@@ -5,15 +5,20 @@ using System.Runtime.InteropServices;
 using System.Text;
 using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
+using BaseLib.Xwt;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Xwt;
 
 namespace SimpleExample
 {
-    class MainWindow : Window
+    public class MainWindow : Window
     {
         private Canvas3D Canvas => this.Content as Canvas3D;
+
+        public IRendererFactory Renderfactory { get; }
+        public IXwtRender XwtRender { get; }
+        public IXwt Xwt { get; }
 
         class Canvas3D : Canvas, IRenderOwner
         {
@@ -28,15 +33,25 @@ namespace SimpleExample
                 public Vector3 pos;
             }
 
+            private readonly IRendererFactory RenderFactory;
+            private readonly IXwtRender XwtRender;
+            private readonly IXwt Xwt;
+
             private IRenderer Renderer;
             private vertices<vertex> vertices;
             private shader shader;
 
             private int test;
 
+            public Canvas3D(MainWindow window)
+            {
+                this.RenderFactory = window.Renderfactory;
+                this.XwtRender = window.XwtRender;
+                this.Xwt = window.Xwt;
+            }
             internal void OnLoaded()
             {
-                this.Renderer = Program.RenderFactory.Open(Program.XwtRender, this, this, new Xwt.Size(1920, 1080));
+                this.Renderer = this.RenderFactory.Open(this.XwtRender, this, this, new Xwt.Size(1920, 1080));
 
                 using (var lck = this.Renderer.GetDrawLock())
                 {
@@ -74,25 +89,28 @@ void main()
                 this.Renderer.Start();
             }
 
-            internal void OnUnloding()
+            internal void OnUnloading()
             {
-                this.Renderer?.Stop();
-                using (var lck = this.Renderer.GetDrawLock())
+                if (this.Renderer != null)
                 {
-                    this.shader?.Dispose();
-                    this.vertices?.Dispose();
+                    this.Renderer.Stop();
+                    using (var lck = this.Renderer.GetDrawLock())
+                    {
+                        this.shader?.Dispose();
+                        this.vertices?.Dispose();
+                    }
+                    this.Renderer.Dispose();
+                    this.Renderer = null;
                 }
-                this.Renderer?.Dispose();
-                this.Renderer = null;
-            }
+                }
 
             void IRenderOwner.DoEvents()
             {
-                Program.Xwt.DoEvents();
+                this.Xwt.DoEvents();
             }
             void IRenderOwner.EndRender(IRenderer renderer)
             {
-                Program.XwtRender.EndRender(renderer, this);
+                this.XwtRender.EndRender(renderer, this);
             }
             bool IRenderOwner.preparerender(IRenderFrame destination, bool dowait)
             {
@@ -119,12 +137,16 @@ void main()
             }
             void IRenderOwner.StartRender(IRenderer renderer)
             {
-                Program.XwtRender.StartRender(renderer, this);
+                this.XwtRender.StartRender(renderer, this);
             }
         }
-        public MainWindow()
+        public MainWindow(IRendererFactory renderfactory, IXwtRender xwtrender, IXwt xwt)
         {
-            this.Content = new Canvas3D()
+            this.Renderfactory = renderfactory;
+            this.XwtRender = xwtrender;
+            this.Xwt = xwt;
+
+            this.Content = new Canvas3D(this)
             {
                 MinWidth = 100,
                 MinHeight = 100,
@@ -142,7 +164,7 @@ void main()
         }
         protected override bool OnCloseRequested()
         {
-            this.Canvas.OnUnloding();
+            this.Canvas.OnUnloading();
             return true;// base.OnCloseRequested();
         }
         protected override void OnClosed()

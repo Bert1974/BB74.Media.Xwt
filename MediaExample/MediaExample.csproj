@@ -38,8 +38,8 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BB74.Xwt.Controls, Version=1.0.7051.24171, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\BB74.Xwt.Controls.1.0.7051.24171\lib\net40\BB74.Xwt.Controls.dll</HintPath>
+    <Reference Include="BB74.Xwt.Controls, Version=1.0.7051.27256, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BB74.Xwt.Controls.1.0.7051.27256\lib\net40\BB74.Xwt.Controls.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\packages\OpenTK-3.0-EGL-disabled.1.0.0\lib\net20\OpenTK.dll</HintPath>
@@ -84,7 +84,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="OpenTK.dll.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Media.OpenTK.GTK\Media.OpenTK.GTK.csproj">

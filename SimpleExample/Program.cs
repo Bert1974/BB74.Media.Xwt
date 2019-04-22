@@ -20,11 +20,11 @@ namespace SimpleExample
         [STAThread]
         static void Main(string[] args)
         {
-            // load egnine
+            // load engine
             try
             {
 #if (__MACOS__)
-                XwtRender = TryLoad(ToolkitType.XamMac);
+                TryLoad(ToolkitType.XamMac);
 #else
                 if (System.Environment.OSVersion.Platform == PlatformID.Unix || System.Environment.OSVersion.Platform == PlatformID.MacOSX)
                 {
@@ -41,19 +41,19 @@ namespace SimpleExample
                 }
 #endif
             }
-            catch (Exception e) { Console.Error.WriteLine($"Error initializing/loading engine {e.Message}"); }
+            catch (Exception e) { Console.Error.WriteLine($"Error initializing/loading engine '{e.Message}'"); }
 
             // initialize Xwt (with dll load for ubuntu with both gtk2 and gtk3 installed)
             try { BaseLib.Xwt.Platform.Initialize(Program.ToolkitType); }
-            catch (Exception e) { Console.Error.WriteLine($"Error initializing/loading xwt {e.Message}"); }
+            catch (Exception e) { Console.Error.WriteLine($"Error initializing/loading xwt '{e.Message}'"); }
 
             // intitialize xwt helpers
             try { Program.Xwt = BaseLib.Xwt.XwtImpl.Create(); }
-            catch (Exception e) { Console.Error.WriteLine($"Error initializing/loading engine {e.Message}"); }
+            catch (Exception e) { Console.Error.WriteLine($"Error initializing/loading xwt-platform-specific '{e.Message}'"); }
 
             // createwdinow
 
-            var window = new MainWindow() { Width = 250, Height = 250, Title = "Triangle" };
+            var window = new MainWindow(RenderFactory, XwtRender, Xwt) { Width = 250, Height = 250, Title = "Triangle" };
             window.Show();
             Application.Run();
         }

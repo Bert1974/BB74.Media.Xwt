@@ -11,9 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Media.OpenTK.WPF", "Media.O
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Media.OpenTK.XamMac", "Media.OpenTK.XamMac\Media.OpenTK.XamMac.csproj", "{D1713229-CA4A-4E30-8C21-626F0416B012}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleExample", "SimpleExample\SimpleExample.csproj", "{BA747515-6973-4730-AC9D-21BABEAEDACB}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaExample", "MediaExample\MediaExample.csproj", "{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleExample", "SimpleExample\SimpleExample.csproj", "{BA747515-6973-4730-AC9D-21BABEAEDACB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{4AD564D5-69EE-4FC3-8FEA-6EFB9CED0CC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,17 +39,21 @@ Global
 		{D1713229-CA4A-4E30-8C21-626F0416B012}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1713229-CA4A-4E30-8C21-626F0416B012}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1713229-CA4A-4E30-8C21-626F0416B012}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BA747515-6973-4730-AC9D-21BABEAEDACB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BA747515-6973-4730-AC9D-21BABEAEDACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA747515-6973-4730-AC9D-21BABEAEDACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA747515-6973-4730-AC9D-21BABEAEDACB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BA747515-6973-4730-AC9D-21BABEAEDACB} = {4AD564D5-69EE-4FC3-8FEA-6EFB9CED0CC7}
+		{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA} = {4AD564D5-69EE-4FC3-8FEA-6EFB9CED0CC7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C45E1D9F-D0CD-4A02-93CF-82329DBB17F9}
