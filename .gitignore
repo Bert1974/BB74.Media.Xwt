@@ -15,3 +15,5 @@
 /MediaExample/obj
 /packages
 /.vs
+/SimpleExample/bin/Debug
+/SimpleExample/obj/Debug
