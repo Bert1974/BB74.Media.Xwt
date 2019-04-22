@@ -1,13 +1,13 @@
 ﻿using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
-using BaseLib.Xwt;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Xwt;
 
 namespace BaseLib.Platforms
 {
-    public class WPF : XwtImpl, IXwtRender
+    public class WPF :  IXwtRender
     {
         class viewinfo
         {

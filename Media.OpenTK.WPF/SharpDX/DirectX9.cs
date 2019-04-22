@@ -1120,7 +1120,7 @@ namespace BaseLib.Display.WPF
         public FrameFactory()
         {
           //  this.opentk = new BaseLib.Media.OpenTK.FrameFactory();
-            this.opentkxwt = new BaseLib.Platforms.GTK(out this.opentk,false);
+            this.opentkxwt = new BaseLib.Platforms.GTK(out this.opentk);
         }
         protected virtual void Dispose(bool disposing)
         {

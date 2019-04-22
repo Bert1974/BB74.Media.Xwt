@@ -62,9 +62,6 @@
     <Reference Include="Xwt.XamMac, Version=0.2.166.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\Xwt.XamMac.0.2.166\lib\net40\Xwt.XamMac.dll</HintPath>
     </Reference>
-    <Reference Include="BB74.Xwt.Controls">
-      <HintPath>..\packages\BB74.Xwt.Controls.1.0.7049.23572\lib\net40\BB74.Xwt.Controls.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
@@ -84,7 +81,9 @@
     <Compile Include="wrappers.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="OpenTK.dll.config" />
   </ItemGroup>
   <ItemGroup />

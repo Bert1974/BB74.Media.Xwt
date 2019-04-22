@@ -15,7 +15,7 @@ namespace DockExample
         }
         public static void NewWindow()
         {
-            var mainWindow = new mainwindow(Program.Xwt)
+            var mainWindow = new mainwindow(Program.XwtRender)
             {
             };
             Program.AddWindow(mainWindow);
@@ -28,10 +28,11 @@ namespace DockExample
         static readonly List<mainwindow> openwindows = new List<mainwindow>();
 
 
-        public static BaseLib.Media.OpenTK.IXwtRender Xwt { get; private set; }
+        public static BaseLib.Media.OpenTK.IXwtRender XwtRender { get; private set; }
+        public static BaseLib.Xwt.IXwt Xwt { get; private set; }
         public static BaseLib.Media.Display.IRendererFactory Render { get; private set; }
 
-        private static BaseLib.Media.OpenTK.IXwtRender TryLoad(string type)
+        private static BaseLib.Media.OpenTK.IXwtRender TryLoad(string type, ToolkitType toolkit)
         {
             try
             {
@@ -40,6 +41,9 @@ namespace DockExample
                 var o = new object[] { null };
                 var r = (BaseLib.Media.OpenTK.IXwtRender)Activator.CreateInstance(t, o);
                 Program.Render = o[0] as BaseLib.Media.Display.IRendererFactory;
+
+                BaseLib.Xwt.Platform.Initialize(toolkit);
+
                 return r;
             }
             catch (Exception e)
@@ -56,11 +60,11 @@ namespace DockExample
         static void Main(string[] args)
         {
 #if (__MACOS__)
-           Xwt = TryLoad("XamMac");
+           XwtRender = TryLoad("XamMac", ToolkitType.XamMac);
 #else
             if (System.Environment.OSVersion.Platform == PlatformID.Unix || System.Environment.OSVersion.Platform == PlatformID.MacOSX)
             {
-                Xwt = TryLoad("GTK");
+                XwtRender = TryLoad("GTK", ToolkitType.Gtk);
 
           //      BaseLib.Xwt.PlatForm.Initialize(args.Contains("gtk3")? ToolkitType.Gtk3 : ToolkitType.Gtk);
             }
@@ -72,16 +76,19 @@ namespace DockExample
 
                    //   if (a != null)
                        {
-                //           Xwt = TryLoad("GTK"); // i386 only
+                  //         XwtRender = TryLoad("GTK", ToolkitType.Gtk); // i386 only
                        }
                    }
                    catch(Exception e)
                    {
                    }
-                 Xwt = TryLoad("WPF");
+                XwtRender = TryLoad("WPF", ToolkitType.Wpf);
                 //   Application.Initialize(ToolkitType.Wpf);
             }
 #endif
+
+            Program.Xwt = BaseLib.Xwt.XwtImpl.Create();
+
             UIHelpers.NewWindow();
             Application.Run();
         }

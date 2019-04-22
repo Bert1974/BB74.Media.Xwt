@@ -1,12 +1,12 @@
 ﻿using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
-using BaseLib.Xwt;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Platform;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security;
 using Xwt;
@@ -15,17 +15,17 @@ namespace BaseLib.Platforms
 {
     using Xwt = global::Xwt;
 
-    public class GTK : XwtImpl, IXwtRender
+    public class GTK : IXwtRender
     {
         IXwtRender impl;
 
-   /*     const string linux_libgdk_x11_name = "libgdk";
-        
-        [DllImport(linux_libgdk_x11_name)]
-        internal static extern int gdk_pointer_grab(IntPtr gdkwindow, bool owner_events, IntPtr confine_to_gdkwin, IntPtr cursor, int time);
+        /*     const string linux_libgdk_x11_name = "libgdk";
 
-        [DllImport(linux_libgdk_x11_name)]
-        internal static extern void gdk_pointer_ungrab(int time);*/
+             [DllImport(linux_libgdk_x11_name)]
+             internal static extern int gdk_pointer_grab(IntPtr gdkwindow, bool owner_events, IntPtr confine_to_gdkwin, IntPtr cursor, int time);
+
+             [DllImport(linux_libgdk_x11_name)]
+             internal static extern void gdk_pointer_ungrab(int time);*/
 
         class Windows : IXwtRender
         {
@@ -54,7 +54,7 @@ namespace BaseLib.Platforms
             }
             static readonly Dictionary<Widget, viewinfo> views = new Dictionary<Widget, viewinfo>();
             private IRendererFactory render;
-            
+
             public Windows(out IRendererFactory render)
             {
                 this.render = render = new FrameFactory(null);
@@ -68,12 +68,12 @@ namespace BaseLib.Platforms
                     views.Remove(win);
                 }
             }
-       //     [DllImport("libgdk-win32-2.0-0.dll", CallingConvention = CallingConvention.Cdecl)]
-        //    internal static extern IntPtr gdk_win32_drawable_get_handle(IntPtr raw);
+            //     [DllImport("libgdk-win32-2.0-0.dll", CallingConvention = CallingConvention.Cdecl)]
+            //    internal static extern IntPtr gdk_win32_drawable_get_handle(IntPtr raw);
 
             private IntPtr GetHwnd(WindowFrame r)
             {
-                var wh = Activator.CreateInstance(PlatForm.GetType("System.Windows.Interop.WindowInteropHelper"),
+                var wh = Activator.CreateInstance(Extensions.GetType("System.Windows.Interop.WindowInteropHelper"),
                     new object[] { (Xwt.Toolkit.CurrentEngine.GetSafeBackend(r) as Xwt.Backends.IWindowFrameBackend).Window });
                 return (IntPtr)wh.GetType().GetPropertyValue(wh, "Handle");
             }
@@ -116,15 +116,15 @@ namespace BaseLib.Platforms
                 gfxcontext.MakeCurrent(null);
             }
 
-        /*    void IXwt.ReleaseCapture(Widget widget)
-            {
-                Gdk.Pointer.Ungrab(0);
-            }
-            void IXwt.SetCapture(Widget widget)
-            {
-                var wBackend = Xwt.Toolkit.CurrentEngine.GetSafeBackend(widget) as Xwt.GtkBackend.WidgetBackend;
-                Gdk.Pointer.Grab(wBackend.Widget.GdkWindow, true, Gdk.EventMask.AllEventsMask, null, null, 0);
-            }*/
+            /*    void IXwt.ReleaseCapture(Widget widget)
+                {
+                    Gdk.Pointer.Ungrab(0);
+                }
+                void IXwt.SetCapture(Widget widget)
+                {
+                    var wBackend = Xwt.Toolkit.CurrentEngine.GetSafeBackend(widget) as Xwt.GtkBackend.WidgetBackend;
+                    Gdk.Pointer.Grab(wBackend.Widget.GdkWindow, true, Gdk.EventMask.AllEventsMask, null, null, 0);
+                }*/
 
             void IXwtRender.StartRender(IRenderer renderer, Widget widget)
             {
@@ -132,7 +132,7 @@ namespace BaseLib.Platforms
                 {
                     view.gfxcontext.MakeCurrent(view.windowInfo);
 
-           //         Console.WriteLine($"active context={(view.gfxcontext as IGraphicsContextInternal).Context.Handle}");
+                    //         Console.WriteLine($"active context={(view.gfxcontext as IGraphicsContextInternal).Context.Handle}");
                 }
             }
             void IXwtRender.EndRender(IRenderer renderer, Widget widget)
@@ -140,7 +140,7 @@ namespace BaseLib.Platforms
                 if (views.TryGetValue(widget, out viewinfo view))
                 {
                     view.gfxcontext.MakeCurrent(null);
-       //             Console.WriteLine($"active context=null");
+                    //             Console.WriteLine($"active context=null");
                 }
             }
             void IXwtRender.SwapBuffers(Widget widget)
@@ -149,37 +149,6 @@ namespace BaseLib.Platforms
                 {
                     view.gfxcontext.SwapBuffers();
                 }
-            }
-
-            void IXwt.SetCapture(Widget widget)
-            {
-                throw new NotImplementedException();
-            }
-
-            void IXwt.ReleaseCapture(Widget widget)
-            {
-                throw new NotImplementedException();
-            }
-
-
-            void IXwt.DoEvents()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void SetParent(WindowFrame r, WindowFrame parentWindow)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void QueueOnUI(Action method)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void GetMouseInfo(WindowFrame window, out int mx, out int my, out uint buttons)
-            {
-                throw new NotImplementedException();
             }
         }
         class X11 : IXwtRender
@@ -297,7 +266,7 @@ namespace BaseLib.Platforms
 
             public X11(out IRendererFactory render)
             {
-                this.render = render= new FrameFactory(null);
+                this.render = render = new FrameFactory(null);
             }
 
             void IXwtRender.FreeWindowInfo(Widget win)
@@ -350,16 +319,16 @@ namespace BaseLib.Platforms
                 gfxcontext.MakeCurrent(null);
             }
 
-          /*  void IXwt.ReleaseCapture(Widget widget)
-            {
-                gdk_pointer_ungrab(0);
-            }
-            void IXwt.SetCapture(Widget widget)
-            {
-                var wBackend = Xwt.Toolkit.CurrentEngine.GetSafeBackend(widget) as Xwt.GtkBackend.WidgetBackend;
+            /*  void IXwt.ReleaseCapture(Widget widget)
+              {
+                  gdk_pointer_ungrab(0);
+              }
+              void IXwt.SetCapture(Widget widget)
+              {
+                  var wBackend = Xwt.Toolkit.CurrentEngine.GetSafeBackend(widget) as Xwt.GtkBackend.WidgetBackend;
 
-                gdk_pointer_grab(wBackend.Widget.GdkWindow.Handle, true, IntPtr.Zero, IntPtr.Zero, 0);
-            }*/
+                  gdk_pointer_grab(wBackend.Widget.GdkWindow.Handle, true, IntPtr.Zero, IntPtr.Zero, 0);
+              }*/
             void IXwtRender.StartRender(IRenderer renderer, Widget widget)
             {
                 views[widget].gfxcontext.MakeCurrent(views[widget].windowInfo);
@@ -372,41 +341,10 @@ namespace BaseLib.Platforms
             {
                 views[widget].gfxcontext.SwapBuffers();
             }
-
-            void IXwt.SetCapture(Widget widget)
-            {
-                throw new NotImplementedException();
-            }
-
-            void IXwt.ReleaseCapture(Widget widget)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void DoEvents()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void SetParent(WindowFrame r, WindowFrame parentWindow)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void QueueOnUI(Action method)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void GetMouseInfo(WindowFrame window, out int mx, out int my, out uint buttons)
-            {
-                throw new NotImplementedException();
-            }
         }
-    
 
         public GTK(out IRendererFactory render)
-            : this(out render,true)
+            : this(out render, true)
         {
         }
         public GTK(out IRendererFactory render, bool initialize)
@@ -419,10 +357,6 @@ namespace BaseLib.Platforms
             else
             {
                 impl = new Windows(out render);
-            }
-            if (initialize)
-            {
-                BaseLib.Xwt.PlatForm.Initialize(ToolkitType.Gtk);
             }
         }
         void IXwtRender.FreeWindowInfo(Widget widget)

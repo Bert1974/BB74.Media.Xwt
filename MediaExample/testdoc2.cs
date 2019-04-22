@@ -1,5 +1,6 @@
 ﻿using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
+using BaseLib.Xwt;
 using BaseLib.Xwt.Controls.DockPanel;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -16,7 +17,8 @@ namespace DockExample
     {
         const Int64 TimeBase = 10000000L;
 
-        private readonly IXwtRender xwt;
+        private readonly IXwtRender xwtrender;
+        private readonly IXwt xwt;
         private readonly IRendererFactory factory;
         private IRenderer Renderer;
         private vertices<vertex> vertices;
@@ -32,8 +34,9 @@ namespace DockExample
 
         public IDockPane DockPane { get; set; }
 
-        public opentkdoc2(IRendererFactory factory, IXwtRender xwt)
+        public opentkdoc2(IRendererFactory factory, IXwtRender xwtrender, IXwt xwt)
         {
+            this.xwtrender = xwtrender;
             this.xwt = xwt;
             this.factory = factory;
 
@@ -44,7 +47,7 @@ namespace DockExample
         {
             Debug.Assert(this.Renderer == null);
 
-            this.Renderer = factory.Open(xwt, this, this, new Xwt.Size(1920, 1080));
+            this.Renderer = factory.Open(xwtrender, this, this, new Xwt.Size(1920, 1080));
 
             using (var lck = this.Renderer.GetDrawLock())
             {
@@ -105,6 +108,10 @@ void main()
             this.Renderer = null;
         }
 
+        void IRenderOwner.DoEvents()
+        {
+            this.xwt.DoEvents();
+        }
         bool IRenderOwner.preparerender(IRenderFrame destination, bool dowait)
         {
             return true;
@@ -142,12 +149,12 @@ void main()
         void IRenderOwner.StartRender(IRenderer renderer)
         {
             //   renderer.EndRender(state);
-            this.xwt.StartRender(renderer, this);
+            this.xwtrender.StartRender(renderer, this);
         }
 
         void IRenderOwner.EndRender(IRenderer renderer)
         {
-            this.xwt.EndRender(renderer, this);
+            this.xwtrender.EndRender(renderer, this);
         }
 
         string IDockSerializable.Serialize()

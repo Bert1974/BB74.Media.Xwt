@@ -1,5 +1,6 @@
 ﻿using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
+using BaseLib.Xwt;
 using BaseLib.Xwt.Controls.DockPanel;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -15,9 +16,10 @@ namespace DockExample.OpenTK
     {
         const Int64 TimeBase = 10000000L;
 
-        private readonly IXwtRender xwt;
+        private readonly IXwtRender xwtrender;
+        private readonly IXwt xwt;
         private readonly IRendererFactory factory;
-        private OpenTK.IWxtDisplay xwtrender;
+        private OpenTK.IWxtDisplay xwtdisplay;
 
         // private Thread thread;
 
@@ -27,8 +29,9 @@ namespace DockExample.OpenTK
 
         public IDockPane DockPane { get; set; }
 
-        public opentkdoc(IRendererFactory factory, IXwtRender xwt)
+        public opentkdoc(IRendererFactory factory, IXwtRender xwtrender, IXwt xwt)
         {
+            this.xwtrender = xwtrender;
             this.xwt = xwt;
             this.factory = factory;
 
@@ -37,17 +40,17 @@ namespace DockExample.OpenTK
         }
         void IDockNotify.OnLoaded(IDockPane pane)
         {
-            Debug.Assert(this.xwtrender == null);
+            Debug.Assert(this.xwtdisplay == null);
 
-            this.xwtrender = new OpenTK.XwtRender(this, this.xwt, TimeBase);
-            this.xwtrender.FrameRenderer = new MovieRender(this);
-            this.xwtrender.Initialize(this.factory, this.xwt, new Xwt.Size(1920, 1080));
-            this.xwtrender.Play(0);
+            this.xwtdisplay = new OpenTK.XwtRender(this, this.xwtrender,this.xwt, TimeBase);
+            this.xwtdisplay.FrameRenderer = new MovieRender(this);
+            this.xwtdisplay.Initialize(this.factory, this.xwtrender, new Xwt.Size(1920, 1080));
+            this.xwtdisplay.Play(0);
         }
         void IDockNotify.OnUnloading()
         {
-            this.xwtrender?.Dispose();
-            this.xwtrender = null;
+            this.xwtdisplay?.Dispose();
+            this.xwtdisplay = null;
         }
 
         string IDockSerializable.Serialize()
@@ -74,6 +77,17 @@ namespace DockExample.OpenTK
             public MovieRender(opentkdoc doc)
                 : base(doc)
             {
+            }
+            protected override void Dispose(bool disposing)
+            {
+                using (var lck = this.Display.Renderer.GetDrawLock())
+                {
+                    this.shader?.Dispose();
+                    this.shader = null;
+                    this.vertices?.Dispose();
+                    this.vertices = null;
+                }
+                base.Dispose(disposing);
             }
             public override void Initialize(size videosize, long timebase)
             {
@@ -110,11 +124,6 @@ void main()
             public override void Stop()
             {
                 base.Stop();
-
-                this.shader?.Dispose();
-                this.shader = null;
-                this.vertices?.Dispose();
-                this.vertices = null;
             }
             public override void Render(IRenderFrame frame, long videotime)
             {

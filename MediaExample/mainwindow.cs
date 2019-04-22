@@ -1,4 +1,5 @@
-﻿using BaseLib.Xwt;
+﻿using BaseLib.Media.OpenTK;
+using BaseLib.Xwt;
 using BaseLib.Xwt.Controls.DockPanel;
 using System;
 using System.IO;
@@ -12,7 +13,7 @@ namespace DockExample
         DockPanel dock;
         bool closing = false;
         private readonly string settingsfile=Path.Combine(Path.GetDirectoryName(new Uri(typeof(mainwindow).Assembly.CodeBase).AbsolutePath),"positions.xml");
-
+        private readonly IXwtRender xwtrender;
 
         private IDockContent Deserialize(DockPanel dockpanel, Type type, string data)
         {
@@ -30,17 +31,19 @@ namespace DockExample
             }
             if (type == typeof(OpenTK.opentkdoc))
             {
-                return new OpenTK.opentkdoc(Program.Render, Program.Xwt);
+                return new OpenTK.opentkdoc(Program.Render, Program.XwtRender, Program.Xwt);
             }
             if (type == typeof(opentkdoc2))
             {
-                return new opentkdoc2(Program.Render, Program.Xwt);
+                return new opentkdoc2(Program.Render, Program.XwtRender, Program.Xwt);
             }
             return null;
         }
         
-        public mainwindow(IXwt xwt)
+        public mainwindow(IXwtRender xwtrender)
         {
+            this.xwtrender = xwtrender;
+
             this.Title = $"Xwt Demo Application {Xwt.Toolkit.CurrentEngine.Type}";
             this.Width = 150; this.Height = 150;
             this.Padding = 0;
@@ -63,13 +66,7 @@ namespace DockExample
             mi.Clicked += (s, e) => { if (this.close()) { base.Close(); }; };
             file.SubMenu.Items.Add(mi);
             menu.Items.Add(file);
-
-            /*      var edit = new MenuItem("_Edit");
-                  edit.SubMenu = new Menu();
-                  edit.SubMenu.Items.Add(new MenuItem("_Copy"));
-                  edit.SubMenu.Items.Add(new MenuItem("Cu_t"));
-                  edit.SubMenu.Items.Add(new MenuItem("_Paste"));
-                  menu.Items.Add(edit);*/
+            
 
             var dockmenu = new MenuItem("Dock") { SubMenu = new Menu() };
             dockmenu.SubMenu.Items.Add(UIHelpers.NewMenuItem("save layout to disk", save_layout));
@@ -77,7 +74,7 @@ namespace DockExample
             menu.Items.Add(dockmenu);
 
             this.MainMenu = menu;
-            this.Content = dock = new DockPanel(this, xwt);
+            this.Content = dock = new DockPanel(this, Program.Xwt);
 
             try
             {
@@ -137,11 +134,11 @@ namespace DockExample
         }
         void new_opentk(object sender, EventArgs e)
         {
-            dock.Dock(new opentkdoc2(Program.Render, Program.Xwt));
+            dock.Dock(new opentkdoc2(Program.Render, Program.XwtRender, Program.Xwt));
         }
         void new_opentk2(object sender, EventArgs e)
         {
-            dock.Dock(new OpenTK.opentkdoc(Program.Render, Program.Xwt));
+            dock.Dock(new OpenTK.opentkdoc(Program.Render, Program.XwtRender, Program.Xwt));
         }
         void new_properties(object sender, EventArgs e)
         {

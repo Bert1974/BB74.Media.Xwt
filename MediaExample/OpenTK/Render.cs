@@ -1,5 +1,6 @@
 ﻿using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
+using BaseLib.Xwt;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
@@ -49,6 +50,7 @@ namespace DockExample.OpenTK
 
         private Canvas window;
         private IXwtRender opentkxwt;
+        private IXwt xwt;
         private readonly Canvas target;
         private VideoRun videorun;
         // private shader presentshader;
@@ -62,8 +64,7 @@ namespace DockExample.OpenTK
         //    private AutoResetEvent pauseevent = new AutoResetEvent(false), pausedevent = new AutoResetEvent(false);
         //     private ManualResetEvent running = new ManualResetEvent(false);
         private ManualResetEvent readyevent = new ManualResetEvent(false), stopevent = new ManualResetEvent(false);
-        private int buf_vertices3;
-        private int vao;
+
         private IWxtRenderer renderer;
         private long displaytime;
         private IRenderFrame presentframe;
@@ -93,11 +94,12 @@ namespace DockExample.OpenTK
 
         public IRendererFactory RenderFactory { get; private set; }
 
-        public XwtRender(Canvas target, IXwtRender xwt, long timebase)
+        public XwtRender(Canvas target, IXwtRender xwtrender, IXwt xwt, long timebase)
         {
             this.TimeBase = timebase;
             this.window = target;
-            this.opentkxwt = xwt;
+            this.opentkxwt = xwtrender;
+            this.xwt = xwt;
             this.target = target;
 
             //    this.opentkxwt.CreateForWidgetContext(this, this.window);
@@ -120,6 +122,10 @@ namespace DockExample.OpenTK
             // this.opentkxwt.FreeWindowInfo(this.window);
 
             GC.SuppressFinalize(this);
+        }
+        void IRenderOwner.DoEvents()
+        {
+            this.xwt.DoEvents();
         }
         bool IRenderOwner.preparerender(IRenderFrame desitination, bool dowait)
         {
@@ -294,7 +300,7 @@ namespace DockExample.OpenTK
         }
 #endif
     }
-    public abstract class MovieRender : IWxtRenderer
+    public abstract class MovieRender : IWxtRenderer, IDisposable
     {
         public IWxtDisplay /*IRenderer.*/Display { get; set; }
         public size VideoSize { get; private set; }
@@ -322,12 +328,21 @@ namespace DockExample.OpenTK
         }
         public void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
             this.stopevent.Set();
             this.stoppedevent.WaitOne(-1, false);
 
             using (var lck = this.Display.Renderer.GetDrawLock())
             {
                 while (previewqueue.TryDequeue(out IRenderFrame frame))
+                {
+                    frame.Dispose();
+                }
+                while (framepool.TryDequeue(out IRenderFrame frame))
                 {
                     frame.Dispose();
                 }

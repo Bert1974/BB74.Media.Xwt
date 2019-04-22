@@ -7,7 +7,7 @@ using Xwt;
 
 namespace BaseLib.Media.OpenTK
 {
-    public interface IXwtRender : BaseLib.Xwt.IXwt
+    public interface IXwtRender //: BaseLib.Xwt.IXwt
     {
         void CreateForWidgetContext(IRenderer renderer, IRenderOwner rendererimpl, Widget widget);
         void FreeWindowInfo(Widget widget);
@@ -28,6 +28,8 @@ void EndScene(Widget win, GraphicsContext ctx);*/
         void render(IRenderFrame destination, global::Xwt.Rectangle r);
         void StartRender(IRenderer renderer);
         void EndRender(IRenderer renderer);
-   /*     void SkipRender(long ticks);*/
+        /*     void SkipRender(long ticks);*/
+
+        void DoEvents();
     }
 }

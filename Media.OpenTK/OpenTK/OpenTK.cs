@@ -279,7 +279,7 @@ precision mediump float;
 
             while (!a.done.WaitOne(0, false))
             {
-                this.Xwt.DoEvents();
+                this.renderer.DoEvents();
             }
             a.Dispose();
         }
