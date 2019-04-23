@@ -223,7 +223,7 @@ namespace BaseLib.Media
             this._framedelegate = new AudioStream.FrameReadyFunction(frameready);
             var error = new StringBuilder(1024);
 
-            var audstream = Imports._player_openaudio(Player._player, info.ind, samplerate, (int)format, (Int64)channelslayout, Marshal.GetFunctionPointerForDelegate(frameready), error);
+            var audstream = Imports._player_openaudio(Player._player, info.ind, samplerate, format, channelslayout, Marshal.GetFunctionPointerForDelegate(frameready), error);
 
             BBRException.CheckError(error, $"open_audio");
 
@@ -304,17 +304,7 @@ namespace BaseLib.Media
         }
         internal void get_videostream(uint ind, ref videostreaminfo info)
         {
-            _videostreaminfo _info = new _videostreaminfo();
-            Imports._player_get_videostream(this._player, ind, ref _info);
-            info = new videostreaminfo()
-            {
-                width = _info.width,
-                height = _info.height,
-                fps = new Rational() { num = _info.fps.num, den = _info.fps.den },
-                ind = _info.ind,
-                ticks = _info.ticks,
-                timebase = new Rational() { num = _info.timebase.num, den = _info.timebase.den }
-            };
+            Imports._player_get_videostream(this._player, ind, ref info);
         }
         internal int get_audiostreamcount()
         {
@@ -322,18 +312,7 @@ namespace BaseLib.Media
         }
         internal void get_audiostream(uint ind, ref audiostreaminfo info)
         {
-            var _info = new _audiostreaminfo();
-            Imports._player_get_audiostream(this._player, ind, ref _info);
-            info = new audiostreaminfo()
-            {
-                samplerate = _info.samplerate,
-                channellayout = _info.channellayout,
-                fps = new Rational() { num = _info.fps.num, den = _info.fps.den },
-                timebase = new Rational() { num = _info.timebase.num, den = _info.timebase.den },
-                channels = _info.channels,
-                format = (AudioFormat)_info.format,
-                ind = _info.ind
-            };
+            Imports._player_get_audiostream(this._player, ind, ref info);
         }
         public VideoStream open_video(uint ind, VideoStream.FrameReadyFunction frameready)
         {

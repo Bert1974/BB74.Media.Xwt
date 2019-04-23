@@ -44,7 +44,7 @@ namespace DockExample.OpenTK
 
             this.xwtdisplay = new OpenTK.XwtRender(this, this.xwtrender,this.xwt, TimeBase);
             this.xwtdisplay.FrameRenderer = new MovieRender(this);
-            this.xwtdisplay.Initialize(this.factory, this.xwtrender, new Xwt.Size(1920, 1080));
+            this.xwtdisplay.Initialize(this.factory, this.xwtrender, new size(1920, 1080));
             this.xwtdisplay.Play(0);
         }
         void IDockNotify.OnUnloading()

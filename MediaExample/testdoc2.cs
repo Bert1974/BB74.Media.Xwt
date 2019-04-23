@@ -47,7 +47,7 @@ namespace DockExample
         {
             Debug.Assert(this.Renderer == null);
 
-            this.Renderer = factory.Open(xwtrender, this, this, new Xwt.Size(1920, 1080));
+            this.Renderer = factory.Open(xwtrender, this, this, new size(1920, 1080));
 
             using (var lck = this.Renderer.GetDrawLock())
             {

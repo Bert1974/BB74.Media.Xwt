@@ -41,14 +41,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="IO\FifoStream.cs" />
-    <Compile Include="IO\PathHelper.cs" />
-    <Compile Include="media.cs" />
+    <None Include="media.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="staticinit.cs" />
     <Compile Include="wrappers.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Media.Base\Media.Base.csproj">
+      <Project>{01fd5659-75cd-4d3c-8701-6d6cf54c2c31}</Project>
+      <Name>Media.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Media.Interop.Impl\Media.Interop.Impl.csproj">
       <Project>{a08163ed-f101-4741-a12b-82bd202b2c23}</Project>
       <Name>Media.Interop.Impl</Name>
@@ -57,7 +59,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\package\bin\net40\"
-copy "$(TargetPath)" "$(ProjectDir)..\package\bin\net40\"</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\package\lib\net40\"
+copy "$(TargetPath)" "$(ProjectDir)..\package\lib\net40\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

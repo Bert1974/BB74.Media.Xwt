@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A08163ED-F101-4741-A12B-82BD202B2C23}</ProjectGuid>
+    <ProjectGuid>{01FD5659-75CD-4D3C-8701-6D6CF54C2C31}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Media.Interop</RootNamespace>
-    <AssemblyName>Media.Interop.Impl</AssemblyName>
+    <RootNamespace>Media.Base</RootNamespace>
+    <AssemblyName>Media.Base</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Deterministic>false</Deterministic>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,18 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Imports.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="IO\FifoStream.cs" />
+    <Compile Include="IO\PathHelper.cs" />
+    <Compile Include="media.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Media.Base\Media.Base.csproj">
-      <Project>{01fd5659-75cd-4d3c-8701-6d6cf54c2c31}</Project>
-      <Name>Media.Base</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\package\lib\net40\x86"
-copy "$(TargetPath)" "$(ProjectDir)..\package\lib\net40\x64"</PostBuildEvent>
-  </PropertyGroup>
 </Project>

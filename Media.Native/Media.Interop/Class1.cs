@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace BaseLib.Media.Display
 {
-    public struct size
+ /*   public struct size
     {
         public int width, height;
 
@@ -41,7 +41,7 @@ namespace BaseLib.Media.Display
         void Unlock();
         void CopyTo(IntPtr dataPointer, int pitch);
         //      void Deinterlace(IRenderFrame destination, DeinterlaceModes mode);
-    }
+    }*/
 }
 namespace BaseLib.Media.Recording
 {
@@ -81,7 +81,7 @@ namespace BaseLib.Media.Recording
     }
 }
 namespace BaseLib.Media.Audio
-{
+{/*
     public interface IAudioOut : IDisposable
     {
         AudioFormat Format { get; }
@@ -117,5 +117,5 @@ namespace BaseLib.Media.Audio
 
         void Pause(FifoStream audiostream);
         void Start(FifoStream audiostream);
-    }
-}
+    }*/
+} 

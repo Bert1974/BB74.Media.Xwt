@@ -1,4 +1,6 @@
 ﻿using BaseLib.Media;
+using BaseLib.Media.Audio;
+using BaseLib.Media.Video;
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -6,7 +8,7 @@ using System.Text;
 
 namespace BaseLib.Media
 {
-    [Serializable()]
+/*    [Serializable()]
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
     internal struct rational
     {
@@ -25,7 +27,7 @@ namespace BaseLib.Media
     {
         public uint ind;
         public int samplerate, channels;
-        public int/*AudioFormat*/ format;
+        public int format;
         public Int64 channellayout;
         public rational fps, timebase;
     }
@@ -35,7 +37,7 @@ namespace BaseLib.Media
         public uint ind;
         public int width, height, ticks;
         public rational fps, timebase;
-    }
+    }*/
 }
 namespace BaseLib.Audio.Interop
 {
@@ -44,7 +46,7 @@ namespace BaseLib.Audio.Interop
         private const string _dll_name = "BaseLib.FFMPEG.dll";
         [SuppressUnmanagedCodeSecurity]
         [DllImport(_dll_name, CallingConvention = CallingConvention.Cdecl, PreserveSig = true)]
-        public static extern IntPtr openaudio(int bitrate, int/*AudioFormat*/ format, Int64/*ChannelsLayout*/ layout, int frames, int buffers, [MarshalAs(UnmanagedType.LPStr)] StringBuilder error);
+        public static extern IntPtr openaudio(int bitrate, AudioFormat format, ChannelsLayout layout, int frames, int buffers, [MarshalAs(UnmanagedType.LPStr)] StringBuilder error);
         [SuppressUnmanagedCodeSecurity]
         [DllImport(_dll_name, CallingConvention = CallingConvention.Cdecl, PreserveSig = true)]
         public static extern void closeaudio(IntPtr audio);
@@ -106,15 +108,15 @@ namespace BaseLib.Video.Interop
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport(_dll_name, CallingConvention = CallingConvention.Cdecl, PreserveSig = true)]
-            public static extern IntPtr recorder_addvideo(IntPtr recorder, int width, int height, ref BaseLib.Media.fps fps, int/*VideoFormat*/ fmt, [MarshalAs(UnmanagedType.LPStr)] StringBuilder error);
+            public static extern IntPtr recorder_addvideo(IntPtr recorder, int width, int height, ref BaseLib.Media.FPS fps, VideoFormat fmt, [MarshalAs(UnmanagedType.LPStr)] StringBuilder error);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport(_dll_name, CallingConvention = CallingConvention.Cdecl, PreserveSig = true)]
-            public static extern IntPtr recorder_addaudio(IntPtr recorder, int bitrate, int samplerate, Int64/*ChannelsLayout*/ channels, int/*AudioFormat*/ audiofmt, [MarshalAs(UnmanagedType.LPStr)] StringBuilder error);
+            public static extern IntPtr recorder_addaudio(IntPtr recorder, int bitrate, int samplerate, ChannelsLayout channels, AudioFormat audiofmt, [MarshalAs(UnmanagedType.LPStr)] StringBuilder error);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport(_dll_name, CallingConvention = CallingConvention.Cdecl, PreserveSig = true)]
-            public static extern IntPtr recorder_video_push(IntPtr vidstream, IntPtr data, int stride, int width, int height, int/*VideoFormat*/ fmt, Int64 time);
+            public static extern IntPtr recorder_video_push(IntPtr vidstream, IntPtr data, int stride, int width, int height, VideoFormat fmt, Int64 time);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport(_dll_name, CallingConvention = CallingConvention.Cdecl, PreserveSig = true)]
@@ -122,7 +124,7 @@ namespace BaseLib.Video.Interop
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport(_dll_name, CallingConvention = CallingConvention.Cdecl, PreserveSig = true)]
-            public static extern IntPtr recorder_audio_push(IntPtr vidstream, Int64 time, IntPtr data, int totsamples, int/*AudioFormat*/ fmt);
+            public static extern IntPtr recorder_audio_push(IntPtr vidstream, Int64 time, IntPtr data, int totsamples, AudioFormat fmt);
         }
     }
     internal static class Imports
@@ -145,14 +147,14 @@ namespace BaseLib.Video.Interop
         public static extern int _player_videostreamcount(IntPtr player);
         [SuppressUnmanagedCodeSecurity]
         [DllImport(_dll_name, CallingConvention = CallingConvention.Cdecl, PreserveSig = true)]
-        public static extern void _player_get_videostream(IntPtr player, uint ind, ref _videostreaminfo info);
+        public static extern void _player_get_videostream(IntPtr player, uint ind, ref videostreaminfo info);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(_dll_name, CallingConvention = CallingConvention.Cdecl, PreserveSig = true)]
         public static extern int _player_audiostreamcount(IntPtr player);
         [SuppressUnmanagedCodeSecurity]
         [DllImport(_dll_name, CallingConvention = CallingConvention.Cdecl, PreserveSig = true)]
-        public static extern void _player_get_audiostream(IntPtr player, uint ind, ref _audiostreaminfo info);
+        public static extern void _player_get_audiostream(IntPtr player, uint ind, ref audiostreaminfo info);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(_dll_name, CallingConvention = CallingConvention.Cdecl, PreserveSig = true)]
@@ -187,6 +189,6 @@ namespace BaseLib.Video.Interop
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(_dll_name, CallingConvention = CallingConvention.Cdecl, PreserveSig = true)]
-        public static extern IntPtr _player_openaudio(IntPtr player, uint ind, int samplerate, int/*AudioFormat*/ format, Int64/*ChannelsLayout*/ channels, IntPtr frameready, [MarshalAs(UnmanagedType.LPStr)] StringBuilder error);
+        public static extern IntPtr _player_openaudio(IntPtr player, uint ind, int samplerate, AudioFormat format, ChannelsLayout channels, IntPtr frameready, [MarshalAs(UnmanagedType.LPStr)] StringBuilder error);
     }
 }

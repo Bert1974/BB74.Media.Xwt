@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenTK-3.0-EGL-disabled.1.0.0\lib\net20\OpenTK.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -65,20 +68,24 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\opentk\src\OpenTK\OpenTK.csproj">
-      <Project>{a37a7e14-0000-0000-0000-000000000000}</Project>
-      <Name>OpenTK</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Media.OpenTK\Media.OpenTK.csproj">
-      <Project>{D7CAD493-7F4B-4C83-A592-8D071B01CF28}</Project>
-      <Name>Media.OpenTK</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
+    <None Include="OpenTK.dll.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Media.Base\Media.Base.csproj">
+      <Project>{01fd5659-75cd-4d3c-8701-6d6cf54c2c31}</Project>
+      <Name>Media.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Media.OpenTK\Media.OpenTK.csproj">
+      <Project>{d7cad493-7f4b-4c83-a592-8d071b01cf28}</Project>
+      <Name>Media.OpenTK</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

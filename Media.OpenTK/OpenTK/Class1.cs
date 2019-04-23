@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using BaseLib.Media.Display;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
@@ -16,6 +17,11 @@ namespace BaseLib.Media.OpenTK
     }
     public static class Extensions
     {
+        public static Xwt.Size ToSize(this size size)
+        {
+            return new Xwt.Size(size.width, size.height);
+        }
+
         public static Type GetType(string typeName)
         {
             var type = Type.GetType(typeName);

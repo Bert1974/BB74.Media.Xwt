@@ -21,3 +21,11 @@
 /SimpleExample/bin/Release
 /Media.Native/bin
 /Media.Native/obj
+/Media.Native/Media.Interop/bin
+/Media.Native/Media.Interop/obj
+/Media.Native/Media.Interop.Impl/bin
+/Media.Native/Media.Interop.Impl/obj
+/Media.Native/Media.Native/bin
+/Media.Native/Media.Native/obj
+/Media.Base/bin
+/Media.Base/obj

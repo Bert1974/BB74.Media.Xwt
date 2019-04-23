@@ -182,7 +182,7 @@ precision mediump float;
 
         private vertices vertices1, vertices2, vertices3;
 
-        private Xwt.Size videosize;
+        private size videosize;
         private readonly Xwt.Widget window;
         private readonly IRenderOwner renderer;
         private FrameFactory owner;
@@ -296,7 +296,7 @@ precision mediump float;
         }
         private readonly BlockingCollection<actioninfo> actions = new BlockingCollection<actioninfo>();
 
-        internal OpenTKRenderer(FrameFactory owner, IXwtRender xwtrender, Xwt.Widget window, IRenderOwner renderer, Xwt.Size videosize)
+        internal OpenTKRenderer(FrameFactory owner, IXwtRender xwtrender, Xwt.Widget window, IRenderOwner renderer, size videosize)
         {
             //    OpenTKRenderer.usecnt = 1;
             this.owner = owner;
@@ -356,18 +356,18 @@ precision mediump float;
                         var pos = GL.GetUniformLocation(this.combineshader, "tex");
                         GL.Uniform1(pos, 0);
                         pos = GL.GetUniformLocation(this.combineshader, "vpHeight");
-                        GL.Uniform1(pos, (float)videosize.Height);
+                        GL.Uniform1(pos, (float)videosize.height);
 
                         this.deinterlaceblendshader = new shader(combineshadervertex, blendshaderfragment, vertices1);
                         GL.UseProgram(deinterlaceblendshader);
                         pos = GL.GetUniformLocation(this.deinterlaceblendshader, "vpHeight");
-                        GL.Uniform1(pos, (float)videosize.Height);
+                        GL.Uniform1(pos, (float)videosize.height);
 
                         this.deinterlacesplitshader = new shader(combineshadervertex, splitshaderfragment, vertices1);
 
                         GL.UseProgram(deinterlacesplitshader);
                         pos = GL.GetUniformLocation(this.deinterlacesplitshader, "vpHeight");
-                        GL.Uniform1(pos, (float)videosize.Height);
+                        GL.Uniform1(pos, (float)videosize.height);
 
                     }
                     catch (Exception e)
@@ -801,7 +801,7 @@ precision mediump float;
           {
               throw new NotImplementedException();
           }*/
-        IRenderer IRendererFactory.Open(IXwtRender xwt, Widget widget, OpenTK.IRenderOwner renderer, Xwt.Size videosize)
+        IRenderer IRendererFactory.Open(IXwtRender xwt, Widget widget, OpenTK.IRenderOwner renderer, size videosize)
         {
             lock (this)
             {

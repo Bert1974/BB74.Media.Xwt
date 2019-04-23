@@ -503,7 +503,7 @@ namespace BaseLib.Display.WPF
             
         }
 
-        internal DirectX9Renderer(FrameFactory owner, IXwtRender xwt, Widget widget, System.Windows.FrameworkElement window, System.Windows.Window main, IRenderOwner renderer, global::Xwt.Size videosize)
+        internal DirectX9Renderer(FrameFactory owner, IXwtRender xwt, Widget widget, System.Windows.FrameworkElement window, System.Windows.Window main, IRenderOwner renderer, size videosize)
         {
             this.owner = owner;
             this.xwt = xwt;
@@ -527,7 +527,7 @@ namespace BaseLib.Display.WPF
             //window..CompositionTarget
 
             //    OpenTKRenderer.usecnt = 1;            //  this.ctlhandle = this.ctl.Handle;
-            this.viewsize = new global::Xwt.Size(window.ActualWidth, window.ActualHeight);
+            this.viewsize = new size(Convert.ToInt32(window.ActualWidth), Convert.ToInt32(window.ActualHeight));
 
             this.window.SizeChanged += Ctl_SizeChanged;
 
@@ -618,7 +618,7 @@ namespace BaseLib.Display.WPF
         private void Ctl_SizeChanged(object sender, EventArgs e)
         {
             _layer?.StopRenderingScene();
-            this.viewsize = new global::Xwt.Size(window.ActualWidth, window.ActualHeight);
+            this.viewsize = new size(Convert.ToInt32(window.ActualWidth), Convert.ToInt32(window.ActualHeight));
             _layer?.rec.Arrange(new Rect(0, 0, this.window.ActualWidth, this.window.ActualHeight));
             _layer?.rec.UpdateLayout();
             _layer?.BeginRenderingScene();
@@ -926,7 +926,7 @@ namespace BaseLib.Display.WPF
 
         void IRenderer.Present(IVideoFrame src, global::Xwt.Rectangle dstrec, IntPtr window) // painting on block or rpreview-something with alpha=255
         {
-            dstrec = new global::Xwt.Rectangle(global::Xwt.Point.Zero, this.viewsize);
+            dstrec = new global::Xwt.Rectangle(global::Xwt.Point.Zero, this.viewsize.ToSize());
 
             if (islost || device.TestCooperativeLevel() == ResultCode.DeviceLost /*||
                 this.lastsize.Width != r.Width || this.lastsize.Height != r.Height*/)
@@ -1139,7 +1139,7 @@ namespace BaseLib.Display.WPF
         {
             throw new NotImplementedException();
         }*/
-        IRenderer IRendererFactory.Open(IXwtRender xwt, Widget w, IRenderOwner renderer, global::Xwt.Size videosize)
+        IRenderer IRendererFactory.Open(IXwtRender xwt, Widget w, IRenderOwner renderer, size videosize)
         {
             lock (this)
             {

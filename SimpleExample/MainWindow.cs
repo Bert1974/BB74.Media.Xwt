@@ -51,7 +51,7 @@ namespace SimpleExample
             }
             internal void OnLoaded()
             {
-                this.Renderer = this.RenderFactory.Open(this.XwtRender, this, this, new Xwt.Size(1920, 1080));
+                this.Renderer = this.RenderFactory.Open(this.XwtRender, this, this, new size(1920, 1080));
 
                 using (var lck = this.Renderer.GetDrawLock())
                 {
