@@ -117,11 +117,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>avcodec-58.lib;avdevice-58.lib;avfilter-7.lib;avformat-58.lib;avresample-4.lib;avutil-56.lib;swresample-3.lib;swscale-5.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>copy "$(TargetPath)" "$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\"
-copy "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\"
-copy "$(ProjectDir)sandbox\win32\bin\*.dll" "$(SolutionDir)bin\$(Configuration)\x86"</Command>
-    </PostBuildEvent>
     <PreBuildEvent>
       <Command>lib /def:$(ProjectDir)sandbox\win32\lib\avcodec-58.def /out:$(ProjectDir)sandbox\win32\lib\avcodec-58.lib /MACHINE:X86
 lib /def:$(ProjectDir)sandbox\win32\lib\avdevice-58.def /out:$(ProjectDir)sandbox\win32\lib\avdevice-58.lib /MACHINE:X86
@@ -147,12 +142,6 @@ lib /def:$(ProjectDir)sandbox\win32\lib\swscale-5.def /out:$(ProjectDir)sandbox\
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>avcodec-58.lib;avdevice-58.lib;avfilter-7.lib;avformat-58.lib;avresample-4.lib;avutil-56.lib;swresample-3.lib;swscale-5.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>copy "$(TargetPath)" "$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\"
-copy "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\"
-copy "$(ProjectDir)sandbox\win64\bin\*.dll" "$(SolutionDir)bin\$(Configuration)\x64\"
-</Command>
-    </PostBuildEvent>
     <PreBuildEvent>
       <Command>lib /def:$(ProjectDir)sandbox\win64\lib\avcodec-58.def /out:$(ProjectDir)sandbox\win64\lib\avcodec-58.lib /MACHINE:X64
 lib /def:$(ProjectDir)sandbox\win64\lib\avdevice-58.def /out:$(ProjectDir)sandbox\win64\lib\avdevice-58.lib /MACHINE:X64
@@ -182,11 +171,6 @@ lib /def:$(ProjectDir)sandbox\win64\lib\swscale-5.def /out:$(ProjectDir)sandbox\
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>avcodec-58.lib;avdevice-58.lib;avfilter-7.lib;avformat-58.lib;avresample-4.lib;avutil-56.lib;swresample-3.lib;swscale-5.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>copy "$(TargetPath)" "$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\"
-copy "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\"
-copy "$(ProjectDir)sandbox\win32\bin\*.dll" "$(SolutionDir)bin\$(Configuration)\x86"</Command>
-    </PostBuildEvent>
     <PreBuildEvent>
       <Command>lib /def:$(ProjectDir)sandbox\win32\lib\avcodec-58.def /out:$(ProjectDir)sandbox\win32\lib\avcodec-58.lib /MACHINE:X86
 lib /def:$(ProjectDir)sandbox\win32\lib\avdevice-58.def /out:$(ProjectDir)sandbox\win32\lib\avdevice-58.lib /MACHINE:X86
@@ -197,6 +181,12 @@ lib /def:$(ProjectDir)sandbox\win32\lib\avutil-56.def /out:$(ProjectDir)sandbox\
 lib /def:$(ProjectDir)sandbox\win32\lib\swresample-3.def /out:$(ProjectDir)sandbox\win32\lib\swresample-3.lib /MACHINE:X86
 lib /def:$(ProjectDir)sandbox\win32\lib\swscale-5.def /out:$(ProjectDir)sandbox\win32\lib\swscale-5.lib /MACHINE:X86</Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>copy "$(TargetPath)" "$(ProjectDir)..\package\bin\net40\$(PlatformTarget)\"
+copy "$(TargetDir)$(TargetName).pdb" "$(ProjectDir)..\package\bin\net40\$(PlatformTarget)\"
+copy "$(ProjectDir)sandbox\win32\bin\*.dll" "$(ProjectDir)..\package\bin\net40\x86\"
+copy "$(ProjectDir)sandbox\win64\bin\*.dll" "$(ProjectDir)..\package\bin\net40\x64\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -216,12 +206,6 @@ lib /def:$(ProjectDir)sandbox\win32\lib\swscale-5.def /out:$(ProjectDir)sandbox\
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>avcodec-58.lib;avdevice-58.lib;avfilter-7.lib;avformat-58.lib;avresample-4.lib;avutil-56.lib;swresample-3.lib;swscale-5.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>copy "$(TargetPath)" "$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\"
-copy "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\"
-copy "$(ProjectDir)sandbox\win64\bin\*.dll" "$(SolutionDir)bin\$(Configuration)\x64\"
-</Command>
-    </PostBuildEvent>
     <PreBuildEvent>
       <Command>lib /def:$(ProjectDir)sandbox\win64\lib\avcodec-58.def /out:$(ProjectDir)sandbox\win64\lib\avcodec-58.lib /MACHINE:X64
 lib /def:$(ProjectDir)sandbox\win64\lib\avdevice-58.def /out:$(ProjectDir)sandbox\win64\lib\avdevice-58.lib /MACHINE:X64
@@ -232,6 +216,12 @@ lib /def:$(ProjectDir)sandbox\win64\lib\avutil-56.def /out:$(ProjectDir)sandbox\
 lib /def:$(ProjectDir)sandbox\win64\lib\swresample-3.def /out:$(ProjectDir)sandbox\win64\lib\swresample-3.lib /MACHINE:X64
 lib /def:$(ProjectDir)sandbox\win64\lib\swscale-5.def /out:$(ProjectDir)sandbox\win64\lib\swscale-5.lib /MACHINE:X64</Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>copy "$(TargetPath)" "$(ProjectDir)..\package\bin\net40\$(PlatformTarget)\"
+copy "$(TargetDir)$(TargetName).pdb" "$(ProjectDir)..\package\bin\net40\$(PlatformTarget)\"
+copy "$(ProjectDir)sandbox\win32\bin\*.dll" "$(ProjectDir)..\package\bin\net40\x86\"
+copy "$(ProjectDir)sandbox\win64\bin\*.dll" "$(ProjectDir)..\package\bin\net40\x64\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="audioconvert.h" />
