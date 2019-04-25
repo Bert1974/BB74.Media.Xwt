@@ -35,3 +35,5 @@
 /Examples/MovieExample/obj
 /Examples/SimpleExample/bin
 /Examples/SimpleExample/obj
+/Examples/MovieExample/OpenTK.dll.config
+/Media.OpenTK.GTK/OpenTK.dll.config

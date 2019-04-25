@@ -40,6 +40,10 @@
      <Link>x64\Media.Native.dll</Link>
      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
    </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x64\libMedia.Native.dll.so">
+     <Link>x64\libMedia.Native.dll.so</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
    <None Include="$(MSBuildThisFileDirectory)..\data\x86\avcodec-58.dll">
      <Link>x86\avcodec-58.dll</Link>
      <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -18,11 +18,11 @@ pkg_check_modules(FFMPEG REQUIRED libavfilter libavformat libavcodec libswresamp
 
 link_directories(${FFMPEG_LIBRARY_DIRS})
 
-set(BaseLib.FFMPEG.dll PROPERTIES
+set(Media.Native.dll PROPERTIES
    CMAKE_CXX_STANDARD 11
    CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_library(BaseLib.FFMPEG.dll SHARED
+add_library(Media.Native.dll SHARED
     interop.cpp
     audioconvert.cpp
     movieplayer.cpp
@@ -34,11 +34,11 @@ add_library(BaseLib.FFMPEG.dll SHARED
     windows_sound.cpp
     win32.cpp
 )
-#target_compile_options(BaseLib.FFMPEG.dll PRIVATE -fPIC)
-target_compile_options(BaseLib.FFMPEG.dll PRIVATE -march=core2)
-target_compile_options(BaseLib.FFMPEG.dll PRIVATE -std=c++11)
+#target_compile_options(Media.Native.dll PRIVATE -fPIC)
+target_compile_options(Media.Native.dll PRIVATE -march=core2)
+target_compile_options(Media.Native.dll PRIVATE -std=c++11)
 
 include_directories(${FFMPEG_INCLUDE_DIRS})
 #include_directories(${CMAKE_PREFIX_PATH}/include)
 
-target_link_libraries(BaseLib.FFMPEG.dll LINK_PRIVATE -Wl,--start-group ${FFMPEG_LIBRARIES} -Wl,--end-group asound)
+target_link_libraries(Media.Native.dll LINK_PRIVATE -Wl,--start-group ${FFMPEG_LIBRARIES} -Wl,--end-group asound)

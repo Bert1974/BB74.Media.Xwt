@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>BB74.Media.FFMPEG</id>
-    <version>1.0.23</version>
+    <version>1.0.25</version>
     <title>$title$</title>
     <authors>Bert Bruggeman</authors>
     <owners>$author$</owners>

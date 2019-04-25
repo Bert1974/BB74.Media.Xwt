@@ -226,7 +226,7 @@ namespace BaseLib.Media.OpenTK
                 GL.BindFramebuffer(FramebufferTarget.Framebuffer, this.framebuffer);
 
                 GL.ReadBuffer(ReadBufferMode.ColorAttachment0);
-                GL.ReadPixels(0, 0, Width, Height, global::OpenTK.Graphics.OpenGL4.PixelFormat.Rgba, PixelType.UnsignedByte, dataPointer);
+                GL.ReadPixels(0, 0, Width, Height, global::OpenTK.Graphics.OpenGL4.PixelFormat.Bgra, PixelType.UnsignedByte, dataPointer);
 
                 GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
 
