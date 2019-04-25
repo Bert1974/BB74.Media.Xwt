@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Xwt.Gtk.0.2.166\build\Xwt.Gtk.props" Condition="Exists('..\packages\Xwt.Gtk.0.2.166\build\Xwt.Gtk.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BA747515-6973-4730-AC9D-21BABEAEDACB}</ProjectGuid>
+    <ProjectGuid>{0C058969-A70F-4DFA-A1A3-E938808A30A9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>SimpleExample</RootNamespace>
-    <AssemblyName>SimpleExample</AssemblyName>
+    <RootNamespace>MovieExample</RootNamespace>
+    <AssemblyName>MovieExample</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -38,11 +38,24 @@
     <Reference Include="BB74.Xwt.Controls, Version=1.0.7051.27256, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\BB74.Xwt.Controls.1.0.7051.27256\lib\net40\BB74.Xwt.Controls.dll</HintPath>
     </Reference>
+    <Reference Include="Media.Interop, Version=1.0.7054.10306, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BB74.Media.FFMPEG.1.0.9\lib\net40\Media.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="Media.Interop.Impl, Version=1.0.7052.23964, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BB74.Media.Base.1.0.3\lib\net40\x64\Media.Interop.Impl.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\packages\OpenTK-3.0-EGL-disabled.1.0.0\lib\net20\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Xwt, Version=0.2.166.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\Xwt.0.2.166\lib\net40\Xwt.dll</HintPath>
@@ -89,19 +102,19 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Media.Base\Media.Base.csproj">
-      <Project>{01fd5659-75cd-4d3c-8701-6d6cf54c2c31}</Project>
+    <ProjectReference Include="..\..\Media.Base\Media.Base.csproj">
+      <Project>{01FD5659-75CD-4D3C-8701-6D6CF54C2C31}</Project>
       <Name>Media.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Media.OpenTK.GTK\Media.OpenTK.GTK.csproj">
+    <ProjectReference Include="..\..\Media.OpenTK.GTK\Media.OpenTK.GTK.csproj">
       <Project>{efd07f85-af34-4cb3-82e3-dd3d15ec011b}</Project>
       <Name>Media.OpenTK.GTK</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Media.OpenTK.WPF\Media.OpenTK.WPF.csproj">
+    <ProjectReference Include="..\..\Media.OpenTK.WPF\Media.OpenTK.WPF.csproj">
       <Project>{5ab2e51d-9dd2-4650-9aa0-03fb811a3255}</Project>
       <Name>Media.OpenTK.WPF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Media.OpenTK\Media.OpenTK.csproj">
+    <ProjectReference Include="..\..\Media.OpenTK\Media.OpenTK.csproj">
       <Project>{d7cad493-7f4b-4c83-a592-8d071b01cf28}</Project>
       <Name>Media.OpenTK</Name>
     </ProjectReference>
@@ -112,5 +125,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Xwt.Gtk.0.2.166\build\Xwt.Gtk.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xwt.Gtk.0.2.166\build\Xwt.Gtk.props'))" />
+    <Error Condition="!Exists('..\packages\BB74.Media.FFMPEG.1.0.9\build\BB74.Media.FFMPEG.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BB74.Media.FFMPEG.1.0.9\build\BB74.Media.FFMPEG.targets'))" />
   </Target>
+  <Import Project="..\packages\BB74.Media.FFMPEG.1.0.9\build\BB74.Media.FFMPEG.targets" Condition="Exists('..\packages\BB74.Media.FFMPEG.1.0.9\build\BB74.Media.FFMPEG.targets')" />
 </Project>

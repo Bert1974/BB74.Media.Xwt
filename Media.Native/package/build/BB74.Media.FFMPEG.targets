@@ -1,0 +1,76 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+ <ItemGroup>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x64\avcodec-58.dll">
+     <Link>x64\avcodec-58.dll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x64\avdevice-58.dll">
+     <Link>x64\avdevice-58.dll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x64\avfilter-7.dll">
+     <Link>x64\avfilter-7.dll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x64\avformat-58.dll">
+     <Link>x64\avformat-58.dll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x64\avresample-4.dll">
+     <Link>x64\avresample-4.dll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x64\avutil-56.dll">
+     <Link>x64\avutil-56.dll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x64\swresample-3.dll">
+     <Link>x64\swresample-3.dlll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x64\swscale-5.dll">
+     <Link>x64\swscale-5.dll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x64\Media.Interop.Impl.dll">
+     <Link>x64\Media.Interop.Impl.dll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x86\avcodec-58.dll">
+     <Link>x86\avcodec-58.dll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x86\avdevice-58.dll">
+     <Link>x86\avdevice-58.dll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x86\avfilter-7.dll">
+     <Link>x86\avfilter-7.dll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x86\avformat-58.dll">
+     <Link>x86\avformat-58.dll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x86\avresample-4.dll">
+     <Link>x86\avresample-4.dll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x86\avutil-56.dll">
+     <Link>x86\avutil-56.dll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x86\swresample-3.dll">
+     <Link>x86\swresample-3.dll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x86\swscale-5.dll">
+     <Link>x86\swscale-5.dll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x86\Media.Interop.Impl.dll">
+     <Link>x86\Media.Interop.Impl.dll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+ </ItemGroup>
+</Project>
