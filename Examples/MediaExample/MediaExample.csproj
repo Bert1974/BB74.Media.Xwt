@@ -89,19 +89,19 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Media.Base\Media.Base.csproj">
+    <ProjectReference Include="..\..\Media.Base\Media.Base.csproj">
       <Project>{01fd5659-75cd-4d3c-8701-6d6cf54c2c31}</Project>
       <Name>Media.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Media.OpenTK.GTK\Media.OpenTK.GTK.csproj">
+    <ProjectReference Include="..\..\Media.OpenTK.GTK\Media.OpenTK.GTK.csproj">
       <Project>{efd07f85-af34-4cb3-82e3-dd3d15ec011b}</Project>
       <Name>Media.OpenTK.GTK</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Media.OpenTK.WPF\Media.OpenTK.WPF.csproj">
+    <ProjectReference Include="..\..\Media.OpenTK.WPF\Media.OpenTK.WPF.csproj">
       <Project>{5ab2e51d-9dd2-4650-9aa0-03fb811a3255}</Project>
       <Name>Media.OpenTK.WPF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Media.OpenTK\Media.OpenTK.csproj">
+    <ProjectReference Include="..\..\Media.OpenTK\Media.OpenTK.csproj">
       <Project>{d7cad493-7f4b-4c83-a592-8d071b01cf28}</Project>
       <Name>Media.OpenTK</Name>
     </ProjectReference>
