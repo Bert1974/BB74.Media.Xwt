@@ -2,16 +2,17 @@
 <package >
   <metadata>
     <id>BB74.Media.FFMPEG</id>
-    <version>1.0.10</version>
+    <version>1.0.23</version>
+    <title>$title$</title>
     <authors>Bert Bruggeman</authors>
-    <owners>Bert Bruggeman</owners>
-    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
+    <owners>$author$</owners>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/Bert1974/BB74.OpenTK.Xwt</projectUrl>
     <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Package description</description>
     <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
     <copyright>Copyright 2019 Bert Bruggeman</copyright>
-    <tags>Tag1 Tag2</tags>
+    <tags>BB74 c# FFMPEG</tags>
   </metadata>
 </package>

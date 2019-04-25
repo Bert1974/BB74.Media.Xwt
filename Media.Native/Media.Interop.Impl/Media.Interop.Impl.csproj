@@ -52,7 +52,6 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\package\data\x86"
-copy "$(TargetPath)" "$(ProjectDir)..\package\data\x64"
-copy "$(TargetPath)" "$(ProjectDir)..\package\ref\net40"</PostBuildEvent>
+copy "$(TargetPath)" "$(ProjectDir)..\package\data\x64"</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -182,10 +182,10 @@ lib /def:$(ProjectDir)sandbox\win32\lib\swresample-3.def /out:$(ProjectDir)sandb
 lib /def:$(ProjectDir)sandbox\win32\lib\swscale-5.def /out:$(ProjectDir)sandbox\win32\lib\swscale-5.lib /MACHINE:X86</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" "$(ProjectDir)..\package\lib\net40\$(PlatformTarget)\"
-copy "$(TargetDir)$(TargetName).pdb" "$(ProjectDir)..\package\lib\net40\$(PlatformTarget)\"
-copy "$(ProjectDir)sandbox\win32\bin\*.dll" "$(ProjectDir)..\package\lib\net40\x86\"
-copy "$(ProjectDir)sandbox\win64\bin\*.dll" "$(ProjectDir)..\package\lib\net40\x64\"</Command>
+      <Command>copy "$(TargetPath)" "$(ProjectDir)..\package\data\$(PlatformTarget)\"
+copy "$(ProjectDir)sandbox\win32\bin\*.dll" "$(ProjectDir)..\package\data\x86\"
+copy "$(ProjectDir)sandbox\win64\bin\*.dll" "$(ProjectDir)..\package\data\x64\"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -217,10 +217,10 @@ lib /def:$(ProjectDir)sandbox\win64\lib\swresample-3.def /out:$(ProjectDir)sandb
 lib /def:$(ProjectDir)sandbox\win64\lib\swscale-5.def /out:$(ProjectDir)sandbox\win64\lib\swscale-5.lib /MACHINE:X64</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" "$(ProjectDir)..\package\lib\net40\$(PlatformTarget)\"
-copy "$(TargetDir)$(TargetName).pdb" "$(ProjectDir)..\package\lib\net40\$(PlatformTarget)\"
-copy "$(ProjectDir)sandbox\win32\bin\*.dll" "$(ProjectDir)..\package\lib\net40\x86\"
-copy "$(ProjectDir)sandbox\win64\bin\*.dll" "$(ProjectDir)..\package\lib\net40\x64\"</Command>
+      <Command>copy "$(TargetPath)" "$(ProjectDir)..\package\data\$(PlatformTarget)\"
+copy "$(ProjectDir)sandbox\win32\bin\*.dll" "$(ProjectDir)..\package\data\x86\"
+copy "$(ProjectDir)sandbox\win64\bin\*.dll" "$(ProjectDir)..\package\data\x64\"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

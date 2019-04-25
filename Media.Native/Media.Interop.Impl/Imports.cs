@@ -8,42 +8,42 @@ using System.Text;
 
 namespace BaseLib.Media
 {
-/*    [Serializable()]
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
-    internal struct rational
-    {
-        public int num, den;
-    }
-    [Serializable()]
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
-    internal struct fps
-    {
-        public rational Number;
-        [MarshalAs(UnmanagedType.I1)]
-        public bool Interlaced;
-    }
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
-    internal struct _audiostreaminfo
-    {
-        public uint ind;
-        public int samplerate, channels;
-        public int format;
-        public Int64 channellayout;
-        public rational fps, timebase;
-    }
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
-    internal struct _videostreaminfo
-    {
-        public uint ind;
-        public int width, height, ticks;
-        public rational fps, timebase;
-    }*/
+    /*    [Serializable()]
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
+        internal struct rational
+        {
+            public int num, den;
+        }
+        [Serializable()]
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
+        internal struct fps
+        {
+            public rational Number;
+            [MarshalAs(UnmanagedType.I1)]
+            public bool Interlaced;
+        }
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
+        internal struct _audiostreaminfo
+        {
+            public uint ind;
+            public int samplerate, channels;
+            public int format;
+            public Int64 channellayout;
+            public rational fps, timebase;
+        }
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
+        internal struct _videostreaminfo
+        {
+            public uint ind;
+            public int width, height, ticks;
+            public rational fps, timebase;
+        }*/
 }
 namespace BaseLib.Audio.Interop
 {
     internal static class Imports
     {
-        private const string _dll_name = "BaseLib.FFMPEG.dll";
+        private const string _dll_name = "Media.Native.dll";
         [SuppressUnmanagedCodeSecurity]
         [DllImport(_dll_name, CallingConvention = CallingConvention.Cdecl, PreserveSig = true)]
         public static extern IntPtr openaudio(int bitrate, AudioFormat format, ChannelsLayout layout, int frames, int buffers, [MarshalAs(UnmanagedType.LPStr)] StringBuilder error);
@@ -84,7 +84,7 @@ namespace BaseLib.Video.Interop
     {
         internal static class Imports
         {
-            private const string _dll_name = "BaseLib.FFMPEG.dll";
+            private const string _dll_name = "Media.Native.dll";
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport(_dll_name, CallingConvention = CallingConvention.Cdecl, PreserveSig = true)]
@@ -129,7 +129,7 @@ namespace BaseLib.Video.Interop
     }
     internal static class Imports
     {
-        private const string _dll_name = "BaseLib.FFMPEG.dll";
+        private const string _dll_name = "Media.Native.dll";
         [SuppressUnmanagedCodeSecurity]
         [DllImport(_dll_name, CallingConvention = CallingConvention.Cdecl, PreserveSig = true)]
         public static extern IntPtr openplayer([MarshalAs(UnmanagedType.LPStr)]string filename, [MarshalAs(UnmanagedType.LPStr)] StringBuilder error);

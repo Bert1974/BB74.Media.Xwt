@@ -25,7 +25,7 @@
      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
    </None>
    <None Include="$(MSBuildThisFileDirectory)..\data\x64\swresample-3.dll">
-     <Link>x64\swresample-3.dlll</Link>
+     <Link>x64\swresample-3.dll</Link>
      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
    </None>
    <None Include="$(MSBuildThisFileDirectory)..\data\x64\swscale-5.dll">
@@ -34,6 +34,10 @@
    </None>
    <None Include="$(MSBuildThisFileDirectory)..\data\x64\Media.Interop.Impl.dll">
      <Link>x64\Media.Interop.Impl.dll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x64\Media.Native.dll">
+     <Link>x64\Media.Native.dll</Link>
      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
    </None>
    <None Include="$(MSBuildThisFileDirectory)..\data\x86\avcodec-58.dll">
@@ -70,6 +74,10 @@
    </None>
    <None Include="$(MSBuildThisFileDirectory)..\data\x86\Media.Interop.Impl.dll">
      <Link>x86\Media.Interop.Impl.dll</Link>
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x86\Media.Native.dll">
+     <Link>x86\Media.Native.dll</Link>
      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
    </None>
  </ItemGroup>
