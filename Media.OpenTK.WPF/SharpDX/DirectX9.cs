@@ -503,7 +503,7 @@ namespace BaseLib.Display.WPF
             
         }
 
-        internal DirectX9Renderer(FrameFactory owner, IXwtRender xwt, Widget widget, System.Windows.FrameworkElement window, System.Windows.Window main, IRenderOwner renderer, size videosize)
+        internal DirectX9Renderer(FrameFactory owner, IXwtRender xwt, Canvas widget, System.Windows.FrameworkElement window, System.Windows.Window main, IRenderOwner renderer, size videosize)
         {
             this.owner = owner;
             this.xwt = xwt;
@@ -889,7 +889,6 @@ namespace BaseLib.Display.WPF
         {
             if (state == null)
             {
-               opentk.EndRender(this.renderframe);
  /*
                 this.frame.Set(0, this.viewsize.width, this.viewsize.height, 0);
 
@@ -1139,7 +1138,7 @@ namespace BaseLib.Display.WPF
         {
             throw new NotImplementedException();
         }*/
-        IRenderer IRendererFactory.Open(IXwtRender xwt, Widget w, IRenderOwner renderer, size videosize)
+        IRenderer IRendererFactory.Open(IXwtRender xwt, Canvas w, IRenderOwner renderer, size videosize)
         {
             lock (this)
             {

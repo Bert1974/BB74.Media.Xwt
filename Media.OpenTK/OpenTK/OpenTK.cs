@@ -296,7 +296,7 @@ precision mediump float;
         }
         private readonly BlockingCollection<actioninfo> actions = new BlockingCollection<actioninfo>();
 
-        internal OpenTKRenderer(FrameFactory owner, IXwtRender xwtrender, Xwt.Widget window, IRenderOwner renderer, size videosize)
+        internal OpenTKRenderer(FrameFactory owner, IXwtRender xwtrender, Xwt.Canvas window, IRenderOwner renderer, size videosize)
         {
             //    OpenTKRenderer.usecnt = 1;
             this.owner = owner;
@@ -461,39 +461,45 @@ precision mediump float;
                         this.renderer.preparerender(null, true);
                         using (var lck = this.GetDrawLock())
                         {
-                            var r = new Xwt.Rectangle(Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Left), Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Top), Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Width), Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Height));
-                            this.renderer.render(null, r);
-                            this.Xwt.SwapBuffers(this.window);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        //  Log.LogException(e);
-                    }
-                    //         }).Wait();
-                }
-                catch
-                {
-                    Thread.Sleep(100);
-                }
-            }
-        }
+                            var r = new Xwt.Rectangle(0,0,
+                                Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Width),
+                                Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Height));
+                    /*   Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Left), 
+                       Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Top),
+                       Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Width),
+                       Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Height));*/
+                   this.renderer.render(null, r);
+                   this.Xwt.SwapBuffers(this.window);
+               }
+           }
+           catch (Exception e)
+           {
+               //  Log.LogException(e);
+           }
+           //         }).Wait();
+       }
+       catch
+       {
+           Thread.Sleep(100);
+       }
+   }
+}
 
-        internal void Deinterlace(IVideoFrame frame, IRenderFrame destination, DeinterlaceModes mode)
-        {
-            try
-            {
-                using (var ll = this.GetDrawLock())
-                {
-                    //   Lock();
-                    GL.BindFramebuffer(FramebufferTarget.Framebuffer, (destination as RenderFrame).framebuffer);
+internal void Deinterlace(IVideoFrame frame, IRenderFrame destination, DeinterlaceModes mode)
+{
+   try
+   {
+       using (var ll = this.GetDrawLock())
+       {
+           //   Lock();
+           GL.BindFramebuffer(FramebufferTarget.Framebuffer, (destination as RenderFrame).framebuffer);
 
-                    var err = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
+           var err = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
 
-                    GL.Viewport(0, 0, destination.Width, destination.Height);// new Rectangle(this.window.Location,this.window.ClientSize));
+           GL.Viewport(0, 0, destination.Width, destination.Height);// new Rectangle(this.window.Location,this.window.ClientSize));
 
-                    GL.ClearColor(1, 1, 0, 1);
-                    GL.Clear(ClearBufferMask.ColorBufferBit /*| ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit*/); // We're not using stencil buffer so why bother with clearing?            
+           GL.ClearColor(1, 1, 0, 1);
+           GL.Clear(ClearBufferMask.ColorBufferBit /*| ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit*/); // We're not using stencil buffer so why bother with clearing?            
 
                     GL.Disable(EnableCap.DepthTest);
                     GL.Disable(EnableCap.StencilTest);
@@ -801,7 +807,7 @@ precision mediump float;
           {
               throw new NotImplementedException();
           }*/
-        IRenderer IRendererFactory.Open(IXwtRender xwt, Widget widget, OpenTK.IRenderOwner renderer, size videosize)
+        IRenderer IRendererFactory.Open(IXwtRender xwt, Canvas widget, OpenTK.IRenderOwner renderer, size videosize)
         {
             lock (this)
             {

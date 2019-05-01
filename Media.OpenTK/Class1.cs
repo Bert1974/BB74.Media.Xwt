@@ -13,7 +13,7 @@ namespace BaseLib.Media.Display
     {
         string Name { get; } // enum RendererNames
         void Initialize();
-        IRenderer Open(IXwtRender wxt, Widget ctl, OpenTK.IRenderOwner renderer, size videosize); 
+        IRenderer Open(IXwtRender wxt, Canvas ctl, OpenTK.IRenderOwner renderer, size videosize); 
 
     }
     /*    public interface Ipaintinfo

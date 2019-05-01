@@ -48,6 +48,9 @@ namespace SimpleExample
                 this.RenderFactory = window.Renderfactory;
                 this.XwtRender = window.XwtRender;
                 this.Xwt = window.Xwt;
+
+                base.BackgroundColor = global::Xwt.Drawing.Colors.DarkGreen;
+                base.MinWidth = base.MinHeight = 100;
             }
             internal void OnLoaded()
             {

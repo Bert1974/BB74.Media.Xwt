@@ -33,7 +33,7 @@ namespace BaseLib.Platforms
                    var wBackend = Xwt.Toolkit.CurrentEngine.GetSafeBackend(widget) as Xwt.WPFBackend.WidgetBackend;
                    wBackend.Widget.ReleaseMouseCapture();
                }*/
-        void IXwtRender.CreateForWidgetContext(IRenderer renderer, IRenderOwner rendererimpl, Widget widget)
+        void IXwtRender.CreateForWidgetContext(IRenderer renderer, IRenderOwner rendererimpl, Canvas widget)
         {
             //    views[widget].
             /*      var wBackend = Xwt.Toolkit.CurrentEngine.GetSafeBackend(win) as Xwt.WPFBackend.WidgetBackend;

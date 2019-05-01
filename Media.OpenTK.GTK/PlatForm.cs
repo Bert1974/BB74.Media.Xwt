@@ -6,6 +6,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Platform;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -40,6 +41,7 @@ namespace BaseLib.Platforms
             {
                 public IWindowInfo windowInfo;
                 public IGraphicsContext gfxcontext;
+                internal Xwt.Canvas viewlabel;
 
                 public viewinfo(IWindowInfo windowInfo, IGraphicsContext gfxcontext)
                 {
@@ -60,14 +62,6 @@ namespace BaseLib.Platforms
                 this.render = render = new FrameFactory(null);
             }
 
-            void IXwtRender.FreeWindowInfo(Widget win)
-            {
-                if (views.TryGetValue(win, out viewinfo view))
-                {
-                    view.Dispose();
-                    views.Remove(win);
-                }
-            }
             //     [DllImport("libgdk-win32-2.0-0.dll", CallingConvention = CallingConvention.Cdecl)]
             //    internal static extern IntPtr gdk_win32_drawable_get_handle(IntPtr raw);
 
@@ -77,8 +71,26 @@ namespace BaseLib.Platforms
                     new object[] { (Xwt.Toolkit.CurrentEngine.GetSafeBackend(r) as Xwt.Backends.IWindowFrameBackend).Window });
                 return (IntPtr)wh.GetType().GetPropertyValue(wh, "Handle");
             }
-            void IXwtRender.CreateForWidgetContext(IRenderer renderer, IRenderOwner rendererimpl, Widget widget)
+
+            private static IntPtr GetHwndFromGtk(object/*IWidgetBackend*/ wBackend)
             {
+                var widget2 = wBackend.GetType().GetPropertyValue(wBackend, "Widget");
+                widget2.GetType().SetPropertyValue(widget2, "DoubleBuffered", false);
+
+                var gdkwin = widget2.GetType().GetPropertyValue(widget2, "GdkWindow");
+                var gdkwinhandle = (IntPtr)gdkwin.GetType().GetPropertyValue(gdkwin, "Handle");
+
+                return gdk_win32_drawable_get_handle(gdkwinhandle);
+            }
+            private static IntPtr GetHwndFromGtk(Xwt.WindowFrame window)
+            {
+                var backend = Xwt.Toolkit.CurrentEngine.GetSafeBackend(window) as Xwt.Backends.IWindowFrameBackend;
+                return backend.NativeHandle;
+            }
+
+            void IXwtRender.CreateForWidgetContext(IRenderer renderer, IRenderOwner rendererimpl, Canvas widget)
+            {
+                Xwt.Canvas view = null;
                 IntPtr hwnd;
                 if (Xwt.Toolkit.CurrentEngine.Type == ToolkitType.Wpf)
                 {
@@ -86,15 +98,16 @@ namespace BaseLib.Platforms
                 }
                 else
                 {
-                    var wBackend = Xwt.Toolkit.CurrentEngine.GetSafeBackend(widget) as Xwt.GtkBackend.CanvasBackend;
+                    hwnd = GetHwndFromGtk(Xwt.Toolkit.CurrentEngine.GetSafeBackend(widget));
 
-                    var widget2 = wBackend.GetType().GetPropertyValue(wBackend, "Widget");
-                    widget2.GetType().SetPropertyValue(widget2, "DoubleBuffered", false);
-
-                    var gdkwin = widget2.GetType().GetPropertyValue(widget2, "GdkWindow");
-                    var gdkwinhandle = (IntPtr)gdkwin.GetType().GetPropertyValue(gdkwin, "Handle");
-
-                    hwnd = gdk_win32_drawable_get_handle(gdkwinhandle);
+                    if (hwnd== GetHwndFromGtk(widget.ParentWindow))
+                    {
+                        view = new global::Xwt.Canvas() { ExpandHorizontal = true, ExpandVertical = true, HorizontalPlacement = WidgetPlacement.Fill, VerticalPlacement = WidgetPlacement.Fill,MinWidth=1,MinHeight=1,BackgroundColor= Xwt.Drawing.Colors.Black };
+                        (widget as global::Xwt.Canvas).AddChild(view);
+                        hwnd = GetHwndFromGtk(Xwt.Toolkit.CurrentEngine.GetSafeBackend(view));
+                        Debug.Assert(hwnd != GetHwndFromGtk(widget.ParentWindow));
+                        (widget as global::Xwt.Canvas).SetChildBounds(view, new Rectangle(Point.Zero, widget.Size));
+                    }
                 }
                 IWindowInfo WindowInfo = null;
                 IGraphicsContext gfxcontext = null;
@@ -102,7 +115,7 @@ namespace BaseLib.Platforms
                 WindowInfo = Utilities.CreateWindowsWindowInfo(hwnd);
                 gfxcontext = new global::OpenTK.Graphics.GraphicsContext(new GraphicsMode(new ColorFormat(8, 8, 8, 8), 24, 8), WindowInfo, null, 3, 2, GraphicsContextFlags.Default);
 
-                views[widget] = new viewinfo(WindowInfo, gfxcontext);
+                views[widget] = new viewinfo(WindowInfo, gfxcontext) { viewlabel = view };
 
                 gfxcontext.MakeCurrent(WindowInfo);
                 gfxcontext.LoadAll();
@@ -116,6 +129,19 @@ namespace BaseLib.Platforms
                 gfxcontext.MakeCurrent(null);
             }
 
+            void IXwtRender.FreeWindowInfo(Widget widget)
+            {
+                if (views.TryGetValue(widget, out viewinfo view))
+                {
+                    var l = view.viewlabel;
+                    view.Dispose();
+                    views.Remove(widget);
+                    if (l != null)
+                    {
+                        (widget as Canvas).RemoveChild(l);
+                    }
+                }
+            }
             /*    void IXwt.ReleaseCapture(Widget widget)
                 {
                     Gdk.Pointer.Ungrab(0);
@@ -273,9 +299,9 @@ namespace BaseLib.Platforms
             {
             }
 
-            void IXwtRender.CreateForWidgetContext(IRenderer renderer, IRenderOwner rendererimpl, Widget win)
+            void IXwtRender.CreateForWidgetContext(IRenderer renderer, IRenderOwner rendererimpl, Canvas win)
             {
-                var wBackend = Xwt.Toolkit.CurrentEngine.GetSafeBackend(win) as Xwt.GtkBackend.CanvasBackend;
+                var wBackend = Xwt.Toolkit.CurrentEngine.GetSafeBackend(win) as Xwt.Backends.ICanvasBackend;
                 var widget = wBackend.GetType().GetPropertyValue(wBackend, "Widget");
                 widget.GetType().SetPropertyValue(widget, "DoubleBuffered", false);
                 var gdkwin = widget.GetType().GetPropertyValue(widget, "GdkWindow");
@@ -363,7 +389,7 @@ namespace BaseLib.Platforms
         {
             impl.FreeWindowInfo(widget);
         }
-        void IXwtRender.CreateForWidgetContext(IRenderer renderer, IRenderOwner rendererimpl, Widget widget)
+        void IXwtRender.CreateForWidgetContext(IRenderer renderer, IRenderOwner rendererimpl, Canvas widget)
         {
             impl.CreateForWidgetContext(renderer,rendererimpl,widget);
         }

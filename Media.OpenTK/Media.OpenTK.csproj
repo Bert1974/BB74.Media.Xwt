@@ -46,9 +46,6 @@
     <Reference Include="Xwt, Version=0.2.166.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\Xwt.0.2.166\lib\net40\Xwt.dll</HintPath>
     </Reference>
-    <Reference Include="Xwt.XamMac, Version=0.2.166.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xwt.XamMac.0.2.166\lib\net40\Xwt.XamMac.dll</HintPath>
-    </Reference>
     <Reference Include="Media.Base">
       <HintPath>..\packages\BB74.Media.Base.1.0.7058.27178\lib\net40\Media.Base.dll</HintPath>
     </Reference>

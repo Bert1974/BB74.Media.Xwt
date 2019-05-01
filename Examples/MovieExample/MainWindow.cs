@@ -85,13 +85,23 @@ namespace MovieExample
             {
                 this.Renderer = this.RenderFactory.Open(this.XwtRender, this, this, new size(1920, 1080));
 
-           //     this.Audio = new AudioOut(48000, AudioFormat.Float32, ChannelsLayout.Stereo, 2);
-           //     this.Mixer = new Mixer(this.Audio.SampleRate, this.Audio.Format, this.Audio.ChannelLayout);
+                //     this.Audio = new AudioOut(48000, AudioFormat.Float32, ChannelsLayout.Stereo, 2);
+                //     this.Mixer = new Mixer(this.Audio.SampleRate, this.Audio.Format, this.Audio.ChannelLayout);
 
                 try
                 {
-                 //   this.MoviePlayer = new Player(this.owner, @"e:\movies\Yamaha_final.avi", TimeBase);
+                    if (System.Environment.OSVersion.Platform == PlatformID.MacOSX)
+                    {
+                        Debug.Assert(false);
+                    }
+                    else if (System.Environment.OSVersion.Platform == PlatformID.Unix)
+                    {
                         this.MoviePlayer = new Player(this.owner, @"/home/bert/Projects/movies/Yamaha_final.avi", TimeBase);
+                    }
+                    else
+                    {
+                        this.MoviePlayer = new Player(this.owner, @"e:\movies\Yamaha_final.avi", TimeBase);
+                    }
                 }
                 catch { }
                 using (var lck = this.Renderer.GetDrawLock())

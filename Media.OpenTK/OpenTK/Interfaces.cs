@@ -9,7 +9,7 @@ namespace BaseLib.Media.OpenTK
 {
     public interface IXwtRender //: BaseLib.Xwt.IXwt
     {
-        void CreateForWidgetContext(IRenderer renderer, IRenderOwner rendererimpl, Widget widget);
+        void CreateForWidgetContext(IRenderer renderer, IRenderOwner rendererimpl, Canvas widget);
         void FreeWindowInfo(Widget widget);
         //void GetInfo(Widget widget, out object win);
         //  void MakeCurrent(Widget widget);
