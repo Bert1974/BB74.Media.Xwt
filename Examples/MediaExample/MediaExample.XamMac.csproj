@@ -54,14 +54,14 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.Mac" />
-    <Reference Include="Xwt">
-      <HintPath>..\packages\Xwt.0.2.166\lib\net40\Xwt.dll</HintPath>
+    <Reference Include="Media.Base">
+      <HintPath>..\..\packages\BB74.Media.Base.1.0.7058.27178\lib\net40\Media.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Xwt.XamMac">
-      <HintPath>..\packages\Xwt.XamMac.0.2.166\lib\net40\Xwt.XamMac.dll</HintPath>
+    <Reference Include="Xwt">
+      <HintPath>..\..\packages\Xwt.0.2.166\lib\net40\Xwt.dll</HintPath>
     </Reference>
     <Reference Include="BB74.Xwt.Controls">
-      <HintPath>..\packages\BB74.Xwt.Controls.1.0.7051.27256\lib\net40\BB74.Xwt.Controls.dll</HintPath>
+      <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7060.22598\lib\net40\BB74.Xwt.Controls.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -79,11 +79,11 @@
     <Compile Include="toolbars.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Media.OpenTK\Media.OpenTK.csproj">
+    <ProjectReference Include="..\..\Media.OpenTK\Media.OpenTK.csproj">
       <Project>{D7CAD493-7F4B-4C83-A592-8D071B01CF28}</Project>
       <Name>Media.OpenTK</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Media.OpenTK.XamMac\Media.OpenTK.XamMac.csproj">
+    <ProjectReference Include="..\..\Media.OpenTK.XamMac\Media.OpenTK.XamMac.csproj">
       <Project>{D1713229-CA4A-4E30-8C21-626F0416B012}</Project>
       <Name>Media.OpenTK.XamMac</Name>
     </ProjectReference>

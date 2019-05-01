@@ -34,64 +34,11 @@ public:
 		ChannelsLayout m_channelslayout;
 
 	public:
-		outputstream(movierecorder *owner) : m_owner(owner)
-			, m_codec(0), m_st(0), m_enc(0), m_frame(0), m_tmp_frame(0), m_next_pts(0)
-	 	    ,m_convert(0)
-		{
-		}
-		~outputstream()
-		{
-			if (m_convert)
-			{
-				delete[] m_convert;
-			}
-
-			avcodec_free_context(&m_enc);
-
-			av_frame_free(&m_frame);
-
-			av_frame_free(&m_tmp_frame);
-			//	sws_freeContext(ost->sws_ctx);
-			//	swr_free(&ost->swr_ctx);
-		}
+		outputstream(movierecorder *owner);
+		~outputstream();
 	private:
-		static AVFrame *alloc_picture(enum AVPixelFormat pix_fmt, int width, int height)
-		{
-			AVFrame *picture;
-			int ret;
-			picture = av_frame_alloc();
-			if (!picture)
-				return NULL;
-			picture->format = pix_fmt;
-			picture->width = width;
-			picture->height = height;
-			/* allocate the buffers for the frame data */
-			ret = av_frame_get_buffer(picture, 32);
-			if (ret < 0) {
-				av_frame_unref(picture);
-				return NULL;
-			}
-			return picture;
-		}
-		AVFrame *alloc_audio_frame(enum AVSampleFormat sample_fmt, uint64_t channel_layout, int sample_rate, int nb_samples)
-		{
-			AVFrame *frame = av_frame_alloc();
-			int ret;
-			if (!frame) {
-				throw new _err("Error allocating an audio frame");
-			}
-			frame->format = sample_fmt;
-			frame->channel_layout = channel_layout;
-			frame->sample_rate = sample_rate;
-			frame->nb_samples = nb_samples;
-			if (nb_samples) {
-				ret = av_frame_get_buffer(frame, 0);
-				if (ret < 0) {
-					throw new _err("Error allocating an audio buffer\n");
-				}
-			}
-			return frame;
-		}
+		static AVFrame *alloc_picture(enum AVPixelFormat pix_fmt, int width, int height);
+		AVFrame *alloc_audio_frame(enum AVSampleFormat sample_fmt, uint64_t channel_layout, int sample_rate, int nb_samples);
 
 		int write_frame(AVFormatContext *fmt_ctx, const AVRational *time_base, AVStream *st, AVPacket *pkt);
 	public:

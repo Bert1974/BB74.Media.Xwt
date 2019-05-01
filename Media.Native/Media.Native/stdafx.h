@@ -40,10 +40,16 @@
 #define SETTHREADNAME(th,name) SetThreadDescription((HANDLE)th->native_handle(),L##name)
 #define CURRENTTHREADID() (DWORD)GetCurrentThreadId()
 //#define SETTHREADPRI(th,pri) SetThreadPriority((HANDLE)th->native_handle(), pri)
-#else
+#elif defined(IS_OSX_BUILD)
+#define THREADTYPE pthread_t
+#define SETTHREADNAME(th,name)
+#define CURRENTTHREADID() (pthread_t)pthread_self()
+#elif defined(IS_LINUX_BUILD)
 #define THREADTYPE pthread_t
 #define SETTHREADNAME(th,name) pthread_setname_np((pthread_t)th->native_handle(),name)
 #define CURRENTTHREADID() (pthread_t)pthread_self()
+#else
+#error "no os defined"
 #endif
 // reference additional headers your program requires here
 

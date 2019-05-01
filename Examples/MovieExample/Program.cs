@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using Xwt;
 
-namespace SimpleExample
+namespace MovieExample
 {
     static class Program
     {

@@ -461,7 +461,7 @@ precision mediump float;
                         this.renderer.preparerender(null, true);
                         using (var lck = this.GetDrawLock())
                         {
-                            var r = new Xwt.Rectangle(0, 0, Convert.ToInt32((this.window as Xwt.Canvas).Bounds.Width), Convert.ToInt32((this.window as Xwt.Canvas).Bounds.Height));
+                            var r = new Xwt.Rectangle(Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Left), Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Top), Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Width), Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Height));
                             this.renderer.render(null, r);
                             this.Xwt.SwapBuffers(this.window);
                         }

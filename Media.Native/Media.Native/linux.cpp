@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#ifndef IS_WINDOWS_BUILD
+#if defined(IS_LINUX_BUILD) || defined(IS_OSX_BUILD)
 
 class lockit
 {

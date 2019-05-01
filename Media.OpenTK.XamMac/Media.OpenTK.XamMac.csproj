@@ -66,10 +66,13 @@
       <HintPath>..\..\..\..\Library\Frameworks\Xamarin.Mac.framework\Versions\5.8.0.0\lib\reference\full\Xamarin.Mac.dll</HintPath>
     </Reference>
     <Reference Include="BB74.Xwt.Controls">
-      <HintPath>..\packages\BB74.Xwt.Controls.1.0.7049.23572\lib\net40\BB74.Xwt.Controls.dll</HintPath>
+      <HintPath>..\packages\BB74.Xwt.Controls.1.0.7051.27256\lib\net40\BB74.Xwt.Controls.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK">
       <HintPath>..\packages\OpenTK-3.0-EGL-disabled.1.0.0\lib\net20\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="Media.Base">
+      <HintPath>..\packages\BB74.Media.Base.1.0.7058.27178\lib\net40\Media.Base.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

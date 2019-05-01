@@ -35,8 +35,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BB74.Xwt.Controls, Version=1.0.7051.27256, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\BB74.Xwt.Controls.1.0.7051.27256\lib\net40\BB74.Xwt.Controls.dll</HintPath>
+    <Reference Include="BB74.Xwt.Controls, Version=1.0.7060.22598, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7060.22598\lib\net40\BB74.Xwt.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Media.Base, Version=1.0.7055.17137, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Media.Base.1.0.7055.17137\lib\net40\Media.Base.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\packages\OpenTK-3.0-EGL-disabled.1.0.0\lib\net20\OpenTK.dll</HintPath>
@@ -59,9 +62,6 @@
     <Reference Include="Xwt.WPF, Version=0.2.166.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\Xwt.WPF.0.2.166\lib\net40\Xwt.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Xwt.XamMac, Version=0.2.166.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xwt.XamMac.0.2.166\lib\net40\Xwt.XamMac.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainWindow.cs" />
@@ -77,7 +77,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="OpenTK.dll.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -89,10 +91,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Media.Base\Media.Base.csproj">
-      <Project>{01fd5659-75cd-4d3c-8701-6d6cf54c2c31}</Project>
-      <Name>Media.Base</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Media.OpenTK.GTK\Media.OpenTK.GTK.csproj">
       <Project>{efd07f85-af34-4cb3-82e3-dd3d15ec011b}</Project>
       <Name>Media.OpenTK.GTK</Name>

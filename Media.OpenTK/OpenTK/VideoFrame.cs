@@ -2,6 +2,7 @@
 using BaseLib.Media.Video;
 using OpenTK.Graphics.OpenGL4;
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace BaseLib.Media.OpenTK
@@ -19,7 +20,8 @@ namespace BaseLib.Media.OpenTK
         }
         ~VideoFrame()
         {
-            Dispose(false);
+            Debug.Assert(false);
+           // Dispose(false);
         }
 
         public void Dispose()

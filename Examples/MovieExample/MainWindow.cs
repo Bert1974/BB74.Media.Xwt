@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using BaseLib.Media;
+using BaseLib.Media.Audio;
 using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
 using BaseLib.Media.Video;
@@ -14,17 +15,21 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Xwt;
 
-namespace SimpleExample
+namespace MovieExample
 {
     public class MainWindow : Window
     {
         private Canvas3D Canvas => this.Content as Canvas3D;
 
-        public IRendererFactory Renderfactory { get; }
+        public IRendererFactory RenderFactory { get; }
         public IXwtRender XwtRender { get; }
         public IXwt Xwt { get; }
 
-        class Canvas3D : Canvas, IRenderOwner
+        public IRenderer Renderer => Canvas.Renderer;
+        public AudioOut Audio => Canvas.Audio;
+        public IMixer Mixer => Canvas.Mixer;
+
+        internal class Canvas3D : Canvas, IRenderOwner
         {
             const long TimeBase = 10000000L;
 
@@ -52,12 +57,12 @@ namespace SimpleExample
                 public Vector2 tex0;
             }
 
+            public readonly MainWindow owner;
             private readonly IRendererFactory RenderFactory;
             private readonly IXwtRender XwtRender;
             private readonly IXwt Xwt;
 
-            private IRenderer Renderer;
-            private Player movie;
+            private Player MoviePlayer;
             private vertices<vertex> vertices;
             private vertices<vertex_tex> verticestex;
             private shader shader, shadertex;
@@ -65,9 +70,14 @@ namespace SimpleExample
             private int test;
             private long timebase;
 
+            public IRenderer Renderer { get; internal set; }
+            public AudioOut Audio { get; internal set; }
+            public IMixer Mixer { get; internal set; }
+
             public Canvas3D(MainWindow window)
             {
-                this.RenderFactory = window.Renderfactory;
+                this.owner = window;
+                this.RenderFactory = window.RenderFactory;
                 this.XwtRender = window.XwtRender;
                 this.Xwt = window.Xwt;
             }
@@ -75,9 +85,15 @@ namespace SimpleExample
             {
                 this.Renderer = this.RenderFactory.Open(this.XwtRender, this, this, new size(1920, 1080));
 
-                this.movie = new Player(this.Renderer, @"e:\movies\Yamaha_final.avi", TimeBase);
-             //   this.movie = new Player(this.Renderer, @"/home/bert/Projects/movies/Yamaha_final.avi", TimeBase);
+           //     this.Audio = new AudioOut(48000, AudioFormat.Float32, ChannelsLayout.Stereo, 2);
+           //     this.Mixer = new Mixer(this.Audio.SampleRate, this.Audio.Format, this.Audio.ChannelLayout);
 
+                try
+                {
+                 //   this.MoviePlayer = new Player(this.owner, @"e:\movies\Yamaha_final.avi", TimeBase);
+                        this.MoviePlayer = new Player(this.owner, @"/home/bert/Projects/movies/Yamaha_final.avi", TimeBase);
+                }
+                catch { }
                 using (var lck = this.Renderer.GetDrawLock())
                 {
 
@@ -158,7 +174,15 @@ void main()
                     var pos = GL.GetUniformLocation(this.shadertex, "texture0");
                     GL.Uniform1(pos, 0);
                 }
+
+
+                //this.Display.WaitBuffered();
+                this.Audio?.Buffered.WaitOne(-1, false);
+
+
+
                 this.timebase = DateTime.Now.Ticks;
+                this.Audio?.Start();
                 this.Renderer.Start();
 
                 //this.movie.p
@@ -169,14 +193,23 @@ void main()
             {
                 if (this.Renderer != null)
                 {
+                    this.MoviePlayer?.Stop();
                     this.Renderer.Stop();
+
+                    this.Audio?.Stop();
+                    this.Mixer?.Dispose();
+                    this.Audio?.Dispose();
+
                     using (var lck = this.Renderer.GetDrawLock())
                     {
                         this.shader?.Dispose();
                         this.vertices?.Dispose();
+                        this.shadertex?.Dispose();
+                        this.verticestex?.Dispose();
+
+                        this.MoviePlayer?.Dispose();
+                        this.MoviePlayer = null;
                     }
-                    this.movie?.Dispose();
-                    this.movie = null;
                     this.Renderer.Dispose();
                     this.Renderer = null;
                 }
@@ -207,7 +240,7 @@ void main()
                 this.verticestex.Apply(this.shadertex);
 
                 var time = DateTime.Now.Ticks- this.timebase;
-                var frame = this.movie.GetFrame(time, 0);
+                var frame = this.MoviePlayer?.GetFrame(time, 0);
 
                 if (frame != null)
                 {
@@ -217,6 +250,8 @@ void main()
 
                     GL.DrawArrays(PrimitiveType.Triangles, 0, 6); // Starting from vertex 0; 3 vertices total -> 2 triangle
                     GL.DisableVertexAttribArray(0);
+
+                    frame.Dispose();
                 }
                 this.Renderer.EndRender(state);
 
@@ -229,7 +264,7 @@ void main()
         }
         public MainWindow(IRendererFactory renderfactory, IXwtRender xwtrender, IXwt xwt)
         {
-            this.Renderfactory = renderfactory;
+            this.RenderFactory = renderfactory;
             this.XwtRender = xwtrender;
             this.Xwt = xwt;
 

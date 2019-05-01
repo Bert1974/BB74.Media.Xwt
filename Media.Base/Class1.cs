@@ -200,5 +200,8 @@ namespace BaseLib.Media.Audio
 
         void Pause(FifoStream audiostream);
         void Start(FifoStream audiostream);
+
+        void Register(FifoStream audiostream, int channels, bool paused);
+        void Unregister(FifoStream audiostream);
     }
 }

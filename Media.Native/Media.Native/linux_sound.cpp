@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "media.h"
 
-#ifndef IS_WINDOWS_BUILD
+#ifdef IS_LINUX_BUILD
 #define ALSA_PCM_NEW_HW_PARAMS_API
 #include <alsa/asoundlib.h>
 

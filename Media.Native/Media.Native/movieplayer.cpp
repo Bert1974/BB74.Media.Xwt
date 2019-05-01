@@ -15,7 +15,7 @@ movieplayer::movieplayer(const char *filename)
 
 		int err = avformat_open_input(&m_avicontext, filename, nullptr/*format*/, nullptr/*options*/);
 		if (err < 0) {
-			throw new _err("error {%s} for av_open_input_file", ERRSTR(err));
+			throw new _err("error {%s} for av_open_input_file", ERRSTR(err).c_str());
 			return;
 		}
 		err = avformat_find_stream_info(m_avicontext, NULL);

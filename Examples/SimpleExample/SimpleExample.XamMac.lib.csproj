@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SimpleExample.XamMac.lib</RootNamespace>
     <AssemblyName>SimpleExample.XamMac.lib</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -44,17 +44,20 @@
     <Reference Include="System.Data" />
     
     <Reference Include="System.Xml" />
+    <Reference Include="OpenTK">
+      <HintPath>..\..\packages\OpenTK-3.0-EGL-disabled.1.0.0\lib\net20\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="Media.Base">
+      <HintPath>..\..\packages\BB74.Media.Base.1.0.7058.27178\lib\net40\Media.Base.dll</HintPath>
+    </Reference>
     <Reference Include="Xwt">
-      <HintPath>..\packages\Xwt.0.2.166\lib\net40\Xwt.dll</HintPath>
+      <HintPath>..\..\packages\Xwt.0.2.166\lib\net40\Xwt.dll</HintPath>
     </Reference>
     <Reference Include="Xwt.XamMac">
-      <HintPath>..\packages\Xwt.XamMac.0.2.166\lib\net40\Xwt.XamMac.dll</HintPath>
+      <HintPath>..\..\packages\Xwt.XamMac.0.2.166\lib\net40\Xwt.XamMac.dll</HintPath>
     </Reference>
     <Reference Include="BB74.Xwt.Controls">
-      <HintPath>..\packages\BB74.Xwt.Controls.1.0.7051.27256\lib\net40\BB74.Xwt.Controls.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenTK">
-      <HintPath>..\packages\OpenTK-3.0-EGL-disabled.1.0.0\lib\net20\OpenTK.dll</HintPath>
+      <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7060.22598\lib\net40\BB74.Xwt.Controls.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -66,13 +69,13 @@
     <None Include="OpenTK.dll.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Media.OpenTK\Media.OpenTK.csproj">
-      <Project>{D7CAD493-7F4B-4C83-A592-8D071B01CF28}</Project>
-      <Name>Media.OpenTK</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Media.OpenTK.XamMac\Media.OpenTK.XamMac.csproj">
+    <ProjectReference Include="..\..\Media.OpenTK.XamMac\Media.OpenTK.XamMac.csproj">
       <Project>{D1713229-CA4A-4E30-8C21-626F0416B012}</Project>
       <Name>Media.OpenTK.XamMac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Media.OpenTK\Media.OpenTK.csproj">
+      <Project>{D7CAD493-7F4B-4C83-A592-8D071B01CF28}</Project>
+      <Name>Media.OpenTK</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

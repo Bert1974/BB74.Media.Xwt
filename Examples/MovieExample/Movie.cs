@@ -5,7 +5,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using BaseLib.IO;
 using BaseLib.Media;
+using BaseLib.Media.Audio;
 using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
 using BaseLib.Media.Video;
@@ -14,7 +16,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Xwt;
 
-namespace SimpleExample
+namespace MovieExample
 {
     public class frameinfo : IDisposable
     {
@@ -201,7 +203,11 @@ namespace SimpleExample
 
         internal long timebase, basetime;
         private IRenderer renderer;
+        private IAudioOut audioout;
+        private readonly IMixer mixer;
+        private readonly FifoStream audiobuffer;
         private MoviePlayer player;
+        private readonly AudioStream audio;
         private VideoStream video;
         private long starttime = 0;
 
@@ -209,30 +215,43 @@ namespace SimpleExample
 
         List<frameinfo> frames = new List<frameinfo>();
         private frameinfo framebuffer;
+        private byte[] audiobuffer2=new byte[0];
 
-        public Player(IRenderer renderer, string filename, long timebase)
+        public Player(MainWindow mainwindow, string filename, long timebase)
         {
             try
             {
                 this.timebase = timebase;
-                this.renderer = renderer;
+                this.renderer = mainwindow.Renderer;
+                this.audioout = mainwindow.Audio;
+                this.mixer = mainwindow.Mixer;
                 this.player = BaseLib.Media.MoviePlayer.Open(() => { }, filename);
 
-                if (player.VideoStreams.Length > 0)
+                try
                 {
-                    this.video = player.open_video(0, frameready);
-                }
-                /*    if (!preview && !nosound && _player.AudioStreams.Length > 0)
+                    if (player.VideoStreams.Length > 0)
                     {
-                        this._audio = _player.open_audio(0, _owner.mixer, audioready);
-                        this._audiobuffer = new FifoStream(_owner.audio.SampleSize * this._owner.audio.SampleRate * 3);
-                        this._owner.mixer.Register(this._audiobuffer, _owner.mixer.Channels, true);
+                        this.video = player.open_video(0, frameready);
+                    }
+                  /*  if (player.AudioStreams.Length > 0)
+                    {
+                        this.audio = player.open_audio(0, mainwindow.Mixer, audioready);
+                        this.audiobuffer = new FifoStream(mainwindow.Audio.SampleSize * mainwindow.Audio.SampleRate * 3);
+                        this.mixer.Register(this.audiobuffer, this.audioout.Channels, true);
                     }*/
-
-                this.player.start(0, timebase);
+                    this.player.start(0, timebase);
+                }
+                catch
+                {
+                    Dispose(true);
+                    GC.SuppressFinalize(this);
+                    throw;
+                }
             }
-            catch(Exception e)
-             {
+            catch
+            {
+                GC.SuppressFinalize(this);
+                throw;
               }
         }
         ~Player()
@@ -246,9 +265,39 @@ namespace SimpleExample
         }
         private void Dispose(bool disposing)
         {
-            this.framebuffer?.Dispose();
-            this.framebuffer = null;
+            using (var ll = this.renderer.GetDrawLock())
+            {
+                foreach (var f in this.frames)
+                {
+                    f.Dispose();
+                }
+                this.frames.Clear();
+                this.framebuffer?.Dispose();
+                this.framebuffer = null;
+            }
+            if (this.audiobuffer != null)
+            {
+                this.mixer.Unregister(this.audiobuffer);
+            }
             this.player?.Dispose();
+        }
+        private void audioready(long time, IntPtr data, int samplecount)
+        {
+         /*   if (audio.Time(time, this._timebase) < this._audiostart)
+            {
+                return;
+            }*/
+            int len = samplecount * this.audioout.SampleSize;
+            if (audiobuffer2.Length < len)
+            {
+                audiobuffer2 = new byte[len];
+            }
+            Marshal.Copy(data, audiobuffer2, 0, len);
+            try
+            {
+                this.audiobuffer.Write(audiobuffer2, 0, len);
+            }
+            catch { }
         }
         private bool frameready(IntPtr avframe, long time, long duration)
         {
