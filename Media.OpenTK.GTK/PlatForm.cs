@@ -1,15 +1,14 @@
-﻿using BaseLib.Media.Display;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Security;
+using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Platform;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security;
 using Xwt;
 
 namespace BaseLib.Platforms
@@ -41,7 +40,7 @@ namespace BaseLib.Platforms
             {
                 public IWindowInfo windowInfo;
                 public IGraphicsContext gfxcontext;
-                internal Xwt.Canvas viewlabel;
+                internal Xwt.Canvas viewcanvas;
                 internal EventHandler sizefunc;
 
                 public viewinfo(IWindowInfo windowInfo, IGraphicsContext gfxcontext)
@@ -119,7 +118,7 @@ namespace BaseLib.Platforms
                 WindowInfo = Utilities.CreateWindowsWindowInfo(hwnd);
                 gfxcontext = new global::OpenTK.Graphics.GraphicsContext(new GraphicsMode(new ColorFormat(8, 8, 8, 8), 24, 8), WindowInfo, null, 3, 2, GraphicsContextFlags.Default);
 
-                views[widget] = new viewinfo(WindowInfo, gfxcontext) { viewlabel = view, sizefunc= sizefunc };
+                views[widget] = new viewinfo(WindowInfo, gfxcontext) { viewcanvas = view, sizefunc= sizefunc };
 
                 gfxcontext.MakeCurrent(WindowInfo);
                 gfxcontext.LoadAll();
@@ -141,7 +140,7 @@ namespace BaseLib.Platforms
                     {
                         (widget as global::Xwt.Canvas).BoundsChanged -= view.sizefunc;
                     }
-                    var l = view.viewlabel;
+                    var l = view.viewcanvas;
                     view.Dispose();
                     views.Remove(widget);
                     if (l != null)
@@ -287,6 +286,8 @@ namespace BaseLib.Platforms
                 public IWindowInfo windowInfo;
                 public IGraphicsContext gfxcontext;
                 public ContextHandle handle;
+                internal Canvas view;
+                internal EventHandler sizefunc;
 
                 public viewinfo(IWindowInfo windowInfo, IGraphicsContext gfxcontext, ContextHandle handle)
                 {
@@ -303,17 +304,20 @@ namespace BaseLib.Platforms
                 this.render = render = new FrameFactory(null);
             }
 
-            void IXwtRender.FreeWindowInfo(Widget win)
+            private static IntPtr GetHandle(Xwt.Backends.IWidgetBackend wBackend)
             {
-            }
-
-            void IXwtRender.CreateForWidgetContext(IRenderer renderer, IRenderOwner rendererimpl, Canvas win)
-            {
-                var wBackend = Xwt.Toolkit.CurrentEngine.GetSafeBackend(win) as Xwt.Backends.ICanvasBackend;
                 var widget = wBackend.GetType().GetPropertyValue(wBackend, "Widget");
                 widget.GetType().SetPropertyValue(widget, "DoubleBuffered", false);
                 var gdkwin = widget.GetType().GetPropertyValue(widget, "GdkWindow");
-                var h = (IntPtr)gdkwin.GetType().GetPropertyValue(gdkwin, "Handle");
+                return (IntPtr)gdkwin.GetType().GetPropertyValue(gdkwin, "Handle");
+            }
+            void IXwtRender.CreateForWidgetContext(IRenderer renderer, IRenderOwner rendererimpl, Canvas widget)
+            {
+                var wBackend = Xwt.Toolkit.CurrentEngine.GetSafeBackend(widget) as Xwt.Backends.ICanvasBackend;
+               // var widget = wBackend.GetType().GetPropertyValue(wBackend, "Widget");
+               // widget.GetType().SetPropertyValue(widget, "DoubleBuffered", false);
+               // var gdkwin = widget.GetType().GetPropertyValue(widget, "GdkWindow");
+                var h = GetHandle(wBackend);// (IntPtr)gdkwin.GetType().GetPropertyValue(gdkwin, "Handle");
 
                 IntPtr windowHandle = gdk_x11_drawable_get_xid(h);// wBackend.Widget.Handle
                 IntPtr display2 = gdk_drawable_get_display(h);
@@ -333,13 +337,35 @@ namespace BaseLib.Platforms
                         visualInfo = GetVisualInfo(display);
                     }*/
 
+                var wBackendMain = Xwt.Toolkit.CurrentEngine.GetSafeBackend(widget.ParentWindow) as Xwt.Backends.IWindowFrameBackend;
+                var winmain = wBackendMain.GetType().GetPropertyValue(wBackendMain, "Window");
+                var gdkwinmain = winmain.GetType().GetPropertyValue(winmain, "GdkWindow");
+                var hmain = (IntPtr)gdkwinmain.GetType().GetPropertyValue(gdkwinmain, "Handle");
+                Canvas view = null;
+                EventHandler sizefunc = null;
+
+                if (h == hmain)
+                {
+                    view = new global::Xwt.Canvas() { ExpandHorizontal = true, ExpandVertical = true, HorizontalPlacement = WidgetPlacement.Fill, VerticalPlacement = WidgetPlacement.Fill, MinWidth = 1, MinHeight = 1, BackgroundColor = Xwt.Drawing.Colors.Black };
+                    widget.AddChild(view);
+                    var hwnd = GetHandle(Xwt.Toolkit.CurrentEngine.GetSafeBackend(view) as Xwt.Backends.ICanvasBackend);
+                    Debug.Assert(hwnd != hmain);
+                    sizefunc = new EventHandler((s, a) => widget.SetChildBounds(view, new Rectangle(Point.Zero, widget.Size)));
+                    widget.BoundsChanged += sizefunc;
+                    sizefunc(null, EventArgs.Empty);
+
+                    windowHandle = gdk_x11_drawable_get_xid(hwnd);
+                }
+
+
+
                 var WindowInfo = Utilities.CreateX11WindowInfo(display, screenn, windowHandle, rootWindow, visualInfo);
 
                 XFree(visualInfo);
 
                 var gfxcontext = new OpenTK.Graphics.GraphicsContext(new GraphicsMode(new ColorFormat(8, 8, 8, 8), 24, 8), WindowInfo, 3, 3, GraphicsContextFlags.Default);
 
-                views[win] = new viewinfo(WindowInfo, gfxcontext, (gfxcontext as IGraphicsContextInternal).Context);
+                views[widget] = new viewinfo(WindowInfo, gfxcontext, (gfxcontext as IGraphicsContextInternal).Context) { view=view, sizefunc=sizefunc};
 
                 gfxcontext.MakeCurrent(WindowInfo);
                 gfxcontext.LoadAll();
@@ -351,6 +377,21 @@ namespace BaseLib.Platforms
                 Console.WriteLine("OpenGL {0}.{1}", major, minor);
 
                 gfxcontext.MakeCurrent(null);
+            }
+            void IXwtRender.FreeWindowInfo(Widget widget)
+            {
+                if (views.TryGetValue(widget, out viewinfo view))
+                {
+                    if (view.sizefunc != null)
+                    {
+                        (widget as global::Xwt.Canvas).BoundsChanged -= view.sizefunc;
+                    }
+                    views.Remove(widget);
+                    if (view.view != null)
+                    {
+                        (widget as Canvas).RemoveChild(view.view);
+                    }
+                }
             }
 
             /*  void IXwt.ReleaseCapture(Widget widget)
