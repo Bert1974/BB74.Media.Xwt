@@ -42,8 +42,8 @@
     <Reference Include="BB74.Xwt.Controls, Version=1.0.7061.21406, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7061.21406\lib\net40\BB74.Xwt.Controls.dll</HintPath>
     </Reference>
-    <Reference Include="Media.Base, Version=1.0.7055.17137, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BB74.Media.Base.1.0.7055.17137\lib\net40\Media.Base.dll</HintPath>
+    <Reference Include="Media.Base, Version=1.0.7058.27178, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Media.Base.1.0.7058.27178\lib\net40\Media.Base.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\packages\OpenTK-3.0-EGL-disabled.1.0.0\lib\net20\OpenTK.dll</HintPath>

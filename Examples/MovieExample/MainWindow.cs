@@ -90,11 +90,11 @@ namespace MovieExample
 
                 try
                 {
-                    if (System.Environment.OSVersion.Platform == PlatformID.MacOSX)
+                    if (BaseLib.Xwt.Platform.OSPlatform == PlatformID.MacOSX)
                     {
-                        Debug.Assert(false);
+                        this.MoviePlayer = new Player(this.owner, @"/Volumes/Projects/movies/Yamaha_final.avi", TimeBase);
                     }
-                    else if (System.Environment.OSVersion.Platform == PlatformID.Unix)
+                    else if (BaseLib.Xwt.Platform.OSPlatform == PlatformID.Unix)
                     {
                         this.MoviePlayer = new Player(this.owner, @"/home/bert/Projects/movies/Yamaha_final.avi", TimeBase);
                     }
