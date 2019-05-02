@@ -889,6 +889,7 @@ namespace BaseLib.Display.WPF
         {
             if (state == null)
             {
+               opentk.EndRender(this.renderframe);
  /*
                 this.frame.Set(0, this.viewsize.width, this.viewsize.height, 0);
 
