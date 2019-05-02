@@ -42,6 +42,7 @@ namespace BaseLib.Platforms
                 public IWindowInfo windowInfo;
                 public IGraphicsContext gfxcontext;
                 internal Xwt.Canvas viewlabel;
+                internal EventHandler sizefunc;
 
                 public viewinfo(IWindowInfo windowInfo, IGraphicsContext gfxcontext)
                 {
@@ -92,6 +93,7 @@ namespace BaseLib.Platforms
             {
                 Xwt.Canvas view = null;
                 IntPtr hwnd;
+                EventHandler sizefunc = null;
                 if (Xwt.Toolkit.CurrentEngine.Type == ToolkitType.Wpf)
                 {
                     hwnd = GetHwnd(widget.ParentWindow);
@@ -106,7 +108,9 @@ namespace BaseLib.Platforms
                         (widget as global::Xwt.Canvas).AddChild(view);
                         hwnd = GetHwndFromGtk(Xwt.Toolkit.CurrentEngine.GetSafeBackend(view));
                         Debug.Assert(hwnd != GetHwndFromGtk(widget.ParentWindow));
-                        (widget as global::Xwt.Canvas).SetChildBounds(view, new Rectangle(Point.Zero, widget.Size));
+                        sizefunc = new EventHandler((s, a) => (widget as global::Xwt.Canvas).SetChildBounds(view, new Rectangle(Point.Zero, widget.Size)));
+                        (widget as global::Xwt.Canvas).BoundsChanged += sizefunc;
+                        sizefunc(null, EventArgs.Empty);
                     }
                 }
                 IWindowInfo WindowInfo = null;
@@ -115,7 +119,7 @@ namespace BaseLib.Platforms
                 WindowInfo = Utilities.CreateWindowsWindowInfo(hwnd);
                 gfxcontext = new global::OpenTK.Graphics.GraphicsContext(new GraphicsMode(new ColorFormat(8, 8, 8, 8), 24, 8), WindowInfo, null, 3, 2, GraphicsContextFlags.Default);
 
-                views[widget] = new viewinfo(WindowInfo, gfxcontext) { viewlabel = view };
+                views[widget] = new viewinfo(WindowInfo, gfxcontext) { viewlabel = view, sizefunc= sizefunc };
 
                 gfxcontext.MakeCurrent(WindowInfo);
                 gfxcontext.LoadAll();
@@ -133,6 +137,10 @@ namespace BaseLib.Platforms
             {
                 if (views.TryGetValue(widget, out viewinfo view))
                 {
+                    if (view.sizefunc != null)
+                    {
+                        (widget as global::Xwt.Canvas).BoundsChanged -= view.sizefunc;
+                    }
                     var l = view.viewlabel;
                     view.Dispose();
                     views.Remove(widget);
