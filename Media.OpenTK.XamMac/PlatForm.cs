@@ -55,7 +55,7 @@ namespace BaseLib.Platforms
             //   return base.GetOpenGLPixelFormat(mask);
         }
 
-        void IXwtRender.CreateForWidgetContext(IRenderer renderer, IRenderOwner rendererimpl, Widget widget)
+        void IXwtRender.CreateForWidgetContext(IRenderer renderer, IRenderOwner rendererimpl, Canvas widget)
         {
             var o = Xwt.Toolkit.CurrentEngine.GetSafeBackend(widget);
             var wBackend = Xwt.Toolkit.CurrentEngine.GetSafeBackend(widget) as Xwt.Backends.IWidgetBackend;

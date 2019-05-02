@@ -60,8 +60,14 @@
     <Reference Include="Xwt">
       <HintPath>..\..\packages\Xwt.0.2.166\lib\net40\Xwt.dll</HintPath>
     </Reference>
+    <Reference Include="Xwt.WPF">
+      <HintPath>..\..\packages\Xwt.WPF.0.2.166\lib\net40\Xwt.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Xwt.XamMac">
+      <HintPath>..\..\packages\Xwt.XamMac.0.2.166\lib\net40\Xwt.XamMac.dll</HintPath>
+    </Reference>
     <Reference Include="BB74.Xwt.Controls">
-      <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7060.22598\lib\net40\BB74.Xwt.Controls.dll</HintPath>
+      <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7061.21406\lib\net40\BB74.Xwt.Controls.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

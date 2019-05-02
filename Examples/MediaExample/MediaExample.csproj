@@ -39,8 +39,8 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BB74.Xwt.Controls, Version=1.0.7061.17258, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7061.17258\lib\net40\BB74.Xwt.Controls.dll</HintPath>
+    <Reference Include="BB74.Xwt.Controls, Version=1.0.7061.21406, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7061.21406\lib\net40\BB74.Xwt.Controls.dll</HintPath>
     </Reference>
     <Reference Include="Media.Base, Version=1.0.7055.17137, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\BB74.Media.Base.1.0.7055.17137\lib\net40\Media.Base.dll</HintPath>

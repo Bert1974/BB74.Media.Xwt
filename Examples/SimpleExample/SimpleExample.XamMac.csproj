@@ -79,7 +79,7 @@
       <HintPath>..\..\packages\Xwt.XamMac.0.2.166\lib\net40\Xwt.XamMac.dll</HintPath>
     </Reference>
     <Reference Include="BB74.Xwt.Controls">
-      <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7051.27256\lib\net40\BB74.Xwt.Controls.dll</HintPath>
+      <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7061.17258\lib\net40\BB74.Xwt.Controls.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
