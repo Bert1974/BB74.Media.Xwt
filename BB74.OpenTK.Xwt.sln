@@ -16,14 +16,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Media.Native", "Media.Native\Media.Native\Media.Native.vcxproj", "{42B9ED94-9C44-4AB5-8CF2-2C47C5E8AE25}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Media.Interop.Impl", "Media.Native\Media.Interop.Impl\Media.Interop.Impl.csproj", "{A08163ED-F101-4741-A12B-82BD202B2C23}"
-	ProjectSection(ProjectDependencies) = postProject
-		{42B9ED94-9C44-4AB5-8CF2-2C47C5E8AE25} = {42B9ED94-9C44-4AB5-8CF2-2C47C5E8AE25}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Media.Interop", "Media.Native\Media.Interop\Media.Interop.csproj", "{9926B468-0290-4E46-B3B4-32CAEABB659F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{42B9ED94-9C44-4AB5-8CF2-2C47C5E8AE25} = {42B9ED94-9C44-4AB5-8CF2-2C47C5E8AE25}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Media.Base", "Media.Base\Media.Base.csproj", "{01FD5659-75CD-4D3C-8701-6D6CF54C2C31}"
 EndProject

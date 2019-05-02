@@ -468,38 +468,38 @@ precision mediump float;
                        Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Top),
                        Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Width),
                        Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Height));*/
-                   this.renderer.render(null, r);
-                   this.Xwt.SwapBuffers(this.window);
-               }
-           }
-           catch (Exception e)
-           {
-               //  Log.LogException(e);
-           }
-           //         }).Wait();
-       }
-       catch
-       {
-           Thread.Sleep(100);
-       }
-   }
-}
+		                   this.renderer.render(null, r);
+		                   this.Xwt.SwapBuffers(this.window);
+		               }
+		           }
+		           catch (Exception e)
+		           {
+		               //  Log.LogException(e);
+		           }
+		           //         }).Wait();
+		       }
+		       catch
+		       {
+		           Thread.Sleep(100);
+		       }
+		   }
+		}
 
-internal void Deinterlace(IVideoFrame frame, IRenderFrame destination, DeinterlaceModes mode)
-{
-   try
-   {
-       using (var ll = this.GetDrawLock())
-       {
-           //   Lock();
-           GL.BindFramebuffer(FramebufferTarget.Framebuffer, (destination as RenderFrame).framebuffer);
-
-           var err = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
-
-           GL.Viewport(0, 0, destination.Width, destination.Height);// new Rectangle(this.window.Location,this.window.ClientSize));
-
-           GL.ClearColor(1, 1, 0, 1);
-           GL.Clear(ClearBufferMask.ColorBufferBit /*| ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit*/); // We're not using stencil buffer so why bother with clearing?            
+		internal void Deinterlace(IVideoFrame frame, IRenderFrame destination, DeinterlaceModes mode)
+		{
+		   try
+		   {
+		       using (var ll = this.GetDrawLock())
+		       {
+		           //   Lock();
+		           GL.BindFramebuffer(FramebufferTarget.Framebuffer, (destination as RenderFrame).framebuffer);
+		
+		           var err = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
+		
+		           GL.Viewport(0, 0, destination.Width, destination.Height);// new Rectangle(this.window.Location,this.window.ClientSize));
+		
+		           GL.ClearColor(1, 1, 0, 1);
+		           GL.Clear(ClearBufferMask.ColorBufferBit /*| ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit*/); // We're not using stencil buffer so why bother with clearing?            
 
                     GL.Disable(EnableCap.DepthTest);
                     GL.Disable(EnableCap.StencilTest);
@@ -540,8 +540,7 @@ internal void Deinterlace(IVideoFrame frame, IRenderFrame destination, Deinterla
             {
                 //      Log.LogException(e);
             }
-        }
-
+		}
 
         IVideoFrame IRenderer.GetFrame()
         {
