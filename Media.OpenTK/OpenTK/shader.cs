@@ -131,7 +131,7 @@ namespace BaseLib.Media.OpenTK
         {
             GL.BindVertexArray(vertices.vao);
             GL.BindBuffer(BufferTarget.ArrayBuffer, (int)vertices);
-
+                
             if (pos1 != -1)
             {
                 GL.VertexAttribPointer(pos1, 2, VertexAttribPointerType.Float, false, 4 * sizeof(float), 0);

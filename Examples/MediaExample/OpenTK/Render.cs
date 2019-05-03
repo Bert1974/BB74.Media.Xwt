@@ -66,7 +66,7 @@ namespace DockExample.OpenTK
         private ManualResetEvent readyevent = new ManualResetEvent(false), stopevent = new ManualResetEvent(false);
 
         private IWxtRenderer renderer;
-        private long displaytime;
+     //   private long displaytime;
         private IRenderFrame presentframe;
 
         public IWxtRenderer FrameRenderer
@@ -127,11 +127,11 @@ namespace DockExample.OpenTK
         {
             this.xwt.DoEvents();
         }
-        bool IRenderOwner.preparerender(IRenderFrame desitination, bool dowait)
+        bool IRenderOwner.preparerender(IRenderFrame desitination, long time, bool dowait)
         {
             if (WaitHandle.WaitAny(new WaitHandle[] { this.readyevent, this.stopevent }, dowait ? -1 : 0, false) == 0)
             {
-                long time = BaseLib.Time.FromTicks(DateTime.Now.Ticks - this.displaytime, TimeBase);
+             //   long time = BaseLib.Time.FromTicks(DateTime.Now.Ticks - this.displaytime, TimeBase);
                 this.presentframe = this.FrameRenderer.GetFrame(time, true);
                 return this.presentframe != null;
             }
@@ -141,7 +141,7 @@ namespace DockExample.OpenTK
         {
             this.displaytime += BBR.Base.Time.FromTicks(ticks, TimeBase);
         }*/
-        void IRenderOwner.render(IRenderFrame desitination, Xwt.Rectangle r)
+        void IRenderOwner.render(IRenderFrame desitination, long time, Xwt.Rectangle r)
         {
             if (this.presentframe != null)
             {
@@ -219,8 +219,11 @@ namespace DockExample.OpenTK
                     this.time = time;
                     this.state = DisplayStates.Running;
                     this.renderer.Play(this.time);
-                    this.displaytime = DateTime.Now.Ticks - BaseLib.Time.ToTick(time, TimeBase);
+
+                  //  this.displaytime = DateTime.Now.Ticks - BaseLib.Time.ToTick(time, TimeBase);
                     this.readyevent.Set();
+
+                    this.Renderer.Start();
                     break;
 
             }
@@ -549,18 +552,20 @@ throw new NotImplementedException();
         {
             while (true)
             {
-                while (this.previewqueue.Count > 0 && this.previewqueue.First().Time < time)
+                while (this.previewqueue.Count > 0 && (this.previewqueue.FirstOrDefault()?.Time ?? Int64.MaxValue) < time)
                 {
                     lock (this.previewqueue)
                     {
-                        this.previewqueue.TryDequeue(out IRenderFrame frame);
-                        FrameDone(frame);
-
-                        this.readyevent.Set();
-
-                        if (this.previewqueue.Count == 0)
+                        if (this.previewqueue.TryDequeue(out IRenderFrame frame))
                         {
-                            this.notemptyevent.Reset();
+                            FrameDone(frame);
+
+                            this.readyevent.Set();
+
+                            if (this.previewqueue.Count == 0)
+                            {
+                                this.notemptyevent.Reset();
+                            }
                         }
                     }
                 }
@@ -575,7 +580,7 @@ throw new NotImplementedException();
                 {
                     return null;
                 }
-                if (this.previewqueue.Count > 0 && this.previewqueue.First().Time >= time)
+                if (this.previewqueue.Count > 0 && (this.previewqueue.FirstOrDefault()?.Time??Int64.MaxValue) >= time)
                 {
                     return this.previewqueue.FirstOrDefault();
                 }

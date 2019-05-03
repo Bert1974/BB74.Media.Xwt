@@ -49,7 +49,7 @@ namespace BaseLib.Media.OpenTK
             base.Dispose();
         }
 
-        public void Apply(int shaderProgram)
+        public void Apply(shader shader)
         {
             GL.BindVertexArray(this.vao);
             GL.BindBuffer(BufferTarget.ArrayBuffer, (int)this);
@@ -58,7 +58,7 @@ namespace BaseLib.Media.OpenTK
             {
                 if (kv.Value.fi >= 0)
                 {
-                    var pos1 = GL.GetAttribLocation(shaderProgram, kv.Key);
+                    var pos1 = GL.GetAttribLocation((int)shader, kv.Key);
 
                     if (pos1 != -1)
                     {
@@ -67,7 +67,7 @@ namespace BaseLib.Media.OpenTK
                     }
                 }
             }
-            GL.UseProgram(shaderProgram);
+            GL.UseProgram((int)shader);
         }
      /*   internal void Bind(shader shader)
         {

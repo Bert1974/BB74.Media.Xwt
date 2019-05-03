@@ -67,8 +67,6 @@ namespace SimpleExample
                     this.vertices = new vertices<vertex>(
                         new vertex[] { new vertex(new Vector3(0, -1, 0)), new vertex(new Vector3(-1, 1, 0)), new vertex(new Vector3(1, 1, 0)) });
 
-                    vertices.define("position", "pos");
-
                     this.shader = new shader(
         @"#version 150 core
 
@@ -88,6 +86,9 @@ void main()
 }
 ",
                              this.vertices);
+
+                    vertices.define("position", "pos");
+
                 }
                 this.Renderer.Start();
             }
@@ -115,14 +116,14 @@ void main()
             {
                 this.XwtRender.EndRender(renderer, this);
             }
-            bool IRenderOwner.preparerender(IRenderFrame destination, bool dowait)
+            bool IRenderOwner.preparerender(IRenderFrame destination, long time, bool dowait)
             {
                 return true;
             }
-            void IRenderOwner.render(IRenderFrame destination, Rectangle r)
+            void IRenderOwner.render(IRenderFrame destination, long time, Rectangle r)
             {
-                var state = this.Renderer.StartRender(destination, r);
-
+          //      var state = this.Renderer.StartRender(destination, r);
+                
                 var c = (test++ % 25) / 25f;
                 var cc = new Xwt.Drawing.Color(c, c, c, 255);
 
@@ -134,7 +135,7 @@ void main()
                 GL.DrawArrays(PrimitiveType.Triangles, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
                 GL.DisableVertexAttribArray(0);
 
-                this.Renderer.EndRender(state);
+          //      this.Renderer.EndRender(state);
 
                 this.Renderer.Present(destination, r, IntPtr.Zero);
             }

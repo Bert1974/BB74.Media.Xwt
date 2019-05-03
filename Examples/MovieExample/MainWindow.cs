@@ -68,7 +68,7 @@ namespace MovieExample
             private shader shader, shadertex;
 
             private int test;
-            private long timebase;
+            private frameinfo frame;
 
             public IRenderer Renderer { get; internal set; }
             public AudioOut Audio { get; internal set; }
@@ -190,8 +190,6 @@ void main()
                 this.Audio?.Buffered.WaitOne(-1, false);
 
 
-
-                this.timebase = DateTime.Now.Ticks;
                 this.Audio?.Start();
                 this.Renderer.Start();
 
@@ -233,13 +231,15 @@ void main()
             {
                 this.XwtRender.EndRender(renderer, this);
             }
-            bool IRenderOwner.preparerender(IRenderFrame destination, bool dowait)
+            bool IRenderOwner.preparerender(IRenderFrame destination, long time, bool dowait)
             {
-                return true;
+                this.frame = this.MoviePlayer?.GetFrame(time, 0);
+
+                return frame!=null;
             }
-            void IRenderOwner.render(IRenderFrame destination, Rectangle r)
+            void IRenderOwner.render(IRenderFrame destination, long time, Rectangle r)
             {
-                var state = this.Renderer.StartRender(destination, r);
+              // var state = this.Renderer.StartRender(destination, r);
 
                 var c = (test++ % 25) / 25f;
                 var cc = new Xwt.Drawing.Color(c, c, c, 255);
@@ -248,9 +248,6 @@ void main()
                 GL.Clear(ClearBufferMask.ColorBufferBit/*ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit*/); // We're not using stencil buffer so why bother with clearing?            
 
                 this.verticestex.Apply(this.shadertex);
-
-                var time = DateTime.Now.Ticks- this.timebase;
-                var frame = this.MoviePlayer?.GetFrame(time, 0);
 
                 if (frame != null)
                 {
@@ -262,8 +259,9 @@ void main()
                     GL.DisableVertexAttribArray(0);
 
                     frame.Dispose();
+                    frame = null;
                 }
-                this.Renderer.EndRender(state);
+              //  this.Renderer.EndRender(state);
 
                 this.Renderer.Present(destination, r, IntPtr.Zero);
             }

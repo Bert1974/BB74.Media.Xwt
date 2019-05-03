@@ -105,7 +105,11 @@ namespace BaseLib.Platforms
                     {
                         view = new global::Xwt.Canvas() { ExpandHorizontal = true, ExpandVertical = true, HorizontalPlacement = WidgetPlacement.Fill, VerticalPlacement = WidgetPlacement.Fill,MinWidth=1,MinHeight=1,BackgroundColor= Xwt.Drawing.Colors.Black };
                         (widget as global::Xwt.Canvas).AddChild(view);
-                        hwnd = GetHwndFromGtk(Xwt.Toolkit.CurrentEngine.GetSafeBackend(view));
+                        var viewbackend = Xwt.Toolkit.CurrentEngine.GetSafeBackend(view) as Xwt.Backends.ICanvasBackend;
+                        var gtkview = viewbackend.GetType().GetPropertyValue(viewbackend, "Widget");
+                        gtkview.GetType().SetPropertyValue(gtkview, "DoubleBuffered", false);
+
+                        hwnd = GetHwndFromGtk(viewbackend);
                         Debug.Assert(hwnd != GetHwndFromGtk(widget.ParentWindow));
                         sizefunc = new EventHandler((s, a) => (widget as global::Xwt.Canvas).SetChildBounds(view, new Rectangle(Point.Zero, widget.Size)));
                         (widget as global::Xwt.Canvas).BoundsChanged += sizefunc;
@@ -286,8 +290,8 @@ namespace BaseLib.Platforms
                 public IWindowInfo windowInfo;
                 public IGraphicsContext gfxcontext;
                 public ContextHandle handle;
-                internal Canvas view;
-                internal EventHandler sizefunc;
+                public Canvas view;
+                public EventHandler sizefunc;
 
                 public viewinfo(IWindowInfo windowInfo, IGraphicsContext gfxcontext, ContextHandle handle)
                 {
@@ -307,16 +311,17 @@ namespace BaseLib.Platforms
             private static IntPtr GetHandle(Xwt.Backends.IWidgetBackend wBackend)
             {
                 var widget = wBackend.GetType().GetPropertyValue(wBackend, "Widget");
-                widget.GetType().SetPropertyValue(widget, "DoubleBuffered", false);
                 var gdkwin = widget.GetType().GetPropertyValue(widget, "GdkWindow");
                 return (IntPtr)gdkwin.GetType().GetPropertyValue(gdkwin, "Handle");
             }
             void IXwtRender.CreateForWidgetContext(IRenderer renderer, IRenderOwner rendererimpl, Canvas widget)
             {
                 var wBackend = Xwt.Toolkit.CurrentEngine.GetSafeBackend(widget) as Xwt.Backends.ICanvasBackend;
-               // var widget = wBackend.GetType().GetPropertyValue(wBackend, "Widget");
-               // widget.GetType().SetPropertyValue(widget, "DoubleBuffered", false);
-               // var gdkwin = widget.GetType().GetPropertyValue(widget, "GdkWindow");
+                var gtkwidget = wBackend.GetType().GetPropertyValue(wBackend, "Widget");
+                gtkwidget.GetType().SetPropertyValue(gtkwidget, "DoubleBuffered", false);
+                // var widget = wBackend.GetType().GetPropertyValue(wBackend, "Widget");
+                // widget.GetType().SetPropertyValue(widget, "DoubleBuffered", false);
+                // var gdkwin = widget.GetType().GetPropertyValue(widget, "GdkWindow");
                 var h = GetHandle(wBackend);// (IntPtr)gdkwin.GetType().GetPropertyValue(gdkwin, "Handle");
 
                 IntPtr windowHandle = gdk_x11_drawable_get_xid(h);// wBackend.Widget.Handle
@@ -348,7 +353,10 @@ namespace BaseLib.Platforms
                 {
                     view = new global::Xwt.Canvas() { ExpandHorizontal = true, ExpandVertical = true, HorizontalPlacement = WidgetPlacement.Fill, VerticalPlacement = WidgetPlacement.Fill, MinWidth = 1, MinHeight = 1, BackgroundColor = Xwt.Drawing.Colors.Black };
                     widget.AddChild(view);
-                    var hwnd = GetHandle(Xwt.Toolkit.CurrentEngine.GetSafeBackend(view) as Xwt.Backends.ICanvasBackend);
+                    var viewbackend = Xwt.Toolkit.CurrentEngine.GetSafeBackend(view) as Xwt.Backends.ICanvasBackend;
+                    var gtkview = viewbackend.GetType().GetPropertyValue(viewbackend, "Widget");
+                    gtkview.GetType().SetPropertyValue(gtkview, "DoubleBuffered", false);
+                    var hwnd = GetHandle(viewbackend);
                     Debug.Assert(hwnd != hmain);
                     sizefunc = new EventHandler((s, a) => widget.SetChildBounds(view, new Rectangle(Point.Zero, widget.Size)));
                     widget.BoundsChanged += sizefunc;

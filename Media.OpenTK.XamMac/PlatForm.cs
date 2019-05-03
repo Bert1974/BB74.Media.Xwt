@@ -33,7 +33,7 @@ namespace BaseLib.Platforms
         public XamMac(out IRendererFactory rendererFactory)
             : base()
         {
-            rendererFactory = new FrameFactory(() => CGLGetCurrentContext()/* NSOpenGLContext.CurrentContext?.CGLContext.Handle ?? IntPtr.Zero*/);
+            rendererFactory = new FrameFactory(() => /*CGLGetCurrentContext()*/ NSOpenGLContext.CurrentContext?.CGLContext.Handle ?? IntPtr.Zero);
 
             Application.Initialize(ToolkitType.XamMac);
 
@@ -85,9 +85,9 @@ namespace BaseLib.Platforms
 
             }).Wait();
 
-            (this as IXwtRender).StartRender(renderer, widget);
+        /*    (this as IXwtRender).StartRender(renderer, widget);
             view._ctx = new _GraphicsContext();
-            (this as IXwtRender).EndRender(renderer, widget);
+            (this as IXwtRender).EndRender(renderer, widget);*/
 
             this.QueueOnUI(() => view.initdone.Set());
         }
@@ -113,7 +113,7 @@ namespace BaseLib.Platforms
             if (views.TryGetValue(widget, out viewinfo view))
             {
                 view.myview.RemoveFromSuperviewWithoutNeedingDisplay();
-                view.myview._ctx?.Dispose();
+              //  view.myview._ctx?.Dispose();
                 view.myview.Dispose();
                 widget.BoundsChanged -= sizechanged;
                 views.Remove(widget);

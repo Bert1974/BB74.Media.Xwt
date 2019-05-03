@@ -25,7 +25,7 @@ namespace DockExample.OpenTK
 
         Widget IDockContent.Widget => this;
 
-        public string TabText => "testdoc";
+        public string TabText => "opentk1";
 
         public IDockPane DockPane { get; set; }
 
@@ -132,7 +132,7 @@ void main()
                 var cc = new Xwt.Drawing.Color(c, c, c, 255);
 
                 // render
-                var state = this.Display.Renderer.StartRender(frame, Rectangle.Zero);
+                var state = this.Display.Renderer.StartRender(frame, new Rectangle(0,0,frame.Width,frame.Height));
 
                 GL.ClearColor((float)cc.Red, (float)cc.Green, (float)cc.Blue, (float)cc.Alpha);
                 GL.Clear(ClearBufferMask.ColorBufferBit/*ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit*/); // We're not using stencil buffer so why bother with clearing?            

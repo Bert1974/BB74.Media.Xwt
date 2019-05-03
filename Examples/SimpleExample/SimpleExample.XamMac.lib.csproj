@@ -5,7 +5,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>9a3209a7-5067-4024-91d8-0ee4add95ba8</ProjectGuid>
+    <ProjectGuid>9a3209a7-5067-4024-91d8-0ee4add95ba9</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SimpleExample.XamMac.lib</RootNamespace>

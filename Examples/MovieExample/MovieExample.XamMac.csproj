@@ -133,10 +133,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="Info.plist" />
-    <None Include="bin\Debug\x64\libMedia.Native.dll.dylib">
-      <Link>libMedia.Native.dll.dylib</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Media.OpenTK\Media.OpenTK.csproj">

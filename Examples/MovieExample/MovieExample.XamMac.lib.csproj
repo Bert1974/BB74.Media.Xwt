@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\BB74.Media.FFMPEG.1.0.33-beta\build\BB74.Media.FFMPEG.props" Condition="Exists('..\..\packages\BB74.Media.FFMPEG.1.0.33-beta\build\BB74.Media.FFMPEG.props')" />
+  <Import Project="..\..\packages\BB74.Media.FFMPEG.1.0.31-beta\build\BB74.Media.FFMPEG.props" Condition="Exists('..\..\packages\BB74.Media.FFMPEG.1.0.31-beta\build\BB74.Media.FFMPEG.props')" />
   <Import Project="..\..\packages\BB74.Media.FFMPEG.1.0.32-beta\build\BB74.Media.FFMPEG.props" Condition="Exists('..\..\packages\BB74.Media.FFMPEG.1.0.32-beta\build\BB74.Media.FFMPEG.props')" />
   <Import Project="..\..\packages\Xwt.Gtk.0.2.166\build\Xwt.Gtk.props" Condition="Exists('..\..\packages\Xwt.Gtk.0.2.166\build\Xwt.Gtk.props')" />
   <Import Project="..\packages\Xwt.Gtk.0.2.166\build\Xwt.Gtk.props" Condition="Exists('..\packages\Xwt.Gtk.0.2.166\build\Xwt.Gtk.props')" />
@@ -10,8 +12,8 @@
     <ProjectGuid>9a3209a7-5067-4024-91d8-0ee4add95ba8</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimpleExample.XamMac.lib</RootNamespace>
-    <AssemblyName>SimpleExample.XamMac.lib</AssemblyName>
+    <RootNamespace>MovieExample.XamMac.lib</RootNamespace>
+    <AssemblyName>MovieExample.XamMac.lib</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -26,7 +28,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -48,10 +49,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="Media.Base">
       <HintPath>..\..\packages\BB74.Media.Base.1.0.7058.27178\lib\net40\Media.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="Media.Interop">
-      <HintPath>..\..\packages\BB74.Media.FFMPEG.1.0.32-beta\lib\net40\Media.Interop.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="BB74.Xwt.Controls">
       <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7061.21406\lib\net40\BB74.Xwt.Controls.dll</HintPath>
@@ -77,6 +74,9 @@
     <Reference Include="Xwt.XamMac">
       <HintPath>..\..\packages\Xwt.XamMac.0.2.166\lib\net40\Xwt.XamMac.dll</HintPath>
     </Reference>
+    <Reference Include="Media.Interop">
+      <HintPath>..\..\packages\BB74.Media.FFMPEG.1.0.33-beta\lib\net45\Media.Interop.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,4 +99,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\BB74.Media.FFMPEG.1.0.32-beta\build\BB74.Media.FFMPEG.targets" Condition="Exists('..\..\packages\BB74.Media.FFMPEG.1.0.32-beta\build\BB74.Media.FFMPEG.targets')" />
+  <Import Project="..\..\packages\BB74.Media.FFMPEG.1.0.31-beta\build\BB74.Media.FFMPEG.targets" Condition="Exists('..\..\packages\BB74.Media.FFMPEG.1.0.31-beta\build\BB74.Media.FFMPEG.targets')" />
+  <Import Project="..\..\packages\BB74.Media.FFMPEG.1.0.33-beta\build\BB74.Media.FFMPEG.targets" Condition="Exists('..\..\packages\BB74.Media.FFMPEG.1.0.33-beta\build\BB74.Media.FFMPEG.targets')" />
  </Project>

@@ -6,11 +6,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{74E6BB7D-239B-4D30-ADF7-5A0A84C8B6DE}</ProjectGuid>
+    <ProjectGuid>{74E6BB7D-239B-4D30-ADF7-5A0A84C8B6DF}</ProjectGuid>
     <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
     <RootNamespace>Examples.XamMac</RootNamespace>
-    <AssemblyName>DockExample.XamMac</AssemblyName>
+    <AssemblyName>SimpleExample.XamMac</AssemblyName>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
     <UseXamMacFullFramework>true</UseXamMacFullFramework>
   </PropertyGroup>
@@ -117,7 +117,7 @@
     </ProjectReference>
     <ProjectReference Include="SimpleExample.XamMac.lib.csproj">
       <Project>{9A3209A7-5067-4024-91D8-0EE4ADD95BA8}</Project>
-      <Name>SimpleExample.XamMac.lib</Name>
+      <Name>MovieExample.XamMac.lib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />

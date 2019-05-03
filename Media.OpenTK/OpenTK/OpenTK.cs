@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Threading;
 using BaseLib.Media.Display;
 using BaseLib.Media.Video;
@@ -59,15 +60,30 @@ namespace BaseLib.Media.OpenTK
      1.0f,  1.0f, 1.0f, 1.0f, // Top-right
     -1.0f, -1.0f, 0.0f, 0.0f  // Bottom-left
     };
-        static float[] _vertices3 = {
-    -1.0f,  1.0f, 0.0f, 0.0f, // Top-left
-     1.0f,  1.0f, 1.0f, 0.0f, // Top-right
-    -1.0f, -1.0f, 0.0f, 1.0f,  // Bottom-left
-    
-     1.0f, -1.0f, 1.0f, 1.0f, // Bottom-right
-     1.0f,  1.0f, 1.0f, 0.0f, // Top-right
-    -1.0f, -1.0f, 0.0f, 1.0f  // Bottom-left
+        static vertex[] _vertices3 = {
+   new vertex(-1.0f,  1.0f, 0.0f, 0.0f), // Top-left
+   new vertex( 1.0f,  1.0f, 1.0f, 0.0f), // Top-right
+   new vertex(-1.0f, -1.0f, 0.0f, 1.0f),  // Bottom-left
+   
+   new vertex(1.0f, -1.0f, 1.0f, 1.0f), // Bottom-right
+   new vertex(1.0f,  1.0f, 1.0f, 0.0f), // Top-right
+   new vertex(-1.0f, -1.0f, 0.0f, 1.0f)  // Bottom-left
     };
+
+
+        [StructLayout(LayoutKind.Explicit, Size = 4 * 4, CharSet = CharSet.Ansi)]
+        struct vertex
+        {
+            public vertex(float x,float y,float tx,float ty)
+            {
+                this.position = new Vector2(x, y);
+                this.texcoord = new Vector2(tx, ty);
+            }
+            [FieldOffset(0)]
+            public Vector2  texcoord;
+            [FieldOffset(8)]
+            public Vector2 position;
+        }
 
 
         const string shadervertex = @"#version 150 core
@@ -180,7 +196,9 @@ precision mediump float;
 	        outColor2 = vec4(texture(tex, vec2(x, y + d)).rgb, 1);
         }";
 
-        private vertices vertices1, vertices2, vertices3;
+        private vertices vertices1, vertices2;
+
+        private vertices<vertex> vertices3;
 
         private size videosize;
         private readonly Xwt.Widget window;
@@ -203,6 +221,7 @@ precision mediump float;
 
         private Thread thread, actionthread;
         private ManualResetEvent stoppedevent = new ManualResetEvent(true);
+        private long timebase, lastupdate;
 
         public void Lock()
         {
@@ -408,6 +427,8 @@ precision mediump float;
                 this.stopevent.Reset();
                 this.stoppedevent.Reset();
                 this.thread = new Thread(this.main) { Name = "opentk-present", IsBackground = true };
+
+                this.lastupdate = -1;
                 this.thread.Start();
             }
         }
@@ -458,19 +479,40 @@ precision mediump float;
                     //       Xwt.Application.InvokeAsync(() => {
                     try
                     {
-                        this.renderer.preparerender(null, true);
-                        using (var lck = this.GetDrawLock())
+                        var now = DateTime.Now.Ticks;
+                        if (lastupdate == -1)
                         {
-                            var r = new Xwt.Rectangle(0,0,
-                                Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Width),
-                                Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Height));
-                    /*   Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Left), 
-                       Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Top),
-                       Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Width),
-                       Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Height));*/
-		                   this.renderer.render(null, r);
-		                   this.Xwt.SwapBuffers(this.window);
-		               }
+                            this.timebase = now;
+                            lastupdate = 0;
+                        }
+                        var time = now - this.timebase;
+
+                        if (lastupdate != -1 && (time - lastupdate) > 25000000)
+                        {
+                            this.timebase += time - lastupdate;
+                            time = lastupdate;
+                        }
+                        lastupdate = time;
+
+                        if (this.renderer.preparerender(null, time, true))
+                        {
+                            using (var lck = this.GetDrawLock())
+                            {
+                                var r = new Xwt.Rectangle(0, 0,
+                                    Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Width),
+                                    Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Height));
+                                /*   Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Left), 
+                                   Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Top),
+                                   Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Width),
+                                   Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Height));*/
+
+                                var state = (this as IRenderer).StartRender(null, r);
+
+                                this.renderer.render(null, time, r);
+                                (this as IRenderer).EndRender(state);
+                                this.Xwt.SwapBuffers(this.window);
+                            }
+                        }
 		           }
 		           catch (Exception e)
 		           {
@@ -697,14 +739,16 @@ precision mediump float;
                     {
                         if (presentshader == null)
                         {
-                            this.vertices3 = new vertices(_vertices3);
+                            this.vertices3 = new vertices<vertex>(_vertices3);
                             this.presentshader = new shader(shadervertex, shaderfragment, vertices3);
                             // presentshader.Bind(this.vertices3);
+                            this.vertices3.define("position", "position");
+                            this.vertices3.define("texcoord", "texcoord");
                             GL.UseProgram(this.presentshader);
                             var pos = GL.GetUniformLocation(this.presentshader, "tex");
                             GL.Uniform1(pos, 0);
                         }
-                        presentshader.Bind(this.vertices3);
+                        vertices3.Apply(this.presentshader);
                         var frame = (RenderFrame)renderedframe;
 
                         GL.Viewport(Convert.ToInt32(dstrec.Left), Convert.ToInt32(dstrec.Top), Convert.ToInt32(dstrec.Width), Convert.ToInt32(dstrec.Height));// new Rectangle(this.window.Location,this.window.ClientSize));

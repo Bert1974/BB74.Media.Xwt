@@ -5,6 +5,7 @@ using CoreAnimation;
 using CoreGraphics;
 using CoreVideo;
 using OpenGL;
+using OpenTK.Graphics.OpenGL;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -30,6 +31,7 @@ namespace BaseLib.Platforms
                 internal _GraphicsContext _ctx2;
                 private Thread thread;
                 private ManualResetEvent stop = new ManualResetEvent(false), stopped = new ManualResetEvent(false);
+                private long timebase;
                 private long lastupdate = -1;
 
                 public layer(viewwindow owner)
@@ -39,6 +41,9 @@ namespace BaseLib.Platforms
                     base.NeedsDisplayOnBoundsChange = true;
                     base.Asynchronous = true;
 
+                    lastupdate = -1;
+
+#if (false)
                     this.thread = new Thread(() =>
                       {
                           /*   var wBackend = Xwt.Toolkit.CurrentEngine.GetSafeBackend(owner.window.ParentWindow) as Xwt.Backends.IWindowFrameBackend;
@@ -70,7 +75,7 @@ namespace BaseLib.Platforms
                               if (t == t2)
                               {
                                   var tt = Math.Max(lu, t);
-                           //       this.owner.renderer.SkipRender(DateTime.Now.Ticks - tt);
+                                  //       this.owner.renderer.SkipRender(DateTime.Now.Ticks - tt);
                                   lu = tt;
                               }
                           }
@@ -79,11 +84,12 @@ namespace BaseLib.Platforms
                     { Name = "wincheck" };
 
                     this.thread.Start();
+#endif
                 }
                 protected override void Dispose(bool disposing)
                 {
-                    this.stop.Set();
-                    this.stopped.WaitOne(-1, false);
+                  //  this.stop.Set();
+                  // this.stopped.WaitOne(-1, false);
 
                     this._ctx2?.Dispose();
                     base.Dispose(disposing);
@@ -127,6 +133,8 @@ namespace BaseLib.Platforms
                 }
                 public override void Release(CGLContext glContext)
                 {
+                    this._ctx2?.Dispose();
+                    this._ctx2 = null;
                     base.Release(glContext);
                 }
                 /*  class openglonscreen : NSOpenGLContext
@@ -144,33 +152,48 @@ namespace BaseLib.Platforms
                 public override bool CanDrawInCGLContext(CGLContext glContext, CGLPixelFormat pixelFormat, double timeInterval, ref CVTimeStamp timeStamp)
                 {
                     //   lastupdate = DateTime.Now.Ticks;
-                    return (this.View as viewwindow).initdone.WaitOne(0,false);//.CanDrawInCGLContext(glContext, pixelFormat, timeInterval, ref timeStamp);
+                    return (this.View as viewwindow).initdone.WaitOne(0, false);//.CanDrawInCGLContext(glContext, pixelFormat, timeInterval, ref timeStamp);
                 }
                 public override void DrawInCGLContext(CGLContext glContext, CGLPixelFormat pixelFormat, double timeInterval, ref CVTimeStamp timeStamp)
                 {
                     long now = DateTime.Now.Ticks;
 
-                    if (lastupdate!=-1 && lastupdate - now > 1000000)
+               /*     if (lastupdate != -1 && lastupdate - now > 1000000)
                     {
-                       // this.owner.renderer.SkipRender(lastupdate - now-400000);
+                        // this.owner.renderer.SkipRender(lastupdate - now-400000);
                     }
 
                     Interlocked.Exchange(ref lastupdate, DateTime.Now.Ticks);
-                    if (this.owner.renderer.preparerender(null, false))
+                    var now = DateTime.Now.Ticks;*/
+                    if (lastupdate == -1)
+                    { 
+                        this.timebase = now;
+                        lastupdate = 0;
+                    }
+                    var time = now - this.timebase;
+
+                    if (lastupdate != -1 && (time - lastupdate) > 25000000)
                     {
-                      //  lock (this.owner)
+                        this.timebase += time - lastupdate;
+                        time = lastupdate;
+                    }
+                    lastupdate = time;
+                    if (this.owner.renderer.preparerender(null, time, false))
+                    {
+                        //  lock (this.owner)
                         {
                             this.OpenGLContext.CGLContext.Lock();
                             this.OpenGLContext.MakeCurrentContext();
 
                             try
                             {
-                                var r = new Xwt.Rectangle(this.owner.Bounds.X, this.owner.Bounds.Y, this.owner.Bounds.Width, this.owner.Bounds.Height);
-                                this.owner.renderer.render(null, r);
+                                GL.Viewport(0, 0, Convert.ToInt32(this.owner.Bounds.Width), Convert.ToInt32(this.owner.Bounds.Height));
+                                var r = new Xwt.Rectangle(0, 0, this.owner.Bounds.Width, this.owner.Bounds.Height);
+                                this.owner.renderer.render(null, time, r);
                             }
                             catch (Exception e)
                             {
-                            //    Log.LogException(e);
+                                //    Log.LogException(e);
                             }
 
                             this.OpenGLContext.FlushBuffer();
@@ -223,20 +246,20 @@ namespace BaseLib.Platforms
 
                 //                    this.openglctx.CGLContext.Handle
 
-                /*     this.openglctx.CGLContext.Lock();
-                     try
-                     {
-                         this.openglctx.MakeCurrentContext();
+                this.openglctx.CGLContext.Lock();
+                try
+                {
+                    this.openglctx.MakeCurrentContext();
 
-                         this._ctx = new _GraphicsContext(); // created from active content
-                     }
-                     catch { throw; }
-                     finally
-                     {
-                         this.openglctx.CGLContext.Unlock();
-                         NSOpenGLContext.ClearCurrentContext();
-                     }
-                     */
+                    this._ctx = new _GraphicsContext(); // created from active content
+                }
+                catch { throw; }
+                finally
+                {
+                    this.openglctx.CGLContext.Unlock();
+                    NSOpenGLContext.ClearCurrentContext();
+                }
+
                 /*      var wBackend = Xwt.Toolkit.CurrentEngine.GetSafeBackend(widget.ParentWindow) as Xwt.Backends.IWindowFrameBackend;
                       var win = wBackend.Window as NSWindow;
 
@@ -251,7 +274,11 @@ namespace BaseLib.Platforms
                       win.DidMiniaturize+= Win_DidMiniaturize;
                       win.DidChangeScreen+= Win_DidChangeScreen;*/
             }
-
+            protected override void Dispose(bool disposing)
+            {
+                this._ctx?.Dispose();
+                base.Dispose(disposing);
+        }
             /*    void Win_DidChangeScreen(object sender, EventArgs e)
                 {
                 }

@@ -24,8 +24,8 @@ void EndScene(Widget win, GraphicsContext ctx);*/
     }
     public interface IRenderOwner
     {
-        bool preparerender(IRenderFrame destination, bool dowait);
-        void render(IRenderFrame destination, global::Xwt.Rectangle r);
+        bool preparerender(IRenderFrame destination, long time, bool dowait);
+        void render(IRenderFrame destination, long time, global::Xwt.Rectangle r);
         void StartRender(IRenderer renderer);
         void EndRender(IRenderer renderer);
         /*     void SkipRender(long ticks);*/

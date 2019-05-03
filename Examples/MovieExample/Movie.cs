@@ -215,7 +215,7 @@ namespace MovieExample
 
         List<frameinfo> frames = new List<frameinfo>();
         private frameinfo framebuffer;
-        private byte[] audiobuffer2=new byte[0];
+        private byte[] audiobuffer2 = new byte[0];
 
         public Player(MainWindow mainwindow, string filename, long timebase)
         {
@@ -233,12 +233,12 @@ namespace MovieExample
                     {
                         this.video = player.open_video(0, frameready);
                     }
-                  /*  if (player.AudioStreams.Length > 0)
-                    {
-                        this.audio = player.open_audio(0, mainwindow.Mixer, audioready);
-                        this.audiobuffer = new FifoStream(mainwindow.Audio.SampleSize * mainwindow.Audio.SampleRate * 3);
-                        this.mixer.Register(this.audiobuffer, this.audioout.Channels, true);
-                    }*/
+                    /*  if (player.AudioStreams.Length > 0)
+                      {
+                          this.audio = player.open_audio(0, mainwindow.Mixer, audioready);
+                          this.audiobuffer = new FifoStream(mainwindow.Audio.SampleSize * mainwindow.Audio.SampleRate * 3);
+                          this.mixer.Register(this.audiobuffer, this.audioout.Channels, true);
+                      }*/
                     this.player.start(0, timebase);
                 }
                 catch
@@ -252,7 +252,7 @@ namespace MovieExample
             {
                 GC.SuppressFinalize(this);
                 throw;
-              }
+            }
         }
         ~Player()
         {
@@ -283,10 +283,10 @@ namespace MovieExample
         }
         private void audioready(long time, IntPtr data, int samplecount)
         {
-         /*   if (audio.Time(time, this._timebase) < this._audiostart)
-            {
-                return;
-            }*/
+            /*   if (audio.Time(time, this._timebase) < this._audiostart)
+               {
+                   return;
+               }*/
             int len = samplecount * this.audioout.SampleSize;
             if (audiobuffer2.Length < len)
             {
@@ -354,7 +354,7 @@ namespace MovieExample
         internal void Stop()
         {
             this.player.preparestop();
-          //  this._audiobuffer?.Close();
+            //  this._audiobuffer?.Close();
             this.stopevent.Set();
             this.player.stop();
             foreach (var f in this.frames)

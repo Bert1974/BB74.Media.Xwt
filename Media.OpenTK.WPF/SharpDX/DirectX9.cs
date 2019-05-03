@@ -229,6 +229,7 @@ namespace BaseLib.Display.WPF
         private IRenderer opentk;
         private IVideoFrame frame;
         private IRenderFrame renderframe;
+        private IDisposable gllock;
 
         public void Lock()
         {
@@ -289,6 +290,8 @@ namespace BaseLib.Display.WPF
             private Surface rt;
             internal System.Windows.Shapes.Rectangle rec;
             private IntPtr surfptr;
+            private long lastupdate=-1, timebase;
+            private long frametime;
             private readonly DirectX9Renderer owner;
             private readonly string layername;
 
@@ -426,7 +429,23 @@ namespace BaseLib.Display.WPF
             {
                 if (this.IsFrontBufferAvailable && _scene != IntPtr.Zero)
                 {
-                    if (this.owner.renderer.preparerender(null, false))
+                    var now = DateTime.Now.Ticks;
+                    if (lastupdate == -1)
+                    {
+                        this.timebase = now;
+                        lastupdate = 0;
+                    }
+                    var time = now - this.timebase;
+
+                    if (lastupdate != -1 && (time - lastupdate) > 25000000)
+                    {
+                        this.timebase += time - lastupdate;
+                        time = lastupdate;
+                    }
+                    lastupdate = time;
+
+                    this.frametime = time;
+                    if (this.owner.renderer.preparerender(null, time, false))
                     {
 
                         // lock the D3DImage
@@ -461,13 +480,15 @@ namespace BaseLib.Display.WPF
                     this.owner.device.SetRenderTarget(0, this.rt);
 
                     // clear the surface to transparent
-               //     this.owner.device.Clear(ClearFlags.Target, new global::SharpDX.Color(0, 0, 0, 255), 1.0f, 0);
+                    //     this.owner.device.Clear(ClearFlags.Target, new global::SharpDX.Color(0, 0, 0, 255), 1.0f, 0);
 
-                   // this.owner.device.BeginScene();
+                    // this.owner.device.BeginScene();
 
-                    using (var dl = this.owner.opentk.GetDrawLock()) // render using opengl
+              //      using (var dl = (this.owner as ).GetDrawLock()) // render using opengl
                     {
-                        this.owner.renderer.render(null, global::Xwt.Rectangle.Zero);
+                       var state = this.owner.StartRender(null, global::Xwt.Rectangle.Zero);
+                        this.owner.renderer.render(null, this.frametime, global::Xwt.Rectangle.Zero);
+                        this.owner.EndRender(state);
                     }
                     /*
                                     // render the scene
@@ -824,6 +845,7 @@ namespace BaseLib.Display.WPF
                     this.renderframe.Set(this.opentk.AlphaFormat);
                     this.renderframe.Set(0, this.videosize.width, this.videosize.height, 0);
                 }
+                this.gllock = this.opentk.GetDrawLock();
                 this.opentk.StartRender(this.renderframe, new Xwt.Rectangle(0, 0, this.videosize.width, this.videosize.height));
                 return null;
             }
@@ -890,6 +912,7 @@ namespace BaseLib.Display.WPF
             if (state == null)
             {
                opentk.EndRender(this.renderframe);
+                this.gllock.Dispose();
  /*
                 this.frame.Set(0, this.viewsize.width, this.viewsize.height, 0);
 

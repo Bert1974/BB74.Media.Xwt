@@ -30,7 +30,7 @@ namespace DockExample
 
         Widget IDockContent.Widget => this;
 
-        public string TabText => "testdoc";
+        public string TabText => "opentk2";
 
         public IDockPane DockPane { get; set; }
 
@@ -60,8 +60,6 @@ namespace DockExample
                 this.vertices = new vertices<vertex>(
                     new vertex[] { new vertex(new Vector3(0, -1, 0)), new vertex(new Vector3(-1, 1, 0)), new vertex(new Vector3(1, 1, 0)) });
 
-                vertices.define("position", "pos");
-
                 this.shader = new shader(
     @"#version 150 core
 
@@ -81,6 +79,8 @@ void main()
 }
 ",
                          this.vertices);
+
+                vertices.define("position", "pos");
             }
             this.Renderer.Start();
         }
@@ -88,13 +88,13 @@ void main()
         [StructLayout(LayoutKind.Explicit, Size = 4 * 3, CharSet = CharSet.Ansi)]
         struct vertex
         {
-        public vertex(Vector3 pos)
-        {
-            this.pos = pos;
-        }
+            public vertex(Vector3 pos)
+            {
+                this.pos = pos;
+            }
             [FieldOffset(0)]
             public Vector3 pos;
-    }
+        }
 
         void IDockNotify.OnUnloading()
         {
@@ -112,16 +112,16 @@ void main()
         {
             this.xwt.DoEvents();
         }
-        bool IRenderOwner.preparerender(IRenderFrame destination, bool dowait)
+        bool IRenderOwner.preparerender(IRenderFrame destination, long time, bool dowait)
         {
             return true;
         }
 
-        void IRenderOwner.render(IRenderFrame destination, Rectangle r)
+        void IRenderOwner.render(IRenderFrame destination, long time, Rectangle r)
         {
      //       using (var lck = this.Renderer.GetDrawLock())
             {
-                var state = this.Renderer.StartRender(destination, r);
+          //      var state = this.Renderer.StartRender(destination, r);
 
              //   GL.MatrixMode(MatrixMode.Projection);
              //   GL.LoadIdentity();
@@ -140,7 +140,7 @@ void main()
                 GL.DrawArrays(PrimitiveType.Triangles, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
                 GL.DisableVertexAttribArray(0);
 
-                this.Renderer.EndRender(state);
+          //      this.Renderer.EndRender(state);
 
                 this.Renderer.Present(destination, r, IntPtr.Zero);
             }
