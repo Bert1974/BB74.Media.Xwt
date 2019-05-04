@@ -26,6 +26,8 @@ namespace BaseLib.Media.Audio
 
         public AudioOut(int samplerate, AudioFormat format, ChannelsLayout channels, int buffers)
         {
+            BaseLib.Media.Interop.staticinit.Initialize();
+
             try
             {
                 this.SampleRate = samplerate;
@@ -38,19 +40,22 @@ namespace BaseLib.Media.Audio
                     case AudioFormat.Short16: this.SampleSize = 2 * this.Channels; break;
                     default: this.SampleSize = 4 * this.Channels; break;
                 }
-
-                var error = new StringBuilder(1024);
-                this.audio = Imports.openaudio(samplerate, format, channels, 25, buffers, error);
-
-                m_callback = () => this.Buffered.Set();
-
-                Imports.audio_setcallback(this.audio, Marshal.GetFunctionPointerForDelegate(m_callback));
+                Intialize(buffers);
             }
             catch
             {
                 GC.SuppressFinalize(this);
                 throw;
             }
+        }
+        private void Intialize(int buffers)
+        { 
+                var error = new StringBuilder(1024);
+                this.audio = Imports.openaudio(this.SampleRate, this.Format, this.ChannelLayout, 25, buffers, error);
+
+                m_callback = () => this.Buffered.Set();
+
+                Imports.audio_setcallback(this.audio, Marshal.GetFunctionPointerForDelegate(m_callback));
         }
         ~AudioOut()
         {
@@ -67,7 +72,7 @@ namespace BaseLib.Media.Audio
             this.audio = IntPtr.Zero;
             //Invoke("closeaudio", this.audio);
         }
-        void IAudioOut.Write(byte[] data, int leninsamples)
+        public void Write(byte[] data, int leninsamples)
         {
             var h = GCHandle.Alloc(data, GCHandleType.Pinned);
             Imports.audio_write(this.audio, h.AddrOfPinnedObject(), leninsamples);

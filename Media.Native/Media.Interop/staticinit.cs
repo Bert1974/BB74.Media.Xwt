@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Media.Interop
+namespace BaseLib.Media.Interop
 {
     static class staticinit
     {

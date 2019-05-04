@@ -324,7 +324,7 @@ bool  AudioOut::TryOpen()
 
 	switch (m_format)
 	{
-		case AudioFormat::Float32:
+		case AudioFormat::SampleFloat32:
 			{
 				GUID guid = KSDATAFORMAT_SUBTYPE_IEEE_FLOAT;
 				wfxext.Format.wFormatTag = WAVE_FORMAT_EXTENSIBLE;
@@ -332,7 +332,7 @@ bool  AudioOut::TryOpen()
 				wfxext.Format.wBitsPerSample = 32;
 			}
 			break;
-		case AudioFormat::Short16:
+		case AudioFormat::SampleShort16:
 			{
 			wfxext.Format.wFormatTag = WAVE_FORMAT_PCM;
 			wfxext.Format.wBitsPerSample = 16;

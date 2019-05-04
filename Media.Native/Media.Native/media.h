@@ -13,9 +13,9 @@ enum VideoFormat : int
 
 enum AudioFormat : int
 {
-	Short16,
-	Float32,
-	Int32
+	SampleShort16,
+	SampleFloat32,
+	SampleInt32
 };
 
 enum ChannelsLayout : uint64_t

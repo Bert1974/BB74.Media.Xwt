@@ -85,8 +85,8 @@ namespace MovieExample
             {
                 this.Renderer = this.RenderFactory.Open(this.XwtRender, this, this, new size(1920, 1080));
 
-                //     this.Audio = new AudioOut(48000, AudioFormat.Float32, ChannelsLayout.Stereo, 2);
-                //     this.Mixer = new Mixer(this.Audio.SampleRate, this.Audio.Format, this.Audio.ChannelLayout);
+                this.Audio = new AudioOut(48000, AudioFormat.Float32, ChannelsLayout.Stereo, 2);
+                this.Mixer = new Mixer(this.Audio.SampleRate, this.Audio.Format, this.Audio.ChannelLayout);
 
                 try
                 {
@@ -187,8 +187,19 @@ void main()
 
 
                 //this.Display.WaitBuffered();
-                this.Audio?.Buffered.WaitOne(-1, false);
+                //    this.Audio?.Buffered.WaitOne(-1, false);
 
+                var audiothread = new Thread(() =>
+                  {
+                      while (true)
+                      {
+                          var data = this.Mixer.Read(0, 48000 / 25);
+
+                          Audio.Write(data, data.Length/8);
+                      }
+                  });
+
+                audiothread.Start();
 
                 this.Audio?.Start();
                 this.Renderer.Start();

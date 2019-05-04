@@ -36,7 +36,7 @@ audiostream::audiostream(movieplayer *owner, int streamnumber, AVCodec *codec,/*
 	if (m_nChannelMask == 0) { m_nChannelMask = (1 << m_nChannels) - 1; }
 
 	m_nRate = samplerate;
-	_samplesize = tot * (fmt == AudioFormat::Short16 ? 2 : 4);
+	_samplesize = tot * (fmt == AudioFormat::SampleShort16 ? 2 : 4);
 }
 audiostream::~audiostream()
 {
@@ -50,8 +50,8 @@ void audiostream::FrameReady()
 		AVSampleFormat fmt;
 		switch (m_format)
 		{
-		case AudioFormat::Short16: fmt = AV_SAMPLE_FMT_S16; break;
-		case AudioFormat::Float32: fmt = AV_SAMPLE_FMT_FLT; break;
+		case AudioFormat::SampleShort16: fmt = AV_SAMPLE_FMT_S16; break;
+		case AudioFormat::SampleFloat32: fmt = AV_SAMPLE_FMT_FLT; break;
 		}
 
 		m_converter.reset(new AudioConverter(m_codec->sample_fmt, m_codec->channel_layout ? m_codec->channel_layout : (1 << m_codec->channels) - 1, m_codec->sample_rate, fmt, m_nChannelMask, m_nRate));

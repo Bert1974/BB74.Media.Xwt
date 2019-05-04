@@ -39,6 +39,7 @@ add_library(Media.Native.dll SHARED
     movieplayer_video.cpp
     linux_sound.cpp
     linux.cpp
+    osx_sound.cpp
     windows_sound.cpp
 	movierecorder.cpp
 	movierecorder_stream.cpp

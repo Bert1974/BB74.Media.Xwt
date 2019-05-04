@@ -240,7 +240,7 @@ public:
 					switch (m_avicontext->streams[nit]->codecpar->format)
 					{
 					default:
-						info->format = AudioFormat::Float32;
+						info->format = AudioFormat::SampleFloat32;
 						break;
 					}
 					if (info->channelmask == 0) { info->channelmask = (1 << info->channels) - 1; }

@@ -81,7 +81,7 @@ void movierecorder::outputstream::Clear()
 }
 void movierecorder::outputstream::Push(int64_t time, uint8_t *audiodata, int totsamples, AudioFormat fmt)
 {
-	assert(fmt == AudioFormat::Float32);
+	assert(fmt == AudioFormat::SampleFloat32);
 
 	int ret;
 	int len = m_rate - m_writepos;// totsamples * m_enc->sample_rate / 48000;

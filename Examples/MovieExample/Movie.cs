@@ -233,12 +233,12 @@ namespace MovieExample
                     {
                         this.video = player.open_video(0, frameready);
                     }
-                    /*  if (player.AudioStreams.Length > 0)
+                      if (player.AudioStreams.Length > 0)
                       {
                           this.audio = player.open_audio(0, mainwindow.Mixer, audioready);
                           this.audiobuffer = new FifoStream(mainwindow.Audio.SampleSize * mainwindow.Audio.SampleRate * 3);
-                          this.mixer.Register(this.audiobuffer, this.audioout.Channels, true);
-                      }*/
+                          this.mixer.Register(this.audiobuffer, this.audioout.Channels, false);
+                      }
                     this.player.start(0, timebase);
                 }
                 catch

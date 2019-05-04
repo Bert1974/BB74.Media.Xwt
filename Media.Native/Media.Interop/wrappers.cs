@@ -9,7 +9,6 @@ namespace BaseLib.Media
     using BaseLib.Media.Audio;
     using BaseLib.Media.Video;
     using BaseLib.Video.Interop;
-    using global::Media.Interop;
     using System.Collections.Generic;
     using System.IO;
 
@@ -251,7 +250,7 @@ namespace BaseLib.Media
 
         internal MoviePlayer(string filename, Action eos = null, Action flushed = null)
         {
-            staticinit.Initialize();
+            Interop.staticinit.Initialize();
 
             this.Filename = filename;
 
