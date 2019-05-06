@@ -39,6 +39,17 @@ namespace BaseLib.Media
             public rational fps, timebase;
         }*/
 }
+namespace BaseLib.Interop
+{
+    internal delegate void messagefunction([MarshalAs(UnmanagedType.LPStr)]string text);
+
+    internal static class Imports
+    {
+        private const string _dll_name = "Media.Native.dll";
+        [DllImport(_dll_name, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void __setprintf(IntPtr callback);
+    }
+}
 namespace BaseLib.Audio.Interop
 {
     internal static class Imports

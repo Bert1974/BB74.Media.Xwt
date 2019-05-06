@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <assert.h>
 
+#include <iostream>
+
 #if (1)
 #define IS_OSX_BUILD
 #endif
@@ -17,9 +19,9 @@ class osx_sound
 public:
 	typedef void(__stdcall *BufferedFucnction)();
 public:
-	int m_wpos, m_writelen;
-	std::unique_ptr<char[]> _buffer;
-	int frames, m_bufferlen, m_bufferpos;
+	int m_wpos;
+	std::unique_ptr<char[]> m_buffer;
+	int frames, m_bufferlen, m_writelen, m_bufferpos;
 
 	std::unique_ptr<std::thread> m_mainloop;
 	std::mutex m_mainmutex;
@@ -33,25 +35,53 @@ public:
 
 	BufferedFucnction m_callback;
 
-	AudioQueueRef queue;
+	AudioQueueRef m_queue;
 	std::vector<AudioQueueBufferRef> m_buffers;
 
 private:
 	void Free()
 	{
 		OSStatus status = -1;
-		if (queue)
+		if (m_queue)
 		{
 			while (!m_buffers.empty())
 			{
-				AudioQueueFreeBuffer(queue, *m_buffers.begin());
+				AudioQueueFreeBuffer(m_queue, *m_buffers.begin());
 				m_buffers.erase(m_buffers.begin());
 			}
 			for (auto it = m_buffers.begin(); it != m_buffers.end(); ++it) {
 			}
-			status = AudioQueueDispose(queue, true);
-			queue = 0;
+			status = AudioQueueDispose(m_queue, true);
+			m_queue = 0;
 		}
+	}
+	std::string error(OSStatus error)
+	{
+		switch (error)
+		{
+		case kAudioQueueErr_InvalidBuffer:return "The specified audio queue buffer does not belong to the specified audio queue.";
+		case kAudioQueueErr_BufferEmpty:return "The audio queue buffer is empty(that is, the mAudioDataByteSize field = 0).";
+		case kAudioQueueErr_DisposalPending:return "The function cannot act on the audio queue because it is being asynchronously disposed of.";
+		case kAudioQueueErr_InvalidProperty:return "The specified property ID is invalid.";
+		case kAudioQueueErr_InvalidPropertySize: return "The size of the specified property is invalid.";
+		case kAudioQueueErr_InvalidParameter: return "The specified parameter ID is invalid.";
+		case kAudioQueueErr_CannotStart:return "The audio queue has encountered a problem and cannot start.";
+		case kAudioQueueErr_InvalidDevice:return "The specified audio hardware device could not be located.";
+		case kAudioQueueErr_BufferInQueue:return "The audio queue buffer cannot be disposed of when it is enqueued.";
+		case kAudioQueueErr_InvalidRunState: return "The queue is running but the function can only operate on the queue when it is stopped, or vice versa.";
+		case kAudioQueueErr_InvalidQueueType:return "The queue is an input queue but the function can only operate on an output queue, or vice versa.";
+		case kAudioQueueErr_Permissions:return "You do not have the required permissions to call the function.";
+		case kAudioQueueErr_InvalidPropertyValue:return "The property value used is not valid.";
+		case kAudioQueueErr_PrimeTimedOut:return "During a call to the AudioQueuePrime function, the audio queue's audio converter failed to convert the requested number of sample frames.";
+		case kAudioQueueErr_CodecNotFound:return "The requested codec was not found.";
+		case kAudioQueueErr_InvalidCodecAccess:return "The codec could not be accessed.";
+		case kAudioQueueErr_QueueInvalidated:return "In iOS, the audio server has exited, causing the audio queue to become invalid.";
+		case kAudioQueueErr_RecordUnderrun:return "During recording, data was lost because there was no enqueued buffer to store it in.";
+		case kAudioQueueErr_EnqueueDuringReset:return "During a call to the AudioQueueReset, AudioQueueStop, or AudioQueueDispose functions, the system does not allow you to enqueue buffers.";
+		case kAudioQueueErr_InvalidOfflineMode:return "The operation requires the audio queue to be in offline mode but it isn't, or vice versa.";
+		case kAudioFormatUnsupportedDataFormatError:return "The playback data format is unsupported";
+		}
+		return string_format("error=%d", error);
 	}
 private:
 	static void listener(void *data, AudioQueueRef queue, AudioQueuePropertyID id)
@@ -68,7 +98,7 @@ private:
 		/*   OggVorbis_File *vf = (OggVorbis_File *) vorbis; */
 		OSStatus status = -1;
 
-		status = AudioQueueGetProperty(queue, id, &running, &size);
+		status = AudioQueueGetProperty(m_queue, id, &running, &size);
 
 		if (!running) {
 			std::unique_lock<std::mutex> lk(m_mainmutex);
@@ -76,7 +106,7 @@ private:
 			m_maincond.notify_all();
 
 			// In a "real example" we'd clean up the vf pointer with ov_clear() and
-			// the audio queue with AudioQueueDispose(); however, the latter is 
+			// the audio m_queue with AudioQueueDispose(); however, the latter is 
 			// better not called from within the listener function, so we just
 			// exit normally.
 		//	exit(0);
@@ -86,7 +116,7 @@ private:
 			// "safe" to call ov_clear() here, but there's no point.
 		}
 	}
-	// The audio queue callback...
+	// The audio m_queue callback...
 	static void callback(void *data, AudioQueueRef queue, AudioQueueBufferRef buffer)
 	{
 		((osx_sound*)data)->_callback(buffer);
@@ -128,7 +158,7 @@ private:
 
 					if (tot > 0)
 					{
-						memcpy(&((char*)buffer->mAudioData)[wpos], &_buffer.get()[rpos], tot);
+						memcpy(&((char*)buffer->mAudioData)[wpos], &m_buffer.get()[rpos], tot);
 
 						wpos += tot; rpos += tot;
 					}
@@ -142,7 +172,7 @@ private:
 				if (rpos > 0)
 				{
 					m_empty = (wp == m_wpos);
-					memmove(_buffer.get(), &_buffer.get()[rpos], m_wpos - rpos);
+					memmove(m_buffer.get(), &m_buffer.get()[rpos], m_wpos - rpos);
 					m_wpos -= rpos;
 					m_full = false;
 					m_maincond.notify_all();
@@ -150,8 +180,8 @@ private:
 			}
 		}
 		OSStatus status = -1;
-		if ((status = AudioQueueEnqueueBuffer(queue, buffer, 0, 0))) {
-			printf("AudioQueueEnqueueBuffer status = %d\n", status);
+		if ((status = AudioQueueEnqueueBuffer(m_queue, buffer, 0, 0))) {
+			__printf("AudioQueueEnqueueBuffer status = %d", status);
 		}
 	}
 public:
@@ -159,10 +189,8 @@ public:
 		: m_empty(true), m_full(false), m_quiting(false), m_quitted(false)
 		, m_format(format), m_channelslayout(channels), m_frames(buffers)
 		, m_buffered(false)
-		, queue (0), frames(samplerate/buffers)
+		, m_queue (0), frames(samplerate/ __frames)
 	{
-		printf("sound open hello\n");
-
 		OSStatus status = -1;
 		try
 		{
@@ -189,35 +217,36 @@ public:
 				break;
 			case AudioFormat::SampleShort16:
 				/* Signed 16-bit little-endian format */
-				fmt.mFormatID = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
+				fmt.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
 				fmt.mBitsPerChannel = 16;
 				m_samplesize = 2;
 				break;
 			default:
 				throw new _err("unimplemented");
 			}
-
 			fmt.mSampleRate = samplerate;
 			fmt.mFormatID = kAudioFormatLinearPCM;
 			fmt.mFramesPerPacket = 1;
-			fmt.mBytesPerFrame = channels * m_samplesize;
+			fmt.mBytesPerFrame = m_channels * m_samplesize;
 			fmt.mChannelsPerFrame = m_channels; // 2 for stereo
 			fmt.mBytesPerPacket = m_channels* m_samplesize; // x2 for stereo
 
 			// Create the audio queue with the desired format.
-			AudioQueueNewOutput(&fmt, callback, this, NULL, NULL, 0, &queue);
+			status=AudioQueueNewOutput(&fmt, callback, this, NULL, NULL, 0, &m_queue);
 			
 			if (status)
 			{
-				throw new _err("AudioQueueNewOutput status = %d\n", status);
+				throw new _err("AudioQueueNewOutput status = %s\n", error(status).c_str());
 			}
 
 			m_bufferlen = frames * m_samplesize*m_channels;
 
+			m_buffer.reset(new char[(m_writelen=(m_bufferlen * 3))]);
+
 			for (int nit = 0; nit < 5; nit++)
 			{
 				AudioQueueBufferRef b = 0;
-				status = AudioQueueAllocateBuffer(queue, m_bufferlen, &b);
+				status = AudioQueueAllocateBuffer(m_queue, m_bufferlen, &b);
 
 				if (status)
 				{
@@ -227,13 +256,12 @@ public:
 			}
 			m_bufferpos = 0;
 			
-			status = AudioQueueAddPropertyListener(queue, kAudioQueueProperty_IsRunning, listener, this);
+			status = AudioQueueAddPropertyListener(m_queue, kAudioQueueProperty_IsRunning, listener, this);
 			
 			if (status)
 			{
 				throw new _err("AudioQueueAddPropertyListener status = %d\n", status);
 			}
-			printf("sound open\n");
 		}
 		catch(_err*)
 		{
@@ -247,7 +275,7 @@ public:
 public:
 	~osx_sound()
 	{
-		if (queue)
+		if (m_queue)
 		{
 			OSStatus status = -1;
 			{
@@ -263,8 +291,8 @@ public:
 			}
 			Free();
 
-			delete[] _buffer.get();
-			_buffer.release();
+			delete[] m_buffer.get();
+			m_buffer.release();
 		}
 	}
 private:
@@ -308,7 +336,7 @@ private:
 						avail = snd_pcm_avail(handle);
 					} while (avail >  3);*/
 
-					auto rc = snd_pcm_writei(handle, &_buffer.get()[pos], frames);
+					auto rc = snd_pcm_writei(handle, &m_buffer.get()[pos], frames);
 
 					if (rc == -EPIPE) {
 						/* EPIPE means underrun */
@@ -339,7 +367,7 @@ private:
 				if (pos > 0)
 				{
 					m_empty = (wp == m_wpos);
-					memmove(_buffer.get(), &_buffer.get()[pos], m_wpos - pos);
+					memmove(m_buffer.get(), &m_buffer.get()[pos], m_wpos - pos);
 					m_wpos -= pos;
 					m_full = false;
 					m_maincond.notify_all();
@@ -356,6 +384,8 @@ public:
 
 		while (samples > 0)
 		{
+			__printf("write %d", samples);
+
 			if (m_quiting)
 			{
 				lk.unlock();
@@ -372,11 +402,11 @@ public:
 				{
 					tl = std::min(m_writelen - m_wpos, m_bufferlen);
 
-					if (tl == 0 && m_bufferpos<m_buffers.size())
+					if (tl == 0 && m_bufferpos==-1)
 					{
 						if (!m_buffered)
 						{
-							printf("sound bufferd\n");
+							__printf("sound bufferd");
 							m_buffered = true;
 							m_callback();
 						}
@@ -385,37 +415,43 @@ public:
 					}
 					else
 					{
-						memcpy(&_buffer.get()[m_wpos], data, tl);
+						__printf("write copy to buffer len=%d", tl);
+						memcpy(&m_buffer.get()[m_wpos], data, tl);
 						m_wpos += tl; data += tl; samples -= tl / (m_samplesize*m_channels);
 
-						if (m_bufferpos!=-1 && m_wpos >= m_bufferlen) // preroll?
+						while (m_wpos >= m_bufferlen)
 						{
-							AudioQueueBufferRef b = m_buffers[m_bufferpos++];
-
-							b->mAudioDataByteSize = m_bufferlen;
-							memcpy(b->mAudioData, &_buffer.get()[m_wpos], m_bufferlen);
-
-							if ((status = AudioQueueEnqueueBuffer(queue, b, 0, 0))) {
-								printf("AudioQueueEnqueueBuffer status = %d\n", status);
-								exit(1);
-							}
-							m_empty = (m_bufferlen == m_wpos);
-							memmove(_buffer.get(), &_buffer.get()[m_bufferlen], m_bufferlen);
-							m_wpos -= m_bufferlen;
-							m_full = false;
-					//		m_maincond.notify_all();
-
-							if (m_bufferpos==m_buffers.size()) // preroll done?
+							__printf("write got full buffer");
+							if (m_bufferpos != -1) // preroll?
 							{
-								printf("sound queued\n");
-								m_bufferpos =-1;
-							//	m_maincond.notify_all();
+								AudioQueueBufferRef b = m_buffers[m_bufferpos++];
+
+								b->mAudioDataByteSize = m_bufferlen;
+								memcpy(b->mAudioData, &m_buffer.get()[m_wpos], m_bufferlen);
+
+								if ((status = AudioQueueEnqueueBuffer(m_queue, b, 0, 0))) {
+									__printf("AudioQueueEnqueueBuffer status = %d", status);
+									//exit(1);
+								}
+								memmove(m_buffer.get(), &m_buffer.get()[m_bufferlen], m_writelen-m_bufferlen);
+								m_wpos -= m_bufferlen;
+								m_empty = (0 == m_wpos);
+								//		m_maincond.notify_all();
+
+								__printf("write prrerolled");
+								if (m_bufferpos == m_buffers.size()) // preroll done?
+								{
+									__printf("sound queued");
+									m_bufferpos = -1;
+									//	m_maincond.notify_all();
+								}
 							}
-						}
-						else if (m_bufferpos ==-1)
-						{
-							m_empty = false;
-							m_maincond.notify_all();
+							else if (m_bufferpos == -1)
+							{
+								m_empty = false;
+								m_maincond.notify_all();
+								break;
+							}
 						}
 					}
 				} while (!m_full && samples > 0);
@@ -431,14 +467,14 @@ public:
 
 		m_stopped = false;
 		
-		status=AudioQueueStart(queue, 0);
+		status=AudioQueueStart(m_queue, 0);
 	}
 	void Stop()
 	{
 		OSStatus status = -1;
 		std::unique_lock<std::mutex> lk(m_mainmutex);
 
-		status = AudioQueueStop(queue, 0);
+		status = AudioQueueStop(m_queue, 0);
 
 		while (!m_stopped)
 		{
@@ -459,6 +495,8 @@ extern "C" {
 		try
 		{
 			auto result = new osx_sound(bitrate, format, channels, frames, buffers);
+
+			__printf("audioptr=%lx", (long)result);
 
 			return result;
 		}

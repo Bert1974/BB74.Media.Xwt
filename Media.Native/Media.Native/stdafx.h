@@ -113,6 +113,11 @@ void FFMPEGUNLOCK();
 std::string string_format(const std::string fmt, ...);
 std::string ERRSTR(int error);
 
+
+typedef void(__stdcall *debugstringfunction)(const char *txt);
+extern "C" {
+	FUNCEXP void __printf(std::string fmt, ...);
+}
 class _err
 {
 public:

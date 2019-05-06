@@ -232,6 +232,7 @@ copy "$(ProjectDir)sandbox\win64\bin\*.dll" "$(ProjectDir)..\package\data\x64\"
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="all.cpp" />
     <ClCompile Include="audioconvert.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -257,7 +258,12 @@ copy "$(ProjectDir)sandbox\win64\bin\*.dll" "$(ProjectDir)..\package\data\x64\"
     <ClCompile Include="movieplayer_video.cpp" />
     <ClCompile Include="movierecorder.cpp" />
     <ClCompile Include="movierecorder_stream.cpp" />
-    <ClCompile Include="osx_sound.cpp" />
+    <ClCompile Include="osx_sound.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

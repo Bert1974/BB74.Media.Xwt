@@ -201,6 +201,8 @@ void main()
 
                 audiothread.Start();
 
+                this.Audio.Buffered.WaitOne(-1, false);
+
                 this.Audio?.Start();
                 this.Renderer.Start();
 

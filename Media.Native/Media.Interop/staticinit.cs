@@ -3,30 +3,40 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
+using BaseLib.Interop;
 
 namespace BaseLib.Media.Interop
 {
     static class staticinit
     {
+        private static object messagefunc;
         private static bool doinit = true;
 
         public static void Initialize()
         {
-            if (doinit)
+            try
             {
-                doinit = false;
-           /*     string dir = Path.GetDirectoryName(new Uri(typeof(staticinit).Assembly.CodeBase).AbsolutePath);
-                Assembly a;
-                if (IntPtr.Size == 8)
+                if (doinit)
                 {
-                    a = Assembly.LoadFile(Path.Combine(dir, "x64\\", "Media.Interop.Impl.dll"));
+                    doinit = false;
+                    /*     string dir = Path.GetDirectoryName(new Uri(typeof(staticinit).Assembly.CodeBase).AbsolutePath);
+                         Assembly a;
+                         if (IntPtr.Size == 8)
+                         {
+                             a = Assembly.LoadFile(Path.Combine(dir, "x64\\", "Media.Interop.Impl.dll"));
+                         }
+                         else
+                         {
+                             a = Assembly.LoadFile(Path.Combine(dir, "x86\\", "Media.Interop.Impl.dll"));
+                         }*/
+                    AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
                 }
-                else
-                {
-                    a = Assembly.LoadFile(Path.Combine(dir, "x86\\", "Media.Interop.Impl.dll"));
-                }*/
-                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+            }
+            catch(Exception e)
+            {
+
             }
         }
         private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
@@ -62,6 +72,23 @@ namespace BaseLib.Media.Interop
             }
          //   Log.Error($"failed to resolve '{name}'.");
             return null;
+        }
+
+        internal static void Initialize2()
+        {
+            try
+            {
+                messagefunc = new BaseLib.Interop.messagefunction(message);
+                BaseLib.Interop.Imports.__setprintf(Marshal.GetFunctionPointerForDelegate((Delegate)messagefunc));
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+        private static void message(string message)
+        {
+            Console.WriteLine(message);
         }
     }
 }

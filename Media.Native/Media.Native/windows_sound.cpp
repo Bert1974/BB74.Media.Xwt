@@ -356,6 +356,9 @@ bool  AudioOut::TryOpen()
 		waveOutGetDevCaps((UINT_PTR)hWaveOut, &m_caps, sizeof(m_caps));
 
 		StartThread();
+
+		__printf("sound open");
+
 		return true;
 	}
 	return false;

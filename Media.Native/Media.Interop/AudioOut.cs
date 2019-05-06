@@ -49,13 +49,18 @@ namespace BaseLib.Media.Audio
             }
         }
         private void Intialize(int buffers)
-        { 
-                var error = new StringBuilder(1024);
-                this.audio = Imports.openaudio(this.SampleRate, this.Format, this.ChannelLayout, 25, buffers, error);
+        {
+            Interop.staticinit.Initialize2();
+            var error = new StringBuilder(1024);
+            this.audio = Imports.openaudio(this.SampleRate, this.Format, this.ChannelLayout, 25, 3, error);
 
-                m_callback = () => this.Buffered.Set();
+            if (this.audio == IntPtr.Zero)
+            {
+                throw new Exception(error.ToString());
+            }
+            m_callback = () => this.Buffered.Set();
 
-                Imports.audio_setcallback(this.audio, Marshal.GetFunctionPointerForDelegate(m_callback));
+            Imports.audio_setcallback(this.audio, Marshal.GetFunctionPointerForDelegate(m_callback));
         }
         ~AudioOut()
         {

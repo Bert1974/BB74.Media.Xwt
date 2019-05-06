@@ -261,6 +261,8 @@ namespace BaseLib.Media
         }
         private void Initialize(string filename)
         { 
+            Interop.staticinit.Initialize2();
+
             if (!File.Exists(filename))
             {
                 throw new FileNotFoundException(filename);
