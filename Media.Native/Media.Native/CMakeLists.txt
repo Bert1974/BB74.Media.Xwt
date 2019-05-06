@@ -32,6 +32,7 @@ set(Media.Native.dll PROPERTIES
 
 add_library(Media.Native.dll SHARED
     interop.cpp
+	all.cpp
     audioconvert.cpp
     movieplayer.cpp
     movieplayer_basestream.cpp

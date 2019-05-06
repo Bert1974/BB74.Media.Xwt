@@ -63,7 +63,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\package\lib\net40\"
+    <PostBuildEvent Condition="'$(OS)' == 'Windows_NT' ">copy "$(TargetPath)" "$(ProjectDir)..\package\lib\net40\"
 copy "$(TargetPath)" "$(ProjectDir)..\package\lib\net45\"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent Condition="'$(OS)' != 'Windows_NT' ">cp "$(TargetPath)" "$(ProjectDir)..\package\lib\net40\"
+cp "$(TargetPath)" "$(ProjectDir)..\package\lib\net45\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

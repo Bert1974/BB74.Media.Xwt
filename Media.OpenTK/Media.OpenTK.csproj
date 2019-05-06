@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Media.Base, Version=1.0.7063.24312, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BB74.Media.Base.1.0.7063.24312\lib\net40\Media.Base.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\packages\OpenTK-3.0-EGL-disabled.1.0.0\lib\net20\OpenTK.dll</HintPath>
     </Reference>
@@ -45,9 +48,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="Xwt, Version=0.2.166.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\Xwt.0.2.166\lib\net40\Xwt.dll</HintPath>
-    </Reference>
-    <Reference Include="Media.Base">
-      <HintPath>..\packages\BB74.Media.Base.1.0.7058.27178\lib\net40\Media.Base.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

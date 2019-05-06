@@ -22,8 +22,6 @@ public:
 	int m_wpos;
 	std::unique_ptr<char[]> m_buffer;
 	int frames, m_bufferlen, m_writelen, m_bufferpos;
-
-	std::unique_ptr<std::thread> m_mainloop;
 	std::mutex m_mainmutex;
 	std::condition_variable m_maincond;
 
@@ -90,30 +88,33 @@ private:
 	}
 	void _listener(AudioQueuePropertyID id)
 	{
-		// Here, we're only listening for start/stop, so don't need to check
-		// the id; it's always kAudioQueueProperty_IsRunning in our case.
+		if (id == kAudioQueueProperty_IsRunning) {
+			// Here, we're only listening for start/stop, so don't need to check
+			// the id; it's always kAudioQueueProperty_IsRunning in our case.
 
-		UInt32 running = 0;
-		UInt32 size = sizeof running;
-		/*   OggVorbis_File *vf = (OggVorbis_File *) vorbis; */
-		OSStatus status = -1;
+			UInt32 running = 0;
+			UInt32 size = sizeof running;
+			/*   OggVorbis_File *vf = (OggVorbis_File *) vorbis; */
+			OSStatus status = -1;
 
-		status = AudioQueueGetProperty(m_queue, id, &running, &size);
+			status = AudioQueueGetProperty(m_queue, id, &running, &size);
 
-		if (!running) {
-			std::unique_lock<std::mutex> lk(m_mainmutex);
-			m_stopped = true;
-			m_maincond.notify_all();
+			if (!running) {
+				std::unique_lock<std::mutex> lk(m_mainmutex);
+				m_stopped = true;
+				m_maincond.notify_all();
 
-			// In a "real example" we'd clean up the vf pointer with ov_clear() and
-			// the audio m_queue with AudioQueueDispose(); however, the latter is 
-			// better not called from within the listener function, so we just
-			// exit normally.
-		//	exit(0);
-			// In a "real" application, we might signal the termination with
-			// a pthread condition variable, or something similar, instead;
-			// where the waiting thread would call AudioQueueDispose().  It is 
-			// "safe" to call ov_clear() here, but there's no point.
+				// In a "real example" we'd clean up the vf pointer with ov_clear() and
+				// the audio m_queue with AudioQueueDispose(); however, the latter is 
+				// better not called from within the listener function, so we just
+				// exit normally.
+			//	exit(0);
+				// In a "real" application, we might signal the termination with
+				// a pthread condition variable, or something similar, instead;
+				// where the waiting thread would call AudioQueueDispose().  It is 
+				// "safe" to call ov_clear() here, but there's no point.
+			}else{
+			}
 		}
 	}
 	// The audio m_queue callback...
@@ -279,7 +280,7 @@ public:
 		{
 			OSStatus status = -1;
 			{
-				std::unique_lock<std::mutex> lk(m_mainmutex);
+		/*		std::unique_lock<std::mutex> lk(m_mainmutex);
 				m_quiting = true;
 				m_maincond.notify_all();
 
@@ -287,7 +288,7 @@ public:
 				{
 					m_maincond.wait(lk);
 				}
-				m_mainloop->join();
+				m_mainloop->join();*/
 			}
 			Free();
 
@@ -472,10 +473,14 @@ public:
 	void Stop()
 	{
 		OSStatus status = -1;
-		std::unique_lock<std::mutex> lk(m_mainmutex);
+
 
 		status = AudioQueueStop(m_queue, 0);
 
+		__printf("audio stopped?");
+		std::unique_lock<std::mutex> lk(m_mainmutex);
+		m_quiting = true;
+		m_maincond.notify_all();
 		while (!m_stopped)
 		{
 			m_maincond.wait(lk);
