@@ -354,7 +354,7 @@ namespace MovieExample
         internal void Stop()
         {
             this.player.preparestop();
-            //  this._audiobuffer?.Close();
+            this.audiobuffer?.Close();
             this.stopevent.Set();
             this.player.stop();
             foreach (var f in this.frames)

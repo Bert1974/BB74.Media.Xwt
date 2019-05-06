@@ -54,22 +54,8 @@ public:
 	{
 		m_callback = callback;
 	}
-	void Start()
-	{
-		EnterCriticalSection(&m_bufferlock);
-		SetEvent(m_playing);
-		if (m_wpos >= m_writelen)
-		{
-			SetEvent(m_gotdata);
-		}
-		LeaveCriticalSection(&m_bufferlock);
-	}
-	void Stop()
-	{
-		EnterCriticalSection(&m_bufferlock);
-		ResetEvent(m_playing);
-		LeaveCriticalSection(&m_bufferlock);
-	}
+	void Start();
+	void Stop();
 };
 
 void CALLBACK AudioOut::waveOutProc(HWAVEOUT hwo, UINT uMsg, DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2)
@@ -169,6 +155,7 @@ void AudioOut::SampleDone(WAVEHDR *h)
 				}
 			} // while wavready
 		} // while !stopped
+		m_hthread = 0;
 		SetEvent(m_stoppedpevent);
 		return 0;
 	}
@@ -218,8 +205,8 @@ AudioOut::AudioOut(int bitrate, AudioFormat format, ChannelsLayout channels, int
 	m_bitrate = bitrate;
 	memset(header, 0, sizeof(header));
 	m_readyevent = CreateEvent(0, true, false, 0);
-	m_stopevent = CreateEvent(0, false, false, 0);
-	m_stoppedpevent = CreateEvent(0, false, true, 0);
+	m_stopevent = CreateEvent(0, true, false, 0);
+	m_stoppedpevent = CreateEvent(0, false, false, 0);
 	m_gotdata = CreateEvent(0, true, false, 0);
 	m_canwrite = CreateEvent(0, true, true, 0);
 	m_playing = CreateEvent(0, true, false, 0);
@@ -252,7 +239,6 @@ void AudioOut::Close()
 
 		if (m_hthread != 0)
 		{
-				SetEvent(m_stopevent);
 				WaitForSingleObject(m_stoppedpevent, INFINITE);
 		}
 		waveOutReset(hWaveOut);
@@ -300,9 +286,9 @@ void  AudioOut::StartThread()
 	m_buffer.reset(new char[m_writelen*m_buffers]);
 	m_wpos = 0;
 
-	DWORD thid;
+/*	DWORD thid;
 	HANDLE ht=::CreateThread(0, 0, &_audiothread, this, 0, &thid);
-	::SetThreadDescription(ht, L"audioout");
+	::SetThreadDescription(ht, L"audioout");*/
 }
 bool  AudioOut::TryOpen()
 {
@@ -407,6 +393,33 @@ void AudioOut::set_volume(float volume)
 	}
 }
 
+void AudioOut::Start()
+{
+	DWORD thid;
+	m_hthread = ::CreateThread(0, 0, &_audiothread, this, 0, &thid);
+	::SetThreadDescription(m_hthread, L"audioout");
+
+	EnterCriticalSection(&m_bufferlock);
+	SetEvent(m_playing);
+	if (m_wpos >= m_writelen) 
+	{
+		SetEvent(m_gotdata);
+	}
+	LeaveCriticalSection(&m_bufferlock);
+}
+void AudioOut::Stop()
+{
+	SetEvent(m_stopevent);
+	if (m_hthread != 0)
+	{
+		WaitForSingleObject(m_stoppedpevent, INFINITE);
+	}
+	m_wpos = 0;
+
+	EnterCriticalSection(&m_bufferlock);
+	ResetEvent(m_playing);
+	LeaveCriticalSection(&m_bufferlock);
+}
 
 extern "C" {
 

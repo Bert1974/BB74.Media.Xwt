@@ -69,6 +69,8 @@ namespace MovieExample
 
             private int test;
             private frameinfo frame;
+            private Thread audiothread;
+            private ManualResetEvent audiostop = new ManualResetEvent(false);
 
             public IRenderer Renderer { get; internal set; }
             public AudioOut Audio { get; internal set; }
@@ -189,17 +191,21 @@ void main()
                 //this.Display.WaitBuffered();
                 //    this.Audio?.Buffered.WaitOne(-1, false);
 
-                var audiothread = new Thread(() =>
+                this.audiostop.Reset();
+                this.audiothread = new Thread(() =>
                   {
-                      while (true)
+                      while (!audiostop.WaitOne(0, false))
                       {
-                          var data = this.Mixer.Read(0, 48000 / 25);
-
-                          Audio.Write(data, data.Length/8);
+                          try
+                          {
+                              var data = this.Mixer.Read(0, 48000 / 25);
+                              Audio.Write(data, data.Length / 8);
+                          }
+                          catch { }
                       }
                   });
 
-                audiothread.Start();
+                this.audiothread.Start();
 
                 this.Audio.Buffered.WaitOne(-1, false);
 
@@ -214,12 +220,18 @@ void main()
             {
                 if (this.Renderer != null)
                 {
-                    this.MoviePlayer?.Stop();
+                    this.audiostop.Set();
                     this.Renderer.Stop();
-
                     this.Audio?.Stop();
+                    this.MoviePlayer?.Stop();
+                    try { this.audiothread.Join(); } catch { }
+
+                    this.MoviePlayer?.Dispose();
+                    this.MoviePlayer = null;
                     this.Mixer?.Dispose();
+                    this.Mixer = null;
                     this.Audio?.Dispose();
+                    this.Audio = null;
 
                     using (var lck = this.Renderer.GetDrawLock())
                     {
@@ -227,9 +239,6 @@ void main()
                         this.vertices?.Dispose();
                         this.shadertex?.Dispose();
                         this.verticestex?.Dispose();
-
-                        this.MoviePlayer?.Dispose();
-                        this.MoviePlayer = null;
                     }
                     this.Renderer.Dispose();
                     this.Renderer = null;
