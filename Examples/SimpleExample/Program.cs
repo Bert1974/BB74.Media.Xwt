@@ -41,15 +41,15 @@ namespace SimpleExample
                 }
 #endif
             }
-            catch (Exception e) { Console.Error.WriteLine($"Error initializing/loading engine '{e.Message}'"); }
+            catch (Exception e) { Console.Error.WriteLine($"Error initializing/loading engine '{e.Message}'"); return; }
 
             // initialize Xwt (with dll load for ubuntu with both gtk2 and gtk3 installed)
             try { BaseLib.Xwt.Platform.Initialize(Program.ToolkitType); }
-            catch (Exception e) { Console.Error.WriteLine($"Error initializing/loading xwt '{e.Message}'"); }
+            catch (Exception e) { Console.Error.WriteLine($"Error initializing/loading xwt '{e.Message}'"); return; }
 
             // intitialize xwt helpers
             try { Program.Xwt = BaseLib.Xwt.XwtImpl.Create(); }
-            catch (Exception e) { Console.Error.WriteLine($"Error initializing/loading xwt-platform-specific '{e.Message}'"); }
+            catch (Exception e) { Console.Error.WriteLine($"Error initializing/loading xwt-platform-specific '{e.Message}'"); return; }
 
             // createwdinow
 

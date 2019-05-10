@@ -1,6 +1,7 @@
 ﻿using BaseLib.Media.Display;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -10,17 +11,49 @@ namespace BaseLib.Media.OpenTK
 {
     public static class Platform
     {
+        public static PlatformID OSPlatform
+        {
+            get
+            {
+                if (System.Environment.OSVersion.Platform != PlatformID.MacOSX &&
+                    System.Environment.OSVersion.Platform != PlatformID.Unix)
+                {
+                    return PlatformID.Win32Windows;
+                }
+                else
+                {
+                    if (Directory.Exists("/Applications")
+                           & Directory.Exists("/System")
+                           & Directory.Exists("/Users")
+                           & Directory.Exists("/Volumes"))
+                    {
+                        return PlatformID.MacOSX;
+                    }
+                    else
+                    {
+                        return PlatformID.Unix;
+                    }
+                }
+            }
+        }
         public static IXwtRender TryLoad(ToolkitType type, out IRendererFactory renderfactory)
         {
-            switch (type)
+            switch (OSPlatform)
             {
-                case ToolkitType.XamMac:
+                case PlatformID.MacOSX:
                     return TryLoad("XamMac", type, out renderfactory);
-                case ToolkitType.Wpf:
-                    return TryLoad("WPF", type, out renderfactory);
-                case ToolkitType.Gtk:
-                case ToolkitType.Gtk3:
-                    return TryLoad("GTK", type, out renderfactory);
+
+                default:
+                    switch (type)
+                    {
+                        case ToolkitType.XamMac:
+                        case ToolkitType.Wpf:
+                            return TryLoad("WPF", type, out renderfactory);
+                        case ToolkitType.Gtk:
+                        case ToolkitType.Gtk3:
+                            return TryLoad("GTK", type, out renderfactory);
+                    }
+                    break;
             }
             throw new NotImplementedException();
         }

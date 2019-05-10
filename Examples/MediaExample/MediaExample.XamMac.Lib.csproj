@@ -51,10 +51,7 @@
       <HintPath>..\..\packages\OpenTK-3.0-EGL-disabled.1.0.0\lib\net20\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="Xwt">
-      <HintPath>..\..\packages\Xwt.0.2.166\lib\net40\Xwt.dll</HintPath>
-    </Reference>
-    <Reference Include="BB74.Xwt.Controls">
-      <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7061.21406\lib\net40\BB74.Xwt.Controls.dll</HintPath>
+      <HintPath>..\..\packages\Xwt.0.2.167\lib\net40\Xwt.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -451,9 +451,11 @@ namespace BaseLib.Display.WPF
                         // lock the D3DImage
                         this.Lock();
 
-                        // update the scene (via a call into our custom library)
-                        RenderScene();
-
+                        using (this.owner.opentk.GetDrawLock())
+                        {
+                            // update the scene (via a call into our custom library)
+                            RenderScene();
+                        }
                         // invalidate the updated region of the D3DImage (in this case, the whole image)
                         this.AddDirtyRect(new Int32Rect(0, 0, this.owner.viewsize.width, this.owner.viewsize.height));
 

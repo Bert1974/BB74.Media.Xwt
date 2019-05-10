@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\Xwt.Gtk.0.2.166\build\Xwt.Gtk.props" Condition="Exists('..\..\packages\Xwt.Gtk.0.2.166\build\Xwt.Gtk.props')" />
+  <Import Project="..\..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props" Condition="Exists('..\..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -35,12 +35,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BB74.Xwt.Controls, Version=1.0.7061.21406, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7061.21406\lib\net40\BB74.Xwt.Controls.dll</HintPath>
+    <Reference Include="BB74.Xwt.Controls, Version=1.0.7068.36758, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7068.36758\lib\net40\BB74.Xwt.Controls.dll</HintPath>
     </Reference>
-    <Reference Include="Media.Base, Version=1.0.7055.17137, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BB74.Media.Base.1.0.7058.27178\lib\net40\Media.Base.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Media.Base, Version=1.0.7063.24312, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Media.Base.1.0.7063.24312\lib\net40\Media.Base.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\packages\OpenTK-3.0-EGL-disabled.1.0.0\lib\net20\OpenTK.dll</HintPath>
@@ -48,20 +47,23 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
-    <Reference Include="Xwt, Version=0.2.166.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xwt.0.2.166\lib\net40\Xwt.dll</HintPath>
+    <Reference Include="Xwt, Version=0.2.167.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xwt.0.2.167\lib\net40\Xwt.dll</HintPath>
     </Reference>
-    <Reference Include="Xwt.Gtk, Version=0.2.166.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xwt.Gtk.0.2.166\lib\net40\Xwt.Gtk.dll</HintPath>
+    <Reference Include="Xwt.Gtk, Version=0.2.167.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xwt.Gtk.0.2.167\lib\net40\Xwt.Gtk.dll</HintPath>
     </Reference>
-    <Reference Include="Xwt.Gtk.Mac, Version=0.2.166.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xwt.Gtk.Mac.0.2.166\lib\net40\Xwt.Gtk.Mac.dll</HintPath>
+    <Reference Include="Xwt.Gtk.Mac, Version=0.2.167.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xwt.Gtk.Mac.0.2.167\lib\net40\Xwt.Gtk.Mac.dll</HintPath>
     </Reference>
-    <Reference Include="Xwt.Gtk.Windows, Version=0.2.166.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xwt.Gtk.Windows.0.2.166\lib\net40\Xwt.Gtk.Windows.dll</HintPath>
+    <Reference Include="Xwt.Gtk.Windows, Version=0.2.167.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xwt.Gtk.Windows.0.2.167\lib\net40\Xwt.Gtk.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="Xwt.WPF, Version=0.2.166.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xwt.WPF.0.2.166\lib\net40\Xwt.WPF.dll</HintPath>
+    <Reference Include="Xwt.WPF, Version=0.2.167.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xwt.WPF.0.2.167\lib\net40\Xwt.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Xwt.XamMac, Version=0.2.167.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xwt.XamMac.0.2.167\lib\net40\Xwt.XamMac.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +112,6 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Xwt.Gtk.0.2.166\build\Xwt.Gtk.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xwt.Gtk.0.2.166\build\Xwt.Gtk.props'))" />
+    <Error Condition="!Exists('..\..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props'))" />
   </Target>
 </Project>
