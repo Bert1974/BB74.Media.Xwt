@@ -75,12 +75,12 @@ public:
 
 			switch (m_format)
 			{
-			case AudioFormat::Float32:
+			case AudioFormat::SampleFloat32:
 				/* Signed 16-bit little-endian format */
 				snd_pcm_hw_params_set_format(handle, params, SND_PCM_FORMAT_FLOAT_LE);
 				m_samplesize = 4;
 				break;
-			case AudioFormat::Short16:
+			case AudioFormat::SampleShort16:
 				/* Signed 16-bit little-endian format */
 				snd_pcm_hw_params_set_format(handle, params, SND_PCM_FORMAT_S16_LE);
 				m_samplesize = 2;

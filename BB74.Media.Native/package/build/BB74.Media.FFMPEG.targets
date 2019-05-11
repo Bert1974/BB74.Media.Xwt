@@ -1,5 +1,15 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
- <ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)..\data\$(TargetFramework)\BB74.Media.Interop.Impl.dll">
+      <Link>x64\BB74.Media.Interop.Impl.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\data\$(TargetFramework)\BB74.Media.Interop.Impl.dll">
+      <Link>x86\BB74.Media.Interop.Impl.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
    <None Include="$(MSBuildThisFileDirectory)..\data\x64\avcodec-58.dll">
      <Link>x64\avcodec-58.dll</Link>
      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -32,20 +42,16 @@
      <Link>x64\swscale-5.dll</Link>
      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
    </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x64\Media.Interop.Impl.dll">
-     <Link>x64\Media.Interop.Impl.dll</Link>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x64\BB74.Media.Native.dll">
+     <Link>x64\BB74.Media.Native.dll</Link>
      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
    </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x64\Media.Native.dll">
-     <Link>x64\Media.Native.dll</Link>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x64\libBB74.Media.Native.dll.so">
+     <Link>x64\libBB74.Media.Native.dll.so</Link>
      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
    </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x64\libMedia.Native.dll.so">
-     <Link>x64\libMedia.Native.dll.so</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x64\libMedia.Native.dll.dylib">
-     <Link>x64\libMedia.Native.dll.dylib</Link>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x64\libBB74.Media.Native.dll.dylib">
+     <Link>x64\libBB74.Media.Native.dll.dylib</Link>
      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
    </None>
    <None Include="$(MSBuildThisFileDirectory)..\data\x86\avcodec-58.dll">
@@ -80,12 +86,8 @@
      <Link>x86\swscale-5.dll</Link>
      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
    </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x86\Media.Interop.Impl.dll">
-     <Link>x86\Media.Interop.Impl.dll</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x86\Media.Native.dll">
-     <Link>x86\Media.Native.dll</Link>
+   <None Include="$(MSBuildThisFileDirectory)..\data\x86\BB74.Media.Native.dll">
+     <Link>x86\BB74.Media.Native.dll</Link>
      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
    </None>
  </ItemGroup>

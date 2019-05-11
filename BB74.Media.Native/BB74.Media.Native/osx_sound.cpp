@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-#if (1)
+#if (0)
 #define IS_OSX_BUILD
 #endif
 

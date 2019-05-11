@@ -34,4 +34,4 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: InternalsVisibleToAttribute("Media.Interop")]
+[assembly: InternalsVisibleToAttribute("BB74.Media.Interop")]

@@ -4,35 +4,43 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9926B468-0290-4E46-B3B4-32CAEABB659F}</ProjectGuid>
+    <ProjectGuid>{10547C10-B57D-493F-AEE9-5A56FC7DC094}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Media.Interop</RootNamespace>
-    <AssemblyName>Media.Interop</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>false</Deterministic>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;X86_BUILD</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;X86_BUILD</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyName>BB74.Media.Interop.x86</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Media.Base, Version=1.0.7063.24312, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BB74.Media.Base.1.0.7063.24312\lib\net40\Media.Base.dll</HintPath>
+    <Reference Include="BB74.Media.Base, Version=1.0.7069.20826, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Media.Base.1.0.7069.20826\lib\net40\BB74.Media.Base.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -43,31 +51,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AudioOut.cs" />
-    <Compile Include="Class1.cs" />
-    <None Include="media.cs" />
-    <Compile Include="Mixer.cs" />
+    <Compile Include="Imports.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="staticinit.cs" />
-    <Compile Include="wrappers.cs" />
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Media.Interop.Impl\Media.Interop.Impl.csproj">
-      <Project>{a08163ed-f101-4741-a12b-82bd202b2c23}</Project>
-      <Name>Media.Interop.Impl</Name>
-      <Private>False</Private>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent Condition="'$(OS)' == 'Windows_NT' ">copy "$(TargetPath)" "$(ProjectDir)..\package\lib\net40\"
-copy "$(TargetPath)" "$(ProjectDir)..\package\lib\net45\"</PostBuildEvent>
+    <PostBuildEvent Condition="'$(OS)' == 'Windows_NT' ">copy "$(TargetPath)" "$(ProjectDir)..\package\data\x86"
+copy "$(TargetPath)" "$(ProjectDir)..\package\data\x64"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent Condition="'$(OS)' != 'Windows_NT' ">cp "$(TargetPath)" "$(ProjectDir)..\package\lib\net40\"
-cp "$(TargetPath)" "$(ProjectDir)..\package\lib\net45\"</PostBuildEvent>
+    <PostBuildEvent Condition="'$(OS)' != 'Windows_NT' ">cp "$(TargetPath)" "$(ProjectDir)..\package\data\x86"
+cp "$(TargetPath)" "$(ProjectDir)..\package\data\x64"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent />
   </PropertyGroup>
 </Project>

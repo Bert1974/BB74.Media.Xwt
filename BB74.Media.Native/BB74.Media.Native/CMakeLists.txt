@@ -26,11 +26,11 @@ pkg_check_modules(FFMPEG REQUIRED libavutil libavfilter libavformat libavcodec l
 
 link_directories(${FFMPEG_LIBRARY_DIRS})
 
-set(Media.Native.dll PROPERTIES
+set(BB74.Media.Native.dll PROPERTIES
    CMAKE_CXX_STANDARD 11
    CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_library(Media.Native.dll SHARED
+add_library(BB74.Media.Native.dll SHARED
     interop.cpp
 	all.cpp
     audioconvert.cpp
@@ -46,16 +46,16 @@ add_library(Media.Native.dll SHARED
 	movierecorder_stream.cpp
     win32.cpp
 )
-#target_compile_options(Media.Native.dll PRIVATE -fPIC)
-target_compile_options(Media.Native.dll PRIVATE -march=core2)
-target_compile_options(Media.Native.dll PRIVATE -std=c++11)
+#target_compile_options(BB74.Media.Native.dll PRIVATE -fPIC)
+target_compile_options(BB74.Media.Native.dll PRIVATE -march=core2)
+target_compile_options(BB74.Media.Native.dll PRIVATE -std=c++11)
 
 include_directories(${FFMPEG_INCLUDE_DIRS})
 #include_directories(${CMAKE_PREFIX_PATH}/include)
 
 IF (DEFINE_OSXBUILD)
-target_link_libraries(Media.Native.dll LINK_PRIVATE ${FFMPEG_LIBRARIES} vpx vorbis vorbisenc zvbi twolame theora theoradec theoraenc opus speex openjp2 aom webp ogg snappy mp3lame twolame gsm sndfile openh264 opencore-amrwb opencore-amrnb vo-amrwbenc gnutls ilbc "-framework Security" "-framework CoreVideo" "-framework CoreFoundation" "-framework AudioToolbox" "-framework VideoToolbox" "-framework CoreMedia" )
+target_link_libraries(BB74.Media.Native.dll LINK_PRIVATE ${FFMPEG_LIBRARIES} vpx vorbis vorbisenc zvbi twolame theora theoradec theoraenc opus speex openjp2 aom webp ogg snappy mp3lame twolame gsm sndfile openh264 opencore-amrwb opencore-amrnb vo-amrwbenc gnutls ilbc "-framework Security" "-framework CoreVideo" "-framework CoreFoundation" "-framework AudioToolbox" "-framework VideoToolbox" "-framework CoreMedia" )
 ENDIF(DEFINE_OSXBUILD)
 IF (DEFINE_LINUXBUILD)
-target_link_libraries(Media.Native.dll LINK_PRIVATE -Wl,--start-group ${FFMPEG_LIBRARIES} -Wl,--end-group asound)
+target_link_libraries(BB74.Media.Native.dll LINK_PRIVATE -Wl,--start-group ${FFMPEG_LIBRARIES} -Wl,--end-group asound)
 ENDIF(DEFINE_LINUXBUILD)

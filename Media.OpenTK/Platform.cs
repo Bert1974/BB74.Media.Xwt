@@ -38,23 +38,24 @@ namespace BaseLib.Media.OpenTK
         }
         public static IXwtRender TryLoad(ToolkitType type, out IRendererFactory renderfactory)
         {
-            switch (OSPlatform)
+           /* switch (OSPlatform)
             {
                 case PlatformID.MacOSX:
                     return TryLoad("XamMac", type, out renderfactory);
 
-                default:
+                default:*/
                     switch (type)
                     {
                         case ToolkitType.XamMac:
+                            return TryLoad("XamMac", type, out renderfactory);
                         case ToolkitType.Wpf:
                             return TryLoad("WPF", type, out renderfactory);
                         case ToolkitType.Gtk:
                         case ToolkitType.Gtk3:
                             return TryLoad("GTK", type, out renderfactory);
                     }
-                    break;
-            }
+                 /*   break;
+            }*/
             throw new NotImplementedException();
         }
         private static BaseLib.Media.OpenTK.IXwtRender TryLoad(string type, ToolkitType toolkit, out IRendererFactory renderfactory)

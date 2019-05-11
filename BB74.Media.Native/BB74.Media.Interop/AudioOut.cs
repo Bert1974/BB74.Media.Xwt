@@ -42,7 +42,7 @@ namespace BaseLib.Media.Audio
                 }
                 Intialize(buffers);
             }
-            catch
+            catch(Exception e)
             {
                 GC.SuppressFinalize(this);
                 throw;

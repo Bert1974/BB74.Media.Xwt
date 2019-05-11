@@ -1,23 +1,27 @@
-"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\devenv.com" BB74.OpenTK.Xwt.sln /rebuild Release /project Media.Base
-IF ERRORLEVEL 1 GOTO Error
-cd Media.Base
-nuget pack Media.Base.csproj -properties configuration=Release
+rem if NOT "%DevEnvDir%"=="" goto devenvok;
+rem call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsx86_amd64.bat"
+rem if "%DevEnvDir%"=="" goto Error;
+rem :devenvok
+
+rem "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\devenv.com" BB74.OpenTK.Xwt.sln /rebuild Release /project Media.Base
+rem IF ERRORLEVEL 1 GOTO Error
+rem cd Media.Base
+rem nuget pack Media.Base.csproj -properties configuration=Release
+
+cd BB74.Media.Base
+call build.bat
 IF ERRORLEVEL 1 GOTO Error
 cd ..
-cd Media.Native\Media.Native
-"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\devenv.com"  Media.Native.vcxproj /rebuild Release /projectconfig "Release|Win32"
+
+cd BB74.Media.Native
+call build.bat
 IF ERRORLEVEL 1 GOTO Error
-"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\devenv.com" Media.Native.vcxproj /rebuild "Release|x64"
-IF ERRORLEVEL 1 GOTO Error
-cd ..\..
-"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\devenv.com" BB74.OpenTK.Xwt.sln /rebuild Release /project Media.Interop.Impl
-IF ERRORLEVEL 1 GOTO Error
-"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\devenv.com" BB74.OpenTK.Xwt.sln /rebuild Release /project Media.Interop
-IF ERRORLEVEL 1 GOTO Error
-cd Media.Native\package
-nuget pack
-IF ERRORLEVEL 1 GOTO Error
-cd ..\..
+cd ..
+
+rem cd ..\package
+rem nuget pack BB74.Media.Base.nuspec -BasePath .\package -properties configuration=Release
+rem IF ERRORLEVEL 1 GOTO Error
+rem cd ..\..
 goto exit
 :Error
 echo "error"

@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup >
-    <Reference Include="Media.Interop.Impl" >
+    <Reference Include="BB74.Media.Interop.Impl" >
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>

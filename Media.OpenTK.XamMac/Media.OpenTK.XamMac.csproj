@@ -53,9 +53,6 @@
     <Reference Include="Xamarin.Mac">
       <HintPath>..\..\..\..\Library\Frameworks\Xamarin.Mac.framework\Versions\5.8.0.0\lib\reference\full\Xamarin.Mac.dll</HintPath>
     </Reference>
-    <Reference Include="BB74.Xwt.Controls">
-      <HintPath>..\packages\BB74.Xwt.Controls.1.0.7061.21406\lib\net40\BB74.Xwt.Controls.dll</HintPath>
-    </Reference>
     <Reference Include="OpenTK">
       <HintPath>..\packages\OpenTK-3.0-EGL-disabled.1.0.0\lib\net20\OpenTK.dll</HintPath>
     </Reference>
@@ -88,6 +85,10 @@
     <ProjectReference Include="..\Media.OpenTK\Media.OpenTK.csproj">
       <Project>{D7CAD493-7F4B-4C83-A592-8D071B01CF28}</Project>
       <Name>Media.OpenTK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BB74.Controls.Xwt\BB74.Controls\BB74.Xwt.Controls.csproj">
+      <Project>{265B302E-B436-46F7-8CB1-57D42FD242AC}</Project>
+      <Name>BB74.Xwt.Controls</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

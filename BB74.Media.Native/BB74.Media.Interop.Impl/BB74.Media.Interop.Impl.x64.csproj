@@ -4,35 +4,43 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A08163ED-F101-4741-A12B-82BD202B2C23}</ProjectGuid>
+    <ProjectGuid>{BAFC5296-30AA-48CD-83DF-44ED088641F6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Media.Interop</RootNamespace>
-    <AssemblyName>Media.Interop.Impl</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>false</Deterministic>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;X64_BUILD</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;X64_BUILD</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyName>BB74.Media.Interop.x64</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Media.Base, Version=1.0.7063.24312, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BB74.Media.Base.1.0.7063.24312\lib\net40\Media.Base.dll</HintPath>
+    <Reference Include="BB74.Media.Base, Version=1.0.7069.20826, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Media.Base.1.0.7069.20826\lib\net40\BB74.Media.Base.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -47,9 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -59,5 +65,8 @@ copy "$(TargetPath)" "$(ProjectDir)..\package\data\x64"</PostBuildEvent>
   <PropertyGroup>
     <PostBuildEvent Condition="'$(OS)' != 'Windows_NT' ">cp "$(TargetPath)" "$(ProjectDir)..\package\data\x86"
 cp "$(TargetPath)" "$(ProjectDir)..\package\data\x64"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent />
   </PropertyGroup>
 </Project>
