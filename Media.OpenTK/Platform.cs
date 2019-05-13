@@ -11,31 +11,6 @@ namespace BaseLib.Media.OpenTK
 {
     public static class Platform
     {
-        public static PlatformID OSPlatform
-        {
-            get
-            {
-                if (System.Environment.OSVersion.Platform != PlatformID.MacOSX &&
-                    System.Environment.OSVersion.Platform != PlatformID.Unix)
-                {
-                    return PlatformID.Win32Windows;
-                }
-                else
-                {
-                    if (Directory.Exists("/Applications")
-                           & Directory.Exists("/System")
-                           & Directory.Exists("/Users")
-                           & Directory.Exists("/Volumes"))
-                    {
-                        return PlatformID.MacOSX;
-                    }
-                    else
-                    {
-                        return PlatformID.Unix;
-                    }
-                }
-            }
-        }
         public static IXwtRender TryLoad(ToolkitType type, out IRendererFactory renderfactory)
         {
            /* switch (OSPlatform)

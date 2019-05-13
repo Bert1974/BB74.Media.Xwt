@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\BB74.Media.FFMPEG.1.0.7072.26334-debug\build\BB74.Media.FFMPEG.props" Condition="Exists('..\..\packages\BB74.Media.FFMPEG.1.0.7072.26334-debug\build\BB74.Media.FFMPEG.props')" />
   <Import Project="..\..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props" Condition="Exists('..\..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -9,14 +10,15 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>MovieExample</RootNamespace>
     <AssemblyName>MovieExample</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,6 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -33,8 +36,24 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BB74.Media.Base, Version=1.0.7070.32372, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Media.FFMPEG.1.0.7072.26334-debug\lib\net472\BB74.Media.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="BB74.Media.Interop, Version=1.0.7072.26336, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Media.FFMPEG.1.0.7072.26334-debug\lib\net472\BB74.Media.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="BB74.Media.Interop.x64, Version=1.0.7072.26335, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\..\packages\BB74.Media.FFMPEG.1.0.7072.26334-debug\lib\net472\BB74.Media.Interop.x64.dll</HintPath>
+    </Reference>
+    <Reference Include="BB74.Media.Interop.x86, Version=1.0.7072.26336, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\..\packages\BB74.Media.FFMPEG.1.0.7072.26334-debug\lib\net472\BB74.Media.Interop.x86.dll</HintPath>
+    </Reference>
+    <Reference Include="BB74.Xwt.Controls, Version=1.0.7072.30362, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7072.30361-debug\lib\net472\BB74.Xwt.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\..\packages\OpenTK-3.0-EGL-disabled.1.0.0\lib\net20\OpenTK.dll</HintPath>
     </Reference>
@@ -80,7 +99,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.config" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -96,14 +117,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BB74.Controls.Xwt\BB74.Controls\BB74.Xwt.Controls.csproj">
-      <Project>{265b302e-b436-46f7-8cb1-57d42fd242ac}</Project>
-      <Name>BB74.Xwt.Controls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Media.Base\Media.Base.csproj">
-      <Project>{01fd5659-75cd-4d3c-8701-6d6cf54c2c31}</Project>
-      <Name>Media.Base</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Media.OpenTK.GTK\Media.OpenTK.GTK.csproj">
       <Project>{efd07f85-af34-4cb3-82e3-dd3d15ec011b}</Project>
       <Name>Media.OpenTK.GTK</Name>
@@ -116,19 +129,19 @@
       <Project>{d7cad493-7f4b-4c83-a592-8d071b01cf28}</Project>
       <Name>Media.OpenTK</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Media.Native\Media.Interop\Media.Interop.csproj">
-      <Project>{9926B468-0290-4E46-B3B4-32CAEABB659F}</Project>
-      <Name>Media.Interop</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
+  <Import Project="..\..\packages\BB74.Media.FFMPEG.1.0.7072.23397\build\BB74.Media.FFMPEG.targets" Condition="Exists('..\..\packages\BB74.Media.FFMPEG.1.0.7072.23397\build\BB74.Media.FFMPEG.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\BB74.Media.FFMPEG.1.0.7072.26334-debug\build\BB74.Media.FFMPEG.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\BB74.Media.FFMPEG.1.0.7072.26334-debug\build\BB74.Media.FFMPEG.props'))" />
+    <Error Condition="!Exists('..\..\packages\BB74.Media.FFMPEG.1.0.7072.26334-debug\build\BB74.Media.FFMPEG.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\BB74.Media.FFMPEG.1.0.7072.26334-debug\build\BB74.Media.FFMPEG.targets'))" />
   </Target>
+  <Import Project="..\..\packages\BB74.Media.FFMPEG.1.0.7072.26334-debug\build\BB74.Media.FFMPEG.targets" Condition="Exists('..\..\packages\BB74.Media.FFMPEG.1.0.7072.26334-debug\build\BB74.Media.FFMPEG.targets')" />
 </Project>

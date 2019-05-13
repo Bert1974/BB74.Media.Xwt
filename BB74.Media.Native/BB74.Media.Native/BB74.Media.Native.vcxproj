@@ -127,6 +127,12 @@ lib /def:$(ProjectDir)sandbox\win32\lib\avutil-56.def /out:$(ProjectDir)sandbox\
 lib /def:$(ProjectDir)sandbox\win32\lib\swresample-3.def /out:$(ProjectDir)sandbox\win32\lib\swresample-3.lib /MACHINE:X86
 lib /def:$(ProjectDir)sandbox\win32\lib\swscale-5.def /out:$(ProjectDir)sandbox\win32\lib\swscale-5.lib /MACHINE:X86</Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>copy "$(TargetPath)" "$(ProjectDir)..\package\data\$(PlatformTarget)\"
+copy "$(ProjectDir)sandbox\win32\bin\*.dll" "$(ProjectDir)..\package\data\x86\"
+copy "$(ProjectDir)sandbox\win64\bin\*.dll" "$(ProjectDir)..\package\data\x64\"
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -152,6 +158,12 @@ lib /def:$(ProjectDir)sandbox\win64\lib\avutil-56.def /out:$(ProjectDir)sandbox\
 lib /def:$(ProjectDir)sandbox\win64\lib\swresample-3.def /out:$(ProjectDir)sandbox\win64\lib\swresample-3.lib /MACHINE:X64
 lib /def:$(ProjectDir)sandbox\win64\lib\swscale-5.def /out:$(ProjectDir)sandbox\win64\lib\swscale-5.lib /MACHINE:X64</Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>copy "$(TargetPath)" "$(ProjectDir)..\package\data\$(PlatformTarget)\"
+copy "$(ProjectDir)sandbox\win32\bin\*.dll" "$(ProjectDir)..\package\data\x86\"
+copy "$(ProjectDir)sandbox\win64\bin\*.dll" "$(ProjectDir)..\package\data\x64\"
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

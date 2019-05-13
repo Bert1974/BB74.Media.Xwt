@@ -1,8 +1,40 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup >
-    <Reference Include="BB74.Media.Interop.Impl" >
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
-    </Reference>
-  </ItemGroup>
+  <UsingTask TaskName="OSVersionInformation" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <_PlatformID ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System.Reflection" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+                if (System.Environment.OSVersion.Platform != PlatformID.MacOSX &&
+                    System.Environment.OSVersion.Platform != PlatformID.Unix)
+                {
+                    _PlatformID="Win32";
+                }
+                else
+                {
+                    if (Directory.Exists("/Applications")
+                           & Directory.Exists("/System")
+                           & Directory.Exists("/Users")
+                           & Directory.Exists("/Volumes"))
+                    {
+			_PlatformID="OSX";
+                    }
+                    else
+                    {
+			_PlatformID="Linux";
+                    }
+                }
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <Target Name="GetOSIdentifiers" Condition=" '$(OSPlatform)' == '' ">
+    <OSVersionInformation>
+      <Output TaskParameter="_PlatformID" PropertyName="OSPlatform" />
+    </OSVersionInformation>
+  </Target>
+
 </Project>

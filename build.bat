@@ -9,12 +9,12 @@ rem cd Media.Base
 rem nuget pack Media.Base.csproj -properties configuration=Release
 
 cd BB74.Media.Base
-call build.bat
+call build.bat %*
 IF ERRORLEVEL 1 GOTO Error
 cd ..
 
 cd BB74.Media.Native
-call build.bat
+call build.bat %*
 IF ERRORLEVEL 1 GOTO Error
 cd ..
 

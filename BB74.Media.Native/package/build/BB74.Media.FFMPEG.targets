@@ -1,94 +1,133 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)..\data\$(TargetFramework)\BB74.Media.Interop.Impl.dll">
-      <Link>x64\BB74.Media.Interop.Impl.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)..\data\$(TargetFramework)\BB74.Media.Interop.Impl.dll">
-      <Link>x86\BB74.Media.Interop.Impl.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x64\avcodec-58.dll">
-     <Link>x64\avcodec-58.dll</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x64\avdevice-58.dll">
-     <Link>x64\avdevice-58.dll</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x64\avfilter-7.dll">
-     <Link>x64\avfilter-7.dll</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x64\avformat-58.dll">
-     <Link>x64\avformat-58.dll</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x64\avresample-4.dll">
-     <Link>x64\avresample-4.dll</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x64\avutil-56.dll">
-     <Link>x64\avutil-56.dll</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x64\swresample-3.dll">
-     <Link>x64\swresample-3.dll</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x64\swscale-5.dll">
-     <Link>x64\swscale-5.dll</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x64\BB74.Media.Native.dll">
-     <Link>x64\BB74.Media.Native.dll</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x64\libBB74.Media.Native.dll.so">
-     <Link>x64\libBB74.Media.Native.dll.so</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x64\libBB74.Media.Native.dll.dylib">
-     <Link>x64\libBB74.Media.Native.dll.dylib</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x86\avcodec-58.dll">
-     <Link>x86\avcodec-58.dll</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x86\avdevice-58.dll">
-     <Link>x86\avdevice-58.dll</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x86\avfilter-7.dll">
-     <Link>x86\avfilter-7.dll</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x86\avformat-58.dll">
-     <Link>x86\avformat-58.dll</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x86\avresample-4.dll">
-     <Link>x86\avresample-4.dll</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x86\avutil-56.dll">
-     <Link>x86\avutil-56.dll</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x86\swresample-3.dll">
-     <Link>x86\swresample-3.dll</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x86\swscale-5.dll">
-     <Link>x86\swscale-5.dll</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-   <None Include="$(MSBuildThisFileDirectory)..\data\x86\BB74.Media.Native.dll">
-     <Link>x86\BB74.Media.Native.dll</Link>
-     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
- </ItemGroup>
+
+  
+  <Target Name="AfterBuild" DependsOnTargets="GetOSIdentifiers">
+    <Message Importance="High" Text="TESTCommencing build for platform: $(OSPlatform)" />
+  </Target>
+  
+  <Target Name="CopyFiles32_64" DependsOnTargets="GetOSIdentifiers" AfterTargets="Build" Condition=" '$(Platform)' != 'x86' And $(OSPlatform) == 'Win32' ">
+    <ItemGroup >
+      <Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\avcodec-58.dll">
+        <Link>x64\avcodec-58.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Win32_64>
+      <Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\avdevice-58.dll">
+        <Link>x64\avdevice-58.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Win32_64>
+      <Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\avfilter-7.dll">
+        <Link>x64\avfilter-7.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Win32_64>
+      <Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\avformat-58.dll">
+        <Link>x64\avformat-58.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Win32_64>
+      <Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\avresample-4.dll">
+        <Link>x64\avresample-4.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Win32_64>
+      <Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\avutil-56.dll">
+        <Link>x64\avutil-56.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Win32_64>
+      <Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\swresample-3.dll">
+        <Link>x64\swresample-3.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Win32_64>
+      <Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\swscale-5.dll">
+        <Link>x64\swscale-5.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Win32_64>
+      <Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\BB74.Media.Native.dll">
+        <Link>x64\BB74.Media.Native.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Win32_64>
+    </ItemGroup>
+    <Copy
+        SourceFiles="@(Win32_64)"
+        DestinationFolder="$(TargetDir)x64\"
+        />
+    <Message Importance="High" Text="copied win32 ffmpeg files" />
+  </Target>
+  <Target Name="AfterBuild" DependsOnTargets="GetOSIdentifiers">
+    <Message Importance="High" Text="TEST2Commencing build for platform: $(OSPlatform)" />
+  </Target>
+
+  <Target Name="CopyFiles_WIn32_32" DependsOnTargets="GetOSIdentifiers" AfterTargets="Build" Condition=" '$(Platform)' != 'x64' And $(OSPlatform) == 'Win32' ">
+    <ItemGroup >
+      <Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\avcodec-58.dll">
+        <Link>x64\avcodec-58.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Win32_32>
+      <Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\avdevice-58.dll">
+        <Link>x64\avdevice-58.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Win32_32>
+      <Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\avfilter-7.dll">
+        <Link>x64\avfilter-7.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Win32_32>
+      <Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\avformat-58.dll">
+        <Link>x64\avformat-58.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Win32_32>
+      <Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\avresample-4.dll">
+        <Link>x64\avresample-4.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Win32_32>
+      <Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\avutil-56.dll">
+        <Link>x64\avutil-56.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Win32_32>
+      <Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\swresample-3.dll">
+        <Link>x64\swresample-3.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Win32_32>
+      <Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\swscale-5.dll">
+        <Link>x64\swscale-5.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Win32_32>
+      <Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\BB74.Media.Native.dll">
+        <Link>x64\BB74.Media.Native.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Win32_32>
+    </ItemGroup>
+    <Copy
+        SourceFiles="@(Win32_32)"
+        DestinationFolder="$(TargetDir)x86\"
+        />
+    <Message Importance="High" Text="copied win64 ffmpeg files" />
+  </Target>
+  <Target Name="CopyFiles_OSX" DependsOnTargets="GetOSIdentifiers" AfterTargets="Build" Condition=" $(OSPlatform) == 'OSX' ">
+    <ItemGroup >
+      <OSX_64 Include="$(MSBuildThisFileDirectory)..\data\x64\libBB74.Media.Native.dll.dylib">
+        <Link>x64\libBB74.Media.Native.dll.dylib</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </OSX_64>
+    </ItemGroup>
+    <Copy
+        SourceFiles="@(OSX_64)"
+        DestinationFolder="$(TargetDir)"
+        />
+    <Copy
+        SourceFiles="@(OSX_64)"
+        DestinationFolder="${TargetDir)/${ProjectName}.app/Contents/MonoBundle/"
+        />
+    <Message Importance="High" Text="copied OS-X ffmpeg files" />
+  </Target>
+ 
+  <Target Name="CopyFiles_Linux" DependsOnTargets="GetOSIdentifiers" AfterTargets="Build" Condition=" $(OSPlatform) == 'Linux' ">
+    <ItemGroup >
+      <Linux_64 Include="$(MSBuildThisFileDirectory)..\data\x64\libBB74.Media.Native.dll.so">
+        <Link>x64\libBB74.Media.Native.dll.so</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Linux_64>
+    </ItemGroup>
+    <Copy
+        SourceFiles="@(Linux_64)"
+        DestinationFolder="$(TargetDir)"
+        />
+    <Message Importance="High" Text="copied Linux ffmpeg files" />
+  </Target>
 </Project>

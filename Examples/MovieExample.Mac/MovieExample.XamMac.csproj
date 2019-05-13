@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\BB74.Media.FFMPEG.1.0.7070.27477\build\BB74.Media.FFMPEG.props" Condition="Exists('..\..\packages\BB74.Media.FFMPEG.1.0.7070.27477\build\BB74.Media.FFMPEG.props')" />
   <Import Project="..\..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props" Condition="Exists('..\..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props')" />
   <Import Project="..\..\packages\BB74.Media.FFMPEG.1.0.31-beta\build\BB74.Media.FFMPEG.props" Condition="Exists('..\..\packages\BB74.Media.FFMPEG.1.0.31-beta\build\BB74.Media.FFMPEG.props')" />
   <Import Project="..\packages\Xwt.Gtk3.0.2.167\build\Xwt.Gtk3.props" Condition="Exists('..\packages\Xwt.Gtk3.0.2.167\build\Xwt.Gtk3.props')" />
@@ -39,15 +40,7 @@
       <CustomCommands>
         <Command>
           <type>AfterBuild</type>
-          <command>cp "${SolutionDir}/Media.Native/Media.Native/make-osx/libMedia.Native.dll.dylib" "${TargetDir}/x64/"</command>
-        </Command>
-        <Command>
-          <type>AfterBuild</type>
-          <command>cp "${TargetDir}/x64/libMedia.Native.dll.dylib" "${TargetDir}/${ProjectName}.app/Contents/MonoBundle/"</command>
-        </Command>
-        <Command>
-          <type>AfterBuild</type>
-          <command>cp "${TargetDir}/x64/Media.Interop.Impl.dll" "${TargetDir}/${ProjectName}.app/Contents/MonoBundle/"</command>
+          <command>cp "/Library/Frameworks/Mono.framework/Versions/5.18.1/etc/mono/config" "${TargetDir}/${ProjectName}.app/Contents/MonoBundle/"</command>
         </Command>
       </CustomCommands>
     </CustomCommands>
@@ -69,32 +62,11 @@
     <XamMacArch>
     </XamMacArch>
     <AOTMode>None</AOTMode>
-    <CustomCommands>
-      <CustomCommands>
-        <Command>
-          <type>AfterBuild</type>
-          <command>cp "${TargetDir}/x64/libMedia.Native.dll.dylib" "${TargetDir}/${ProjectName}.app/Contents/MonoBundle/"</command>
-        </Command>
-        <Command>
-          <type>AfterBuild</type>
-          <command>cp "${TargetDir}/x64/Media.Interop.Impl.dll" "${TargetDir}/${ProjectName}.app/Contents/MonoBundle/"</command>
-        </Command>
-      </CustomCommands>
-    </CustomCommands>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.Mac" />
-    <Reference Include="Media.Base">
-      <HintPath>..\..\packages\BB74.Media.Base.1.0.7058.27178\lib\net40\Media.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="Xwt">
-      <HintPath>..\..\packages\Xwt.0.2.167\lib\net40\Xwt.dll</HintPath>
-    </Reference>
-    <Reference Include="Xwt.Gtk">
-      <HintPath>..\..\packages\Xwt.Gtk.0.2.167\lib\net40\Xwt.Gtk.dll</HintPath>
-    </Reference>
     <Reference Include="Xwt.Gtk.Mac">
       <HintPath>..\..\packages\Xwt.Gtk.Mac.0.2.167\lib\net40\Xwt.Gtk.Mac.dll</HintPath>
     </Reference>
@@ -107,8 +79,29 @@
     <Reference Include="Xwt.XamMac">
       <HintPath>..\..\packages\Xwt.XamMac.0.2.167\lib\net40\Xwt.XamMac.dll</HintPath>
     </Reference>
-    <Reference Include="Media.Interop">
-      <HintPath>..\..\packages\BB74.Media.FFMPEG.1.0.31-beta\lib\net40\Media.Interop.dll</HintPath>
+    <Reference Include="Xwt">
+      <HintPath>..\..\packages\Xwt.0.2.167\lib\net40\Xwt.dll</HintPath>
+    </Reference>
+    <Reference Include="Xwt.Gtk">
+      <HintPath>..\..\packages\Xwt.Gtk.0.2.167\lib\net40\Xwt.Gtk.dll</HintPath>
+    </Reference>
+    <Reference Include="BB74.Media.Base">
+      <HintPath>..\..\packages\BB74.Media.Base.1.0.7069.20826\lib\net45\BB74.Media.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="BB74.Media.Interop">
+      <HintPath>..\..\packages\BB74.Media.FFMPEG.1.0.7070.27477\lib\net45\BB74.Media.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="BB74.Media.Interop.Impl">
+      <HintPath>..\..\packages\BB74.Media.FFMPEG.1.0.7070.27477\lib\net45\BB74.Media.Interop.Impl.dll</HintPath>
+    </Reference>
+    <Reference Include="BB74.Media.Interop.x64">
+      <HintPath>..\..\packages\BB74.Media.FFMPEG.1.0.7070.27477\lib\net45\BB74.Media.Interop.x64.dll</HintPath>
+    </Reference>
+    <Reference Include="BB74.Media.Interop.x86">
+      <HintPath>..\..\packages\BB74.Media.FFMPEG.1.0.7070.27477\lib\net45\BB74.Media.Interop.x86.dll</HintPath>
+    </Reference>
+    <Reference Include="BB74.Xwt.Controls">
+      <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7068.36758\lib\net45\BB74.Xwt.Controls.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -152,11 +145,12 @@
       <Project>{9A3209A7-5067-4024-91D8-0EE4ADD95BA8}</Project>
       <Name>MovieExample.XamMac.lib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\BB74.Controls.Xwt\BB74.Controls\BB74.Xwt.Controls.csproj">
-      <Project>{265B302E-B436-46F7-8CB1-57D42FD242AC}</Project>
-      <Name>BB74.Xwt.Controls</Name>
+    <ProjectReference Include="..\..\Media.OpenTK.GTK\Media.OpenTK.GTK.csproj">
+      <Project>{EFD07F85-AF34-4CB3-82E3-DD3D15EC011B}</Project>
+      <Name>Media.OpenTK.GTK</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
   <Import Project="..\..\packages\BB74.Media.FFMPEG.1.0.31-beta\build\BB74.Media.FFMPEG.targets" Condition="Exists('..\..\packages\BB74.Media.FFMPEG.1.0.31-beta\build\BB74.Media.FFMPEG.targets')" />
+  <Import Project="..\..\packages\BB74.Media.FFMPEG.1.0.7070.27477\build\BB74.Media.FFMPEG.targets" Condition="Exists('..\..\packages\BB74.Media.FFMPEG.1.0.7070.27477\build\BB74.Media.FFMPEG.targets')" />
 </Project>

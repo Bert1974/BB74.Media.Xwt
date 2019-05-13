@@ -1,0 +1,1 @@
+nuget add BB74.Media.FFMPEG.$version$.nupkg -source e:\nuget

@@ -23,9 +23,11 @@ namespace MovieExample
         [STAThread]
         static void Main(string[] args)
         {
-            // load engine
             try
             {
+                // load engine
+                try
+                {
 #if (__MACOS__)
                 if (args.Contains("gtk"))
                 {
@@ -37,40 +39,43 @@ namespace MovieExample
                     TryLoad(ToolkitType.XamMac);
                 }
 #else
-                if (System.Environment.OSVersion.Platform == PlatformID.Unix || System.Environment.OSVersion.Platform == PlatformID.MacOSX)
-                {
-                    TryLoad(args.Contains("gtk3") ? ToolkitType.Gtk3 : ToolkitType.Gtk);
-                }
-                else // assume windows
-                {
-                    if (args.Contains("gtk"))
+                    if (System.Environment.OSVersion.Platform == PlatformID.Unix || System.Environment.OSVersion.Platform == PlatformID.MacOSX)
                     {
-                        try { TryLoad(ToolkitType.Gtk); }// i386 only 
-                        catch { TryLoad(ToolkitType.Wpf); }
+                        TryLoad(args.Contains("gtk3") ? ToolkitType.Gtk3 : ToolkitType.Gtk);
                     }
-                    else { TryLoad(ToolkitType.Wpf); }
-                }
+                    else // assume windows
+                    {
+                        if (args.Contains("gtk"))
+                        {
+                            try { TryLoad(ToolkitType.Gtk); }// i386 only 
+                            catch { TryLoad(ToolkitType.Wpf); }
+                        }
+                        else { TryLoad(ToolkitType.Wpf); }
+                    }
 #endif
+                }
+                catch (Exception e)
+                { Console.Error.WriteLine($"Error initializing/loading engine '{e.Message}'"); return; }
+
+                // initialize Xwt (with dll load for ubuntu with both gtk2 and gtk3 installed)
+                try { BaseLib.Xwt.Platform.Initialize(Program.ToolkitType); }
+                catch (Exception e)
+                { Console.Error.WriteLine($"Error initializing/loading xwt '{e.Message}'"); return; }
+
+                // intitialize xwt helpers
+                try { Program.Xwt = BaseLib.Xwt.XwtImpl.Create(); }
+                catch (Exception e) { Console.Error.WriteLine($"Error initializing/loading xwt-platform-specific '{e.Message}'"); return; }
+
+                // createwdinow
+
+                var window = new MainWindow(RenderFactory, XwtRender, Xwt) { Width = 250, Height = 250, Title = "Triangle" };
+                window.Show();
+                Application.Run();
             }
             catch (Exception e)
-            { Console.Error.WriteLine($"Error initializing/loading engine '{e.Message}'"); return; }
-
-            // initialize Xwt (with dll load for ubuntu with both gtk2 and gtk3 installed)
-            try { BaseLib.Xwt.Platform.Initialize(Program.ToolkitType); }
-            catch (Exception e) 
-            { Console.Error.WriteLine($"Error initializing/loading xwt '{e.Message}'"); return; }
-
-            // intitialize xwt helpers
-            try { Program.Xwt = BaseLib.Xwt.XwtImpl.Create(); }
-            catch (Exception e) { Console.Error.WriteLine($"Error initializing/loading xwt-platform-specific '{e.Message}'"); return; }
-
-            // createwdinow
-
-            var window = new MainWindow(RenderFactory, XwtRender, Xwt) { Width = 250, Height = 250, Title = "Triangle" };
-            window.Show();
-            Application.Run();
+            {
+            }
         }
-
         private static void TryLoad(ToolkitType type)
         {
             ToolkitType = type;

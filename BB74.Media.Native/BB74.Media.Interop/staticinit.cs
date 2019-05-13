@@ -28,16 +28,20 @@ namespace BaseLib.Media.Interop
         {
             if (args.Name.StartsWith("BB74.Media.Interop"))
             {
-                string dir = Path.GetDirectoryName(new Uri(typeof(staticinit).Assembly.Location).AbsolutePath);
+                try
+                {
+                    string dir = Path.GetDirectoryName(new Uri(typeof(staticinit).Assembly.Location).AbsolutePath);
 
-                if (IntPtr.Size == 8)
-                {
-                    return Assembly.LoadFile(Path.Combine(dir, "BB74.Media.Interop.x64.dll"));
+                    if (IntPtr.Size == 8)
+                    {
+                        return Assembly.LoadFile(Path.Combine(dir, "BB74.Media.Interop.x64.dll"));
+                    }
+                    else
+                    {
+                        return Assembly.LoadFile(Path.Combine(dir, "BB74.Media.Interop.x86.dll"));
+                    }
                 }
-                else
-                {
-                    return Assembly.LoadFile(Path.Combine(dir, "BB74.Media.Interop.x86.dll"));
-                }
+                catch { }
             }
             return null;
         }
