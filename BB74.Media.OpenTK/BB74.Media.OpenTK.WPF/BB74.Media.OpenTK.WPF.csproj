@@ -34,21 +34,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BB74.Media.Base, Version=1.0.7073.20740, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\BB74.Media.Base.1.0.7073.20740\lib\net40\BB74.Media.Base.dll</HintPath>
+      <HintPath>..\..\packages\BB74.Media.Base.1.0.7073.20740\lib\net40\BB74.Media.Base.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>..\packages\OpenTK-3.0-EGL-disabled.1.0.0\lib\net20\OpenTK.dll</HintPath>
+      <HintPath>..\..\packages\OpenTK-3.0-EGL-disabled.1.0.0\lib\net20\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="SharpDX, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpDX.4.2.0\lib\net40\SharpDX.dll</HintPath>
+      <HintPath>..\..\packages\SharpDX.4.2.0\lib\net40\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Direct3D9, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpDX.Direct3D9.4.2.0\lib\net40\SharpDX.Direct3D9.dll</HintPath>
+      <HintPath>..\..\packages\SharpDX.Direct3D9.4.2.0\lib\net40\SharpDX.Direct3D9.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Mathematics, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpDX.Mathematics.4.2.0\lib\net40\SharpDX.Mathematics.dll</HintPath>
+      <HintPath>..\..\packages\SharpDX.Mathematics.4.2.0\lib\net40\SharpDX.Mathematics.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -59,10 +59,10 @@
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
     <Reference Include="Xwt, Version=0.2.167.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xwt.0.2.167\lib\net40\Xwt.dll</HintPath>
+      <HintPath>..\..\packages\Xwt.0.2.167\lib\net40\Xwt.dll</HintPath>
     </Reference>
     <Reference Include="Xwt.WPF, Version=0.2.167.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xwt.WPF.0.2.167\lib\net40\Xwt.WPF.dll</HintPath>
+      <HintPath>..\..\packages\Xwt.WPF.0.2.167\lib\net40\Xwt.WPF.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -78,11 +78,11 @@
     <Compile Include="SharpDX\VideoFrame.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Media.OpenTK.GTK\Media.OpenTK.GTK.csproj">
+    <ProjectReference Include="..\BB74.Media.OpenTK.GTK\BB74.Media.OpenTK.GTK.csproj">
       <Project>{efd07f85-af34-4cb3-82e3-dd3d15ec011b}</Project>
       <Name>Media.OpenTK.GTK</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Media.OpenTK\Media.OpenTK.csproj">
+    <ProjectReference Include="..\BB74.Media.OpenTK\BB74.Media.OpenTK.csproj">
       <Project>{D7CAD493-7F4B-4C83-A592-8D071B01CF28}</Project>
       <Name>Media.OpenTK</Name>
     </ProjectReference>
