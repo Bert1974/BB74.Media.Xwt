@@ -33,8 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BB74.Media.Base, Version=1.0.7072.30780, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\BB74.Media.Base.1.0.7072.30780\lib\net40\BB74.Media.Base.dll</HintPath>
+    <Reference Include="BB74.Media.Base, Version=1.0.7073.20740, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BB74.Media.Base.1.0.7073.20740\lib\net40\BB74.Media.Base.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\packages\OpenTK-3.0-EGL-disabled.1.0.0\lib\net20\OpenTK.dll</HintPath>

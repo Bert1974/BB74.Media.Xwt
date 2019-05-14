@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
+#if (false)
 namespace BaseLib.Media
 {
 }
@@ -54,3 +55,4 @@ namespace BaseLib.Media.Video
         public Rational fps, timebase;
     }
 }
+#endif

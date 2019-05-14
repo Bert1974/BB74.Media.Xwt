@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Media.Interop</RootNamespace>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>false</Deterministic>
     <TargetFrameworkProfile />
@@ -28,7 +28,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;X86_BUILD</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -38,8 +38,8 @@
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BB74.Media.Base, Version=1.0.7069.20826, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BB74.Media.Base.1.0.7069.20826\lib\net40\BB74.Media.Base.dll</HintPath>
+    <Reference Include="BB74.Media.Base, Version=1.0.7073.13342, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Media.Base.1.0.7073.13342-debug\lib\net40\BB74.Media.Base.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />

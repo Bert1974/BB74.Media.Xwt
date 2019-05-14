@@ -1,5 +1,5 @@
 set BB74_CONFIG=Release
-set BB74_PUBLISH="default"
+set BB74_PUBLISH=default
 set BB74_VERSIONONLY=FALSE
 
 :parse
@@ -41,8 +41,8 @@ md data\x86
 md data\x64
 md lib
 md lib\net40
-md lib\net45
-md lib\net472
+rem md lib\net45
+rem md lib\net472
 
 cd ..
 
@@ -62,42 +62,42 @@ IF ERRORLEVEL 1 GOTO Error
 cd ..
 msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=..\package\ref\net40
 IF ERRORLEVEL 1 GOTO Error
-msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.x64.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=x64 /p:OutputPath=..\package\lib\net40
+msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=x64 /p:OutputPath=..\package\ref\net40 /p:DefineConstants=X64_BUILD /p:AssemblyName=BB74.Media.Interop.x64
 IF ERRORLEVEL 1 GOTO Error
-msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.x86.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=x86 /p:OutputPath=..\package\lib\net40
+msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=x86 /p:OutputPath=..\package\ref\net40 /p:DefineConstants=X86_BUILD /p:AssemblyName=BB74.Media.Interop.x86
 IF ERRORLEVEL 1 GOTO Error
-rem devenv.com  ..\BB74.OpenTK.Xwt.sln /build %BB74_CONFIG%  /project BB74.Media.Interop.Impl /projectconfig %BB74_CONFIG%
-rem IF ERRORLEVEL 1 GOTO Error
-rem devenv.com  ..\BB74.OpenTK.Xwt.sln /rebuild %BB74_CONFIG%  /project BB74.Media.Interop /projectconfig %BB74_CONFIG%
-rem IF ERRORLEVEL 1 GOTO Error
-rem copy BB74.Media.Interop.Impl\bin\%BB74_CONFIG%\BB74.Media.Interop.dll package\lib\net40
-rem IF ERRORLEVEL 1 GOTO Error
+msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=Release,Platform=AnyCPU
+IF ERRORLEVEL 1 GOTO Error
 msbuild BB74.Media.Interop\BB74.Media.Interop.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=..\package\lib\net40
 IF ERRORLEVEL 1 GOTO Error
-del .\package\lib\net40\BB74.Media.Interop.Impl.*
+del package\lib\net40\BB74.Media.Interop.Impl.*
 IF ERRORLEVEL 1 GOTO Error
 
-msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.5;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=..\package\ref\net45
-IF ERRORLEVEL 1 GOTO Error
-msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.x64.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.5;Configuration=%BB74_CONFIG%,Platform=x64 /p:OutputPath=..\package\lib\net45
-IF ERRORLEVEL 1 GOTO Error
-msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.x86.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.5;Configuration=%BB74_CONFIG%,Platform=x86 /p:OutputPath=..\package\lib\net45
-IF ERRORLEVEL 1 GOTO Error
-msbuild BB74.Media.Interop\BB74.Media.Interop.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.5;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=..\package\lib\net45
-IF ERRORLEVEL 1 GOTO Error
-del .\package\lib\net45\BB74.Media.Interop.Impl.*
-IF ERRORLEVEL 1 GOTO Error
+rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.5;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=..\package\ref\net45
+rem IF ERRORLEVEL 1 GOTO Error
+rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.x64.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.5;Configuration=%BB74_CONFIG%,Platform=x64 /p:OutputPath=..\package\lib\net45
+rem IF ERRORLEVEL 1 GOTO Error
+rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.x86.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.5;Configuration=%BB74_CONFIG%,Platform=x86 /p:OutputPath=..\package\lib\net45
+rem IF ERRORLEVEL 1 GOTO Error
+rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.5;Configuration=Release,Platform=AnyCPU
+rem IF ERRORLEVEL 1 GOTO Error
+rem msbuild BB74.Media.Interop\BB74.Media.Interop.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.5;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=..\package\lib\net45
+rem IF ERRORLEVEL 1 GOTO Error
+rem del .\package\lib\net45\BB74.Media.Interop.Impl.*
+rem IF ERRORLEVEL 1 GOTO Error
 
-msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.7.2;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=..\package\ref\net472
-IF ERRORLEVEL 1 GOTO Error
-msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.x64.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.7.2;Configuration=%BB74_CONFIG%,Platform=x64 /p:OutputPath=..\package\lib\net472
-IF ERRORLEVEL 1 GOTO Error
-msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.x86.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.7.2;Configuration=%BB74_CONFIG%,Platform=x86 /p:OutputPath=..\package\lib\net472
-IF ERRORLEVEL 1 GOTO Error
-msbuild BB74.Media.Interop\BB74.Media.Interop.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.7.2;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=..\package\lib\net472
-IF ERRORLEVEL 1 GOTO Error
-del .\package\lib\net472\BB74.Media.Interop.Impl.*
-IF ERRORLEVEL 1 GOTO Error
+rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.7.2;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=..\package\ref\net472
+rem IF ERRORLEVEL 1 GOTO Error
+rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.x64.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.7.2;Configuration=%BB74_CONFIG%,Platform=x64 /p:OutputPath=..\package\lib\net472
+rem IF ERRORLEVEL 1 GOTO Error
+rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.x86.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.7.2;Configuration=%BB74_CONFIG%,Platform=x86 /p:OutputPath=..\package\lib\net472
+rem IF ERRORLEVEL 1 GOTO Error
+rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.7.2;Configuration=Release,Platform=AnyCPU
+rem IF ERRORLEVEL 1 GOTO Error
+rem msbuild BB74.Media.Interop\BB74.Media.Interop.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.7.2;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=..\package\lib\net472
+rem IF ERRORLEVEL 1 GOTO Error
+rem del .\package\lib\net472\BB74.Media.Interop.Impl.*
+rem IF ERRORLEVEL 1 GOTO Error
 
 :versiononly
 
@@ -106,7 +106,7 @@ IF ERRORLEVEL 1 GOTO Error
 
 if "%BB74_VERSIONONLY%"=="TRUE" goto exit
 
-nuget pack _tmp\BB74.Media.FFMPEG.nuspec -BasePath .\package -properties configuration=%BB74_CONFIG% OutputDirectory=packages\
+nuget pack _tmp\BB74.Media.FFMPEG.nuspec -BasePath .\package -properties configuration=%BB74_CONFIG% -OutputDirectory packages\
 if ERRORLEVEL 1 GOTO Error
 
 if NOT "%BB74_PUBLISH%"=="bert" goto exit

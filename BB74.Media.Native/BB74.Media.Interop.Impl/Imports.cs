@@ -50,7 +50,7 @@ namespace BaseLib.Interop
 #elif X64_BUILD
         public const string _dll_name = "x64\\BB74.Media.Native.dll";
 #else
-        public const string _dll_name = "not mapped";
+        public const string _dll_name = "BB74.Media.Native.dll";
 #endif
         [DllImport(BaseLib.Interop.Imports._dll_name, CallingConvention = CallingConvention.Cdecl)]
         public static extern void __setprintf(IntPtr callback);

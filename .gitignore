@@ -38,3 +38,12 @@
 /Examples/MovieExample/OpenTK.dll.config
 /Media.OpenTK.GTK/OpenTK.dll.config
 /Media.Base/package/lib
+/BB74.Media.Base/obj
+/BB74.Media.Base/bin
+/BB74.Media.Base/packages
+/BB74.Media.Native/BB74.Media.Interop.Impl/obj
+/BB74.Media.Native/BB74.Media.Native/obj
+/BB74.Media.Native/BB74.Media.Native/bin
+/BB74.Media.Native/BB74.Media.Interop/bin
+/BB74.Media.Native/BB74.Media.Interop/obj
+/BB74.Media.Native/BB74.Media.Interop.Impl/bin

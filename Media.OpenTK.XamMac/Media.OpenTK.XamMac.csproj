@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Media.OpenTK.XamMac</RootNamespace>
     <AssemblyName>Media.OpenTK.XamMac</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
@@ -56,9 +56,6 @@
     <Reference Include="OpenTK">
       <HintPath>..\packages\OpenTK-3.0-EGL-disabled.1.0.0\lib\net20\OpenTK.dll</HintPath>
     </Reference>
-    <Reference Include="Media.Base">
-      <HintPath>..\packages\BB74.Media.Base.1.0.7063.24312\lib\net40\Media.Base.dll</HintPath>
-    </Reference>
     <Reference Include="Xwt.Gtk">
       <HintPath>..\packages\Xwt.Gtk.0.2.167\lib\net40\Xwt.Gtk.dll</HintPath>
     </Reference>
@@ -70,6 +67,9 @@
     </Reference>
     <Reference Include="Xwt.WPF">
       <HintPath>..\packages\Xwt.WPF.0.2.167\lib\net40\Xwt.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="BB74.Media.Base">
+      <HintPath>..\packages\BB74.Media.Base.1.0.7073.20740\lib\net40\BB74.Media.Base.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
