@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\..\packages\BB74.Media.FFMPEG.1.0.7073.19567\build\BB74.Media.FFMPEG.props" Condition="Exists('..\..\..\packages\BB74.Media.FFMPEG.1.0.7073.19567\build\BB74.Media.FFMPEG.props')" />
+  <Import Project="..\..\..\packages\BB74.Media.FFMPEG.1.0.7073.21025\build\BB74.Media.FFMPEG.props" Condition="Exists('..\..\..\packages\BB74.Media.FFMPEG.1.0.7073.21025\build\BB74.Media.FFMPEG.props')" />
   <Import Project="..\..\..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props" Condition="Exists('..\..\..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props')" />
   <Import Project="..\..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props" Condition="Exists('..\..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props')" />
   <PropertyGroup>
@@ -75,15 +75,15 @@
       <HintPath>..\..\..\packages\Xwt.Gtk.Mac.0.2.167\lib\net40\Xwt.Gtk.Mac.dll</HintPath>
     </Reference>
     <Reference Include="BB74.Xwt.Controls">
-      <HintPath>..\..\..\packages\BB74.Xwt.Controls.1.0.7073.13216\lib\net40\BB74.Xwt.Controls.dll</HintPath>
+      <HintPath>..\..\..\packages\BB74.Xwt.Controls.1.0.7073.20561\lib\net40\BB74.Xwt.Controls.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="BB74.Media.Base">
-      <HintPath>..\..\..\packages\BB74.Media.Base.1.0.7073.13335\lib\net40\BB74.Media.Base.dll</HintPath>
+      <HintPath>..\..\..\packages\BB74.Media.Base.1.0.7073.20740\lib\net40\BB74.Media.Base.dll</HintPath>
     </Reference>
     <Reference Include="BB74.Media.Interop">
-      <HintPath>..\..\..\packages\BB74.Media.FFMPEG.1.0.7073.19567\lib\net40\BB74.Media.Interop.dll</HintPath>
+      <HintPath>..\..\..\packages\BB74.Media.FFMPEG.1.0.7073.21025\lib\net40\BB74.Media.Interop.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -129,5 +129,5 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
-  <Import Project="..\..\..\packages\BB74.Media.FFMPEG.1.0.7073.19567\build\BB74.Media.FFMPEG.targets" Condition="Exists('..\..\..\packages\BB74.Media.FFMPEG.1.0.7073.19567\build\BB74.Media.FFMPEG.targets')" />
+  <Import Project="..\..\..\packages\BB74.Media.FFMPEG.1.0.7073.21025\build\BB74.Media.FFMPEG.targets" Condition="Exists('..\..\..\packages\BB74.Media.FFMPEG.1.0.7073.21025\build\BB74.Media.FFMPEG.targets')" />
 </Project>
