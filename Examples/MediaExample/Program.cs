@@ -85,14 +85,20 @@ namespace DockExample
                 }
 #endif
             }
-            catch
+            catch (Exception e)
             {
                 return;
             }
-            Program.Xwt = BaseLib.Xwt.XwtImpl.Create();
+            try
+            {
+                Program.Xwt = BaseLib.Xwt.XwtImpl.Create();
 
-            UIHelpers.NewWindow();
-            Application.Run();
+                UIHelpers.NewWindow();
+                Application.Run();
+            }
+            catch (Exception e)
+            {
+            }
         }
         public static void AddWindow(mainwindow window)
         {
