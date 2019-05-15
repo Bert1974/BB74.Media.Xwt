@@ -1,0 +1,24 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="CopyOpenTK301" DependsOnTargets="GetOSIdentifiersOpenTK" AfterTargets="Build">
+    <ItemGroup Condition=" $(OSPlatform) == 'OSX' " >
+      <OSX_64_OPENTK Include="$(MSBuildThisFileDirectory)..\..\OpenTK.3.0.1\lib\net20\OpenTK.dll">
+        <Link>OpenTK.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </OSX_64_OPENTK>
+      <OSX_64_OPENTK Include="$(MSBuildThisFileDirectory)..\..\OpenTK.3.0.1\lib\net20\OpenTK.pdb">
+        <Link>OpenTK.dll</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </OSX_64_OPENTK>
+    </ItemGroup>
+    <Copy
+        SourceFiles="@(OSX_64_OPENTK)"
+        DestinationFolder="$(TargetDir)"
+        />
+    <Copy
+        SourceFiles="@(OSX_64_OPENTK)"
+        DestinationFolder="bin/$(Configuration)/$(AssemblyName).app/Contents/MonoBundle/"
+        />
+    <Message Importance="High" Text="copied OS-X opentk files" />
+  </Target>
+</Project>

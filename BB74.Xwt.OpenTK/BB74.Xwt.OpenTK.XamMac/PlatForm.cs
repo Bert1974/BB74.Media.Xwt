@@ -39,6 +39,18 @@ namespace BaseLib.Platforms
 
             // NSApplication.Initialize(); // Problem: This does not allow creating a separate app and using CocoaNativeWindow.
         }
+        ~XamMac()
+        {
+            Dispose(false);
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        private void Dispose(bool disposing)
+        {
+        }
         public NSOpenGLPixelFormat GetOpenGLPixelFormat(uint mask)
         {
             object[] attribs = new object[] {

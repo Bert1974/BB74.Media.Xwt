@@ -5,7 +5,7 @@ using CoreAnimation;
 using CoreGraphics;
 using CoreVideo;
 using OpenGL;
-using OpenTK.Graphics.OpenGL;
+//using OpenTK.Graphics.OpenGL;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -29,7 +29,7 @@ namespace BaseLib.Platforms
 
                 private readonly viewwindow owner;
                 internal _GraphicsContext _ctx2;
-                private Thread thread;
+              //  private Thread thread;
                 private ManualResetEvent stop = new ManualResetEvent(false), stopped = new ManualResetEvent(false);
                 private long timebase;
                 private long lastupdate = -1;
@@ -156,52 +156,60 @@ namespace BaseLib.Platforms
                 }
                 public override void DrawInCGLContext(CGLContext glContext, CGLPixelFormat pixelFormat, double timeInterval, ref CVTimeStamp timeStamp)
                 {
-                    long now = DateTime.Now.Ticks;
-
-               /*     if (lastupdate != -1 && lastupdate - now > 1000000)
+                    try
                     {
-                        // this.owner.renderer.SkipRender(lastupdate - now-400000);
-                    }
+                        long now = DateTime.Now.Ticks;
 
-                    Interlocked.Exchange(ref lastupdate, DateTime.Now.Ticks);
-                    var now = DateTime.Now.Ticks;*/
-                    if (lastupdate == -1)
-                    { 
-                        this.timebase = now;
-                        lastupdate = 0;
-                    }
-                    var time = now - this.timebase;
+                        /*     if (lastupdate != -1 && lastupdate - now > 1000000)
+                             {
+                                 // this.owner.renderer.SkipRender(lastupdate - now-400000);
+                             }
 
-                    if (lastupdate != -1 && (time - lastupdate) > 25000000)
-                    {
-                        this.timebase += time - lastupdate;
-                        time = lastupdate;
-                    }
-                    lastupdate = time;
-                    if (this.owner.renderer.preparerender(null, time, false))
-                    {
-                        //  lock (this.owner)
+                             Interlocked.Exchange(ref lastupdate, DateTime.Now.Ticks);
+                             var now = DateTime.Now.Ticks;*/
+                        if (lastupdate == -1)
                         {
-                            this.OpenGLContext.CGLContext.Lock();
-                            this.OpenGLContext.MakeCurrentContext();
+                            this.timebase = now;
+                            lastupdate = 0;
+                        }
+                        var time = now - this.timebase;
 
-                            try
+                        if (lastupdate != -1 && (time - lastupdate) > 25000000)
+                        {
+                            this.timebase += time - lastupdate;
+                            time = lastupdate;
+                        }
+                        lastupdate = time;
+                        if (this.owner.renderer.preparerender(null, time, false))
+                        {
+                            //  lock (this.owner)
                             {
-                                GL.Viewport(0, 0, Convert.ToInt32(this.owner.Bounds.Width), Convert.ToInt32(this.owner.Bounds.Height));
-                                var r = new Xwt.Rectangle(0, 0, this.owner.Bounds.Width, this.owner.Bounds.Height);
-                                this.owner.renderer.render(null, time, r);
-                            }
-                            catch (Exception e)
-                            {
-                                //    Log.LogException(e);
-                            }
+                                this.OpenGLContext.CGLContext.Lock();
+                                this.OpenGLContext.MakeCurrentContext();
 
-                            this.OpenGLContext.FlushBuffer();
-                            this.OpenGLContext.CGLContext.Unlock();
-                            NSOpenGLContext.ClearCurrentContext();
+                                try
+                                {
+                                    var r = new Xwt.Rectangle(0, 0, this.owner.Bounds.Width, this.owner.Bounds.Height);
+
+                                    this.owner.renderer.render(null, time, r);
+                                }
+                                catch (Exception e)
+                                {
+                                    //    Log.LogException(e);
+                                }
+
+                                this.OpenGLContext.FlushBuffer();
+                                this.OpenGLContext.CGLContext.Unlock();
+                                NSOpenGLContext.ClearCurrentContext();
+                            }
                         }
                     }
+                    catch(Exception e)
+                    {
+                   
+}
                 }
+
             }
 
 

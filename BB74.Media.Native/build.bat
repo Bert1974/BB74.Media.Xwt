@@ -111,7 +111,7 @@ if ERRORLEVEL 1 GOTO Error
 
 if NOT "%BB74_PUBLISH%"=="bert" goto exit
 
-..\bin\getversion -version_ext "%BB74_VERSION%" assembly package\lib\net40\BB74.Media.Interop.dll copy._bat _tmp\copy.bat
+..\bin\getversion -version_ext "%BB74_VERSION%" -assembly package\lib\net40\BB74.Media.Interop.dll copy._bat _tmp\copy.bat
 IF ERRORLEVEL 1 GOTO Error
 
 call _tmp\copy.bat

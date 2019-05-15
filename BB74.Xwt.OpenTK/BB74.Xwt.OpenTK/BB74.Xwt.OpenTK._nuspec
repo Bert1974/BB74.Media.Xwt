@@ -4,8 +4,8 @@
     <id>$id$</id>
     <version>$version$</version>
     <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
+    <authors>Bert Bruggeman</authors>
+    <owners>Bert Bruggeman</owners>
     <license type="expression">MIT</license>
     <projectUrl>https://github.com/Bert1974/BB74.OpenTK.Xwt</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
