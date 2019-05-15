@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\BB74.Media.FFMPEG.1.0.7074.32440-debug\build\BB74.Media.FFMPEG.props" Condition="Exists('..\..\packages\BB74.Media.FFMPEG.1.0.7074.32440-debug\build\BB74.Media.FFMPEG.props')" />
-  <Import Project="..\..\packages\BB74.Xwt.OpenTK.1.0.7074.33130-debug\build\BB74.Xwt.OpenTK.props" Condition="Exists('..\..\packages\BB74.Xwt.OpenTK.1.0.7074.33130-debug\build\BB74.Xwt.OpenTK.props')" />
-  <Import Project="..\..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props" Condition="Exists('..\..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props')" />
+  <Import Project="..\..\packages\Xwt.Gtk.0.2.168\build\Xwt.Gtk.props" Condition="Exists('..\..\packages\Xwt.Gtk.0.2.168\build\Xwt.Gtk.props')" />
+  <Import Project="..\..\packages\BB74.Xwt.OpenTK.1.0.7074.34565-debug\build\BB74.Xwt.OpenTK.props" Condition="Exists('..\..\packages\BB74.Xwt.OpenTK.1.0.7074.34565-debug\build\BB74.Xwt.OpenTK.props')" />
+  <Import Project="..\..\packages\BB74.Media.FFMPEG.1.0.7074.34574-debug\build\BB74.Media.FFMPEG.props" Condition="Exists('..\..\packages\BB74.Media.FFMPEG.1.0.7074.34574-debug\build\BB74.Media.FFMPEG.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -43,20 +43,20 @@
     <Reference Include="BB74.Media.Base, Version=1.0.7074.25260, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\BB74.Media.Base.1.0.7074.25260\lib\net40\BB74.Media.Base.dll</HintPath>
     </Reference>
-    <Reference Include="BB74.Media.Interop, Version=1.0.7074.32440, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BB74.Media.FFMPEG.1.0.7074.32440-debug\lib\net40\BB74.Media.Interop.dll</HintPath>
+    <Reference Include="BB74.Media.Interop, Version=1.0.7074.34574, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Media.FFMPEG.1.0.7074.34574-debug\lib\net40\BB74.Media.Interop.dll</HintPath>
     </Reference>
     <Reference Include="BB74.Xwt.Controls, Version=1.0.7074.28838, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7074.28838-debug\lib\net40\BB74.Xwt.Controls.dll</HintPath>
     </Reference>
-    <Reference Include="BB74.Xwt.OpenTK, Version=1.0.7074.33130, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BB74.Xwt.OpenTK.1.0.7074.33130-debug\lib\net40\BB74.Xwt.OpenTK.dll</HintPath>
+    <Reference Include="BB74.Xwt.OpenTK, Version=1.0.7074.34565, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Xwt.OpenTK.1.0.7074.34565-debug\lib\net40\BB74.Xwt.OpenTK.dll</HintPath>
     </Reference>
-    <Reference Include="BB74.Xwt.OpenTK.GTK, Version=1.0.7074.33132, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BB74.Xwt.OpenTK.GTK.1.0.7074.33132-debug\lib\net40\BB74.Xwt.OpenTK.GTK.dll</HintPath>
+    <Reference Include="BB74.Xwt.OpenTK.GTK, Version=1.0.7074.34567, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Xwt.OpenTK.GTK.1.0.7074.34567-debug\lib\net40\BB74.Xwt.OpenTK.GTK.dll</HintPath>
     </Reference>
-    <Reference Include="BB74.Xwt.OpenTK.WPF, Version=1.0.7074.33133, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BB74.Xwt.OpenTK.WPF.1.0.7074.33133-debug\lib\net40\BB74.Xwt.OpenTK.WPF.dll</HintPath>
+    <Reference Include="BB74.Xwt.OpenTK.WPF, Version=1.0.7074.34568, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Xwt.OpenTK.WPF.1.0.7074.34568-debug\lib\net40\BB74.Xwt.OpenTK.WPF.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -81,23 +81,23 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Xwt, Version=0.2.167.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xwt.0.2.167\lib\net40\Xwt.dll</HintPath>
+    <Reference Include="Xwt, Version=0.2.168.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xwt.0.2.168\lib\net40\Xwt.dll</HintPath>
     </Reference>
-    <Reference Include="Xwt.Gtk, Version=0.2.167.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xwt.Gtk.0.2.167\lib\net40\Xwt.Gtk.dll</HintPath>
+    <Reference Include="Xwt.Gtk, Version=0.2.168.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xwt.Gtk.0.2.168\lib\net40\Xwt.Gtk.dll</HintPath>
     </Reference>
-    <Reference Include="Xwt.Gtk.Mac, Version=0.2.167.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xwt.Gtk.Mac.0.2.167\lib\net40\Xwt.Gtk.Mac.dll</HintPath>
+    <Reference Include="Xwt.Gtk.Mac, Version=0.2.168.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xwt.Gtk.Mac.0.2.168\lib\net40\Xwt.Gtk.Mac.dll</HintPath>
     </Reference>
     <Reference Include="Xwt.Gtk.Windows, Version=0.2.167.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xwt.Gtk.Windows.0.2.167\lib\net40\Xwt.Gtk.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="Xwt.WPF, Version=0.2.167.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xwt.WPF.0.2.167\lib\net40\Xwt.WPF.dll</HintPath>
+    <Reference Include="Xwt.WPF, Version=0.2.168.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xwt.WPF.0.2.168\lib\net40\Xwt.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Xwt.XamMac, Version=0.2.167.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xwt.XamMac.0.2.167\lib\net40\Xwt.XamMac.dll</HintPath>
+    <Reference Include="Xwt.XamMac, Version=0.2.168.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xwt.XamMac.0.2.168\lib\net40\Xwt.XamMac.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -140,11 +140,12 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\BB74.Xwt.OpenTK.1.0.7074.33130-debug\build\BB74.Xwt.OpenTK.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\BB74.Xwt.OpenTK.1.0.7074.33130-debug\build\BB74.Xwt.OpenTK.props'))" />
-    <Error Condition="!Exists('..\..\packages\BB74.Xwt.OpenTK.1.0.7074.33130-debug\build\BB74.Xwt.OpenTK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\BB74.Xwt.OpenTK.1.0.7074.33130-debug\build\BB74.Xwt.OpenTK.targets'))" />
-    <Error Condition="!Exists('..\..\packages\BB74.Media.FFMPEG.1.0.7074.32440-debug\build\BB74.Media.FFMPEG.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\BB74.Media.FFMPEG.1.0.7074.32440-debug\build\BB74.Media.FFMPEG.props'))" />
-    <Error Condition="!Exists('..\..\packages\BB74.Media.FFMPEG.1.0.7074.32440-debug\build\BB74.Media.FFMPEG.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\BB74.Media.FFMPEG.1.0.7074.32440-debug\build\BB74.Media.FFMPEG.targets'))" />
+    <Error Condition="!Exists('..\..\packages\BB74.Media.FFMPEG.1.0.7074.34574-debug\build\BB74.Media.FFMPEG.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\BB74.Media.FFMPEG.1.0.7074.34574-debug\build\BB74.Media.FFMPEG.props'))" />
+    <Error Condition="!Exists('..\..\packages\BB74.Media.FFMPEG.1.0.7074.34574-debug\build\BB74.Media.FFMPEG.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\BB74.Media.FFMPEG.1.0.7074.34574-debug\build\BB74.Media.FFMPEG.targets'))" />
+    <Error Condition="!Exists('..\..\packages\BB74.Xwt.OpenTK.1.0.7074.34565-debug\build\BB74.Xwt.OpenTK.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\BB74.Xwt.OpenTK.1.0.7074.34565-debug\build\BB74.Xwt.OpenTK.props'))" />
+    <Error Condition="!Exists('..\..\packages\BB74.Xwt.OpenTK.1.0.7074.34565-debug\build\BB74.Xwt.OpenTK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\BB74.Xwt.OpenTK.1.0.7074.34565-debug\build\BB74.Xwt.OpenTK.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Xwt.Gtk.0.2.168\build\Xwt.Gtk.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xwt.Gtk.0.2.168\build\Xwt.Gtk.props'))" />
   </Target>
-  <Import Project="..\..\packages\BB74.Xwt.OpenTK.1.0.7074.33130-debug\build\BB74.Xwt.OpenTK.targets" Condition="Exists('..\..\packages\BB74.Xwt.OpenTK.1.0.7074.33130-debug\build\BB74.Xwt.OpenTK.targets')" />
-  <Import Project="..\..\packages\BB74.Media.FFMPEG.1.0.7074.32440-debug\build\BB74.Media.FFMPEG.targets" Condition="Exists('..\..\packages\BB74.Media.FFMPEG.1.0.7074.32440-debug\build\BB74.Media.FFMPEG.targets')" />
+  <Import Project="..\..\packages\BB74.Media.FFMPEG.1.0.7074.34574-debug\build\BB74.Media.FFMPEG.targets" Condition="Exists('..\..\packages\BB74.Media.FFMPEG.1.0.7074.34574-debug\build\BB74.Media.FFMPEG.targets')" />
+  <Import Project="..\..\packages\BB74.Xwt.OpenTK.1.0.7074.34565-debug\build\BB74.Xwt.OpenTK.targets" Condition="Exists('..\..\packages\BB74.Xwt.OpenTK.1.0.7074.34565-debug\build\BB74.Xwt.OpenTK.targets')" />
 </Project>

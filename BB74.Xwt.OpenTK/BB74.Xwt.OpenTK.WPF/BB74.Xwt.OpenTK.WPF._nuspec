@@ -16,6 +16,7 @@
       <dependency id="BB74.Media.Base" version="1.0.7073.20740" />
       <dependency id="BB74.Xwt.OpenTK" version="1.0.7074.26806" />
       <dependency id="BB74.Xwt.OpenTK.GTK" version="1.0.7074.26810" />
+      <dependency id="OpenTK" version="3.0.1" />
       <dependency id="SharpDX" version="4.2.0"  />
       <dependency id="SharpDX.Direct3D9" version="4.2.0"  />
       <dependency id="SharpDX.Mathematics" version="4.2.0"  />

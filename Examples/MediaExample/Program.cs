@@ -36,7 +36,7 @@ namespace DockExample
         {
             try
             {
-                var a = Assembly.Load($"Media.OpenTK.{type}");
+                var a = Assembly.Load($"BB74.Xwt.OpenTK.{type}");
                 var t = a.GetType($"BaseLib.Platforms.{type}");
                 var o = new object[] { null };
                 var r = (BaseLib.Media.OpenTK.IXwtRender)Activator.CreateInstance(t, o);

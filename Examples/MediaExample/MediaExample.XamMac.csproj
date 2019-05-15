@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\Xwt.Gtk.0.2.168\build\Xwt.Gtk.props" Condition="Exists('..\..\packages\Xwt.Gtk.0.2.168\build\Xwt.Gtk.props')" />
+  <Import Project="..\..\packages\BB74.Xwt.OpenTK.1.0.7074.37375-debug\build\BB74.Xwt.OpenTK.props" Condition="Exists('..\..\packages\BB74.Xwt.OpenTK.1.0.7074.37375-debug\build\BB74.Xwt.OpenTK.props')" />
   <Import Project="..\packages\Xwt.Gtk3.0.2.167\build\Xwt.Gtk3.props" Condition="Exists('..\packages\Xwt.Gtk3.0.2.167\build\Xwt.Gtk3.props')" />
   <Import Project="..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props" Condition="Exists('..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props')" />
   <PropertyGroup>
@@ -54,20 +56,32 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.Mac" />
-    <Reference Include="Media.Base">
-      <HintPath>..\..\packages\BB74.Media.Base.1.0.7058.27178\lib\net40\Media.Base.dll</HintPath>
-    </Reference>
     <Reference Include="Xwt">
-      <HintPath>..\..\packages\Xwt.0.2.167\lib\net40\Xwt.dll</HintPath>
+      <HintPath>..\..\packages\BB74.Xwt.OpenTK.GTK.1.0.7074.37376-debug\lib\net40\Xwt.dll</HintPath>
     </Reference>
-    <Reference Include="Xwt.WPF">
-      <HintPath>..\..\packages\Xwt.WPF.0.2.167\lib\net40\Xwt.WPF.dll</HintPath>
+    <Reference Include="BB74.Media.Base">
+      <HintPath>..\..\packages\BB74.Xwt.OpenTK.GTK.1.0.7074.37376-debug\lib\net40\BB74.Media.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Xwt.XamMac">
-      <HintPath>..\..\packages\Xwt.XamMac.0.2.167\lib\net40\Xwt.XamMac.dll</HintPath>
+    <Reference Include="BB74.Xwt.OpenTK">
+      <HintPath>..\..\packages\BB74.Xwt.OpenTK.1.0.7074.37375-debug\lib\net40\BB74.Xwt.OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="BB74.Xwt.OpenTK.GTK">
+      <HintPath>..\..\packages\BB74.Xwt.OpenTK.GTK.1.0.7074.37376-debug\lib\net40\BB74.Xwt.OpenTK.GTK.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK">
+      <HintPath>..\..\packages\OpenTK.3.0.1\lib\net20\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="BB74.Xwt.Controls">
-      <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7061.21406\lib\net40\BB74.Xwt.Controls.dll</HintPath>
+      <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7074.28838-debug\lib\net40\BB74.Xwt.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Xwt.Gtk">
+      <HintPath>..\..\packages\Xwt.Gtk.0.2.168\lib\net40\Xwt.Gtk.dll</HintPath>
+    </Reference>
+    <Reference Include="Xwt.XamMac">
+      <HintPath>..\..\packages\Xwt.XamMac.0.2.168\lib\net40\Xwt.XamMac.dll</HintPath>
+    </Reference>
+    <Reference Include="Xwt.Gtk.Mac">
+      <HintPath>..\..\packages\Xwt.Gtk.Mac.0.2.168\lib\net40\Xwt.Gtk.Mac.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -83,20 +97,18 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="toolbars.cs" />
+    <Compile Include="testdoc2.cs" />
+    <Compile Include="OpenTK\Interfaces.cs" />
+    <Compile Include="OpenTK\Render.cs" />
+    <Compile Include="OpenTK\testdoc.cs" />
+    <Compile Include="OpenTK\Time.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Media.OpenTK\Media.OpenTK.csproj">
-      <Project>{D7CAD493-7F4B-4C83-A592-8D071B01CF28}</Project>
-      <Name>Media.OpenTK</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Media.OpenTK.XamMac\Media.OpenTK.XamMac.csproj">
+    <ProjectReference Include="..\..\BB74.Xwt.OpenTK\BB74.Xwt.OpenTK.XamMac\BB74.Xwt.OpenTK.XamMac.csproj">
       <Project>{D1713229-CA4A-4E30-8C21-626F0416B012}</Project>
-      <Name>Media.OpenTK.XamMac</Name>
-    </ProjectReference>
-    <ProjectReference Include="MediaExample.XamMac.Lib.csproj">
-      <Project>{9727D961-3DF7-4EC1-AB3F-2B5DEE8456BA}</Project>
-      <Name>MediaExample.XamMac.Lib</Name>
+      <Name>BB74.Xwt.OpenTK.XamMac</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
+  <Import Project="..\..\packages\BB74.Xwt.OpenTK.1.0.7074.37375-debug\build\BB74.Xwt.OpenTK.targets" Condition="Exists('..\..\packages\BB74.Xwt.OpenTK.1.0.7074.37375-debug\build\BB74.Xwt.OpenTK.targets')" />
 </Project>

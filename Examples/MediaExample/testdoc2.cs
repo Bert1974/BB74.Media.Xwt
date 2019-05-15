@@ -137,7 +137,7 @@ void main()
 
                 this.vertices.Apply(this.shader);
 
-                GL.DrawArrays(PrimitiveType.Triangles, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
+                GL.DrawArrays(BeginMode.Triangles, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
                 GL.DisableVertexAttribArray(0);
 
           //      this.Renderer.EndRender(state);
