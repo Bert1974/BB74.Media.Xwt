@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -115,9 +116,10 @@ namespace MovieExample
                             simpleVertices.Add(new Vector3(0, 0, 0));
                             simpleVertices.Add(new Vector3(100, 0, 0));
                             simpleVertices.Add(new Vector3(100, 100, 0));*/
+                        var data = new vertex[] { new vertex(new Vector3(0, -1, 0)), new vertex(new Vector3(-1, 1, 0)), new vertex(new Vector3(1, 1, 0)) };
+                        this.vertices = new vertices<vertex>(data);
 
-                        this.vertices = new vertices<vertex>(
-                            new vertex[] { new vertex(new Vector3(0, -1, 0)), new vertex(new Vector3(-1, 1, 0)), new vertex(new Vector3(1, 1, 0)) });
+                       // MethodInfo method = typeof(GL).GetMethods(("GenVertexArrays");
 
                         vertices.define("position", "pos");
 

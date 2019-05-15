@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\..\packages\BB74.Media.FFMPEG.1.0.7073.21025\build\BB74.Media.FFMPEG.props" Condition="Exists('..\..\..\packages\BB74.Media.FFMPEG.1.0.7073.21025\build\BB74.Media.FFMPEG.props')" />
-  <Import Project="..\..\..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props" Condition="Exists('..\..\..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props')" />
+  <Import Project="..\..\..\packages\Xwt.Gtk.0.2.168\build\Xwt.Gtk.props" Condition="Exists('..\..\..\packages\Xwt.Gtk.0.2.168\build\Xwt.Gtk.props')" />
+  <Import Project="..\..\..\packages\BB74.Media.FFMPEG.1.0.7074.34574-debug\build\BB74.Media.FFMPEG.props" Condition="Exists('..\..\..\packages\BB74.Media.FFMPEG.1.0.7074.34574-debug\build\BB74.Media.FFMPEG.props')" />
+  <Import Project="..\..\..\packages\BB74.Xwt.OpenTK.1.0.7074.34565-debug\build\BB74.Xwt.OpenTK.props" Condition="Exists('..\..\..\packages\BB74.Xwt.OpenTK.1.0.7074.34565-debug\build\BB74.Xwt.OpenTK.props')" />
   <Import Project="..\..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props" Condition="Exists('..\..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -62,28 +63,40 @@
     <AOTMode>None</AOTMode>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Xwt">
-      <HintPath>..\..\..\packages\Xwt.0.2.167\lib\net40\Xwt.dll</HintPath>
-    </Reference>
-    <Reference Include="Xwt.Gtk">
-      <HintPath>..\..\..\packages\Xwt.Gtk.0.2.167\lib\net40\Xwt.Gtk.dll</HintPath>
-    </Reference>
-    <Reference Include="Xwt.XamMac">
-      <HintPath>..\..\..\packages\Xwt.XamMac.0.2.167\lib\net40\Xwt.XamMac.dll</HintPath>
-    </Reference>
-    <Reference Include="Xwt.Gtk.Mac">
-      <HintPath>..\..\..\packages\Xwt.Gtk.Mac.0.2.167\lib\net40\Xwt.Gtk.Mac.dll</HintPath>
-    </Reference>
-    <Reference Include="BB74.Xwt.Controls">
-      <HintPath>..\..\..\packages\BB74.Xwt.Controls.1.0.7073.20561\lib\net40\BB74.Xwt.Controls.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="Xamarin.Mac">
+      <HintPath>..\..\..\..\..\..\Library\Frameworks\Xamarin.Mac.framework\Versions\5.8.0.0\lib\reference\full\Xamarin.Mac.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK">
+      <HintPath>..\..\..\packages\OpenTK.3.0.1\lib\net20\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="Xwt">
+      <HintPath>..\..\..\packages\Xwt.0.2.168\lib\net40\Xwt.dll</HintPath>
+    </Reference>
+    <Reference Include="BB74.Xwt.Controls">
+      <HintPath>..\..\..\packages\BB74.Xwt.Controls.1.0.7074.28838-debug\lib\net40\BB74.Xwt.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="BB74.Media.Base">
-      <HintPath>..\..\..\packages\BB74.Media.Base.1.0.7073.20740\lib\net40\BB74.Media.Base.dll</HintPath>
+      <HintPath>..\..\..\packages\BB74.Media.Base.1.0.7074.25260\lib\net40\BB74.Media.Base.dll</HintPath>
     </Reference>
     <Reference Include="BB74.Media.Interop">
-      <HintPath>..\..\..\packages\BB74.Media.FFMPEG.1.0.7073.21025\lib\net40\BB74.Media.Interop.dll</HintPath>
+      <HintPath>..\..\..\packages\BB74.Media.FFMPEG.1.0.7074.34574-debug\lib\net40\BB74.Media.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="BB74.Xwt.OpenTK">
+      <HintPath>..\..\..\packages\BB74.Xwt.OpenTK.1.0.7074.34565-debug\lib\net40\BB74.Xwt.OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="Xwt.XamMac">
+      <HintPath>..\..\..\packages\Xwt.XamMac.0.2.168\lib\net40\Xwt.XamMac.dll</HintPath>
+    </Reference>
+    <Reference Include="Xwt.Gtk">
+      <HintPath>..\..\..\packages\Xwt.Gtk.0.2.168\lib\net40\Xwt.Gtk.dll</HintPath>
+    </Reference>
+    <Reference Include="Xwt.Gtk.Mac">
+      <HintPath>..\..\..\packages\Xwt.Gtk.Mac.0.2.168\lib\net40\Xwt.Gtk.Mac.dll</HintPath>
+    </Reference>
+    <Reference Include="BB74.Xwt.OpenTK.GTK">
+      <HintPath>..\..\..\packages\BB74.Xwt.OpenTK.GTK.1.0.7074.34567-debug\lib\net40\BB74.Xwt.OpenTK.GTK.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -108,26 +121,19 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="Info.plist" />
+    <Compile Include="MainWindow.cs" />
+    <Compile Include="Movie.cs" />
+    <None Include="app.config" />
+    <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Media.OpenTK\Media.OpenTK.csproj">
-      <Project>{D7CAD493-7F4B-4C83-A592-8D071B01CF28}</Project>
-      <Name>Media.OpenTK</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Media.OpenTK.GTK\Media.OpenTK.GTK.csproj">
-      <Project>{EFD07F85-AF34-4CB3-82E3-DD3D15EC011B}</Project>
-      <Name>Media.OpenTK.GTK</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Media.OpenTK.XamMac\Media.OpenTK.XamMac.csproj">
+    <ProjectReference Include="..\..\..\BB74.Xwt.OpenTK\BB74.Xwt.OpenTK.XamMac\BB74.Xwt.OpenTK.XamMac.csproj">
       <Project>{D1713229-CA4A-4E30-8C21-626F0416B012}</Project>
-      <Name>Media.OpenTK.XamMac</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MovieExample.Mac.Lib\MovieExample.XamMac.lib.csproj">
-      <Project>{9A3209A7-5067-4024-91D8-0EE4ADD95BA8}</Project>
-      <Name>MovieExample.XamMac.lib</Name>
+      <Name>BB74.Xwt.OpenTK.XamMac</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
-  <Import Project="..\..\..\packages\BB74.Media.FFMPEG.1.0.7073.21025\build\BB74.Media.FFMPEG.targets" Condition="Exists('..\..\..\packages\BB74.Media.FFMPEG.1.0.7073.21025\build\BB74.Media.FFMPEG.targets')" />
+  <Import Project="..\..\..\packages\BB74.Xwt.OpenTK.1.0.7074.34565-debug\build\BB74.Xwt.OpenTK.targets" Condition="Exists('..\..\..\packages\BB74.Xwt.OpenTK.1.0.7074.34565-debug\build\BB74.Xwt.OpenTK.targets')" />
+  <Import Project="..\..\..\packages\BB74.Media.FFMPEG.1.0.7074.34574-debug\build\BB74.Media.FFMPEG.targets" Condition="Exists('..\..\..\packages\BB74.Media.FFMPEG.1.0.7074.34574-debug\build\BB74.Media.FFMPEG.targets')" />
 </Project>
