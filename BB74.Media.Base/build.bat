@@ -27,7 +27,7 @@ rem IF ERRORLEVEL 1 GOTO Error
 rem msbuild BB74.Media.Base.csproj /p:TargetFrameworkVersion=v4.7.2;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=.\package\lib\net472
 rem IF ERRORLEVEL 1 GOTO Error
 
-..\bin\getversion -version_ext "%BB74_VERSION%" package\lib\net40\BB74.Media.Base.dll BB74.Media.Base._nuspec _tmp\BB74.Media.Base.nuspec
+..\bin\getversion -version_ext "%BB74_VERSION%" -assembly package\lib\net40\BB74.Media.Base.dll BB74.Media.Base._nuspec _tmp\BB74.Media.Base.nuspec
 IF ERRORLEVEL 1 GOTO Error
 
 nuget pack _tmp/BB74.Media.Base.nuspec -BasePath .\package -properties configuration=%BB74_CONFIG% -OutputDirectory packages\
@@ -35,7 +35,7 @@ IF ERRORLEVEL 1 GOTO Error
 
 if NOT "%BB74_PUBLISH%"=="bert" goto exit
 
-..\bin\getversion -version_ext "%BB74_VERSION%" package\lib\net40\BB74.Media.Base.dll copy._bat _tmp\copy.bat
+..\bin\getversion -version_ext "%BB74_VERSION%" -assembly package\lib\net40\BB74.Media.Base.dll copy._bat _tmp\copy.bat
 IF ERRORLEVEL 1 GOTO Error
 
 call _tmp\copy.bat

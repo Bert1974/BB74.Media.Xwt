@@ -39,16 +39,26 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BB74.Media.Base, Version=1.0.7074.18852, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BB74.Media.Base.1.0.7074.18852\lib\net40\BB74.Media.Base.dll</HintPath>
+    <Reference Include="BB74.Media.Base, Version=1.0.7074.25260, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Media.Base.1.0.7074.25260\lib\net40\BB74.Media.Base.dll</HintPath>
     </Reference>
     <Reference Include="BB74.Media.Interop, Version=1.0.7073.21348, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\BB74.Media.FFMPEG.1.0.7073.21348\lib\net40\BB74.Media.Interop.dll</HintPath>
     </Reference>
-    <Reference Include="BB74.Xwt.Controls, Version=1.0.7073.20561, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7073.20561\lib\net40\BB74.Xwt.Controls.dll</HintPath>
+    <Reference Include="BB74.Xwt.Controls, Version=1.0.7074.26173, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7074.26173\lib\net40\BB74.Xwt.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="BB74.Xwt.OpenTK, Version=1.0.7074.27077, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Xwt.OpenTK.1.0.7074.27077-debug\lib\net40\BB74.Xwt.OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="BB74.Xwt.OpenTK.GTK, Version=1.0.7074.27079, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Xwt.OpenTK.GTK.1.0.7074.27079-debug\lib\net40\BB74.Xwt.OpenTK.GTK.dll</HintPath>
+    </Reference>
+    <Reference Include="BB74.Xwt.OpenTK.WPF, Version=1.0.7074.27080, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Xwt.OpenTK.WPF.1.0.7074.27080-debug\lib\net40\BB74.Xwt.OpenTK.WPF.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\OpenTK.3.0.1\lib\net20\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
@@ -107,7 +117,6 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="OpenTK.dll.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -120,20 +129,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\BB74.Xwt.OpenTK\BB74.Xwt.OpenTK.GTK\BB74.Xwt.OpenTK.GTK.csproj">
-      <Project>{efd07f85-af34-4cb3-82e3-dd3d15ec011b}</Project>
-      <Name>BB74.Xwt.OpenTK.GTK</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\BB74.Xwt.OpenTK\BB74.Xwt.OpenTK.WPF\BB74.Xwt.OpenTK.WPF.csproj">
-      <Project>{5ab2e51d-9dd2-4650-9aa0-03fb811a3255}</Project>
-      <Name>BB74.Xwt.OpenTK.WPF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\BB74.Xwt.OpenTK\BB74.Xwt.OpenTK\BB74.Xwt.OpenTK.csproj">
-      <Project>{d7cad493-7f4b-4c83-a592-8d071b01cf28}</Project>
-      <Name>BB74.Xwt.OpenTK</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

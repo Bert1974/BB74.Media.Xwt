@@ -1,10 +1,5 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  
-  <Target Name="AfterBuild" DependsOnTargets="GetOSIdentifiers">
-    <Message Importance="High" Text="TESTCommencing build for platform: $(OSPlatform)" />
-  </Target>
-  
   <Target Name="CopyFiles32_64" DependsOnTargets="GetOSIdentifiers" AfterTargets="Build" Condition=" '$(Platform)' != 'x86' And $(OSPlatform) == 'Win32' ">
     <ItemGroup >
       <Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\avcodec-58.dll">
@@ -49,9 +44,6 @@
         DestinationFolder="$(TargetDir)x64\"
         />
     <Message Importance="High" Text="copied win32 ffmpeg files" />
-  </Target>
-  <Target Name="AfterBuild" DependsOnTargets="GetOSIdentifiers">
-    <Message Importance="High" Text="TEST2Commencing build for platform: $(OSPlatform)" />
   </Target>
 
   <Target Name="CopyFiles_WIn32_32" DependsOnTargets="GetOSIdentifiers" AfterTargets="Build" Condition=" '$(Platform)' != 'x64' And $(OSPlatform) == 'Win32' ">
@@ -112,7 +104,7 @@
         />
     <Copy
         SourceFiles="@(OSX_64)"
-        DestinationFolder="${TargetDir)/${ProjectName}.app/Contents/MonoBundle/"
+        DestinationFolder="bin/$(Configuration)/$(AssemblyName).app/Contents/MonoBundle/"
         />
     <Message Importance="High" Text="copied OS-X ffmpeg files" />
   </Target>
@@ -130,4 +122,30 @@
         />
     <Message Importance="High" Text="copied Linux ffmpeg files" />
   </Target>
+
+  <Target Name="SetPrivate" AfterTargets="ResolveReferences" DependsOnTargets="GetOSIdentifiers" >
+    <ItemGroup  Condition=" '$(OSPlatform)' == 'Win32' ">
+      <None Include="$(MSBuildThisFileDirectory)..\ref\net40\BB74.Media.Interop.Impl.dll">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </None>
+      <None Include="$(MSBuildThisFileDirectory)..\ref\net40\BB74.Media.Interop.x86.dll">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Include="$(MSBuildThisFileDirectory)..\ref\net40\BB74.Media.Interop.x64.dll">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+    <ItemGroup  Condition=" '$(OSPlatform)' != 'Win32' ">
+      <None Include="$(MSBuildThisFileDirectory)..\ref\net40\BB74.Media.Interop.Impl.dll">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Include="$(MSBuildThisFileDirectory)..\ref\net40\BB74.Media.Interop.x86.dll">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </None>
+      <None Include="$(MSBuildThisFileDirectory)..\ref\net40\BB74.Media.Interop.x64.dll">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+  </Target>
+  
 </Project>

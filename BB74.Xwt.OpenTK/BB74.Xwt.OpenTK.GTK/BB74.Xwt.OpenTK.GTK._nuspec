@@ -4,7 +4,7 @@
     <id>$id$</id>
     <version>$version$</version>
     <title>$title$</title>
-    <authors>$author$</authors>
+    <authors>Bert Bruggeman</authors>
     <owners>$author$</owners>
     <license type="expression">MIT</license>
     <projectUrl>https://github.com/Bert1974/BB74.OpenTK.Xwt</projectUrl>
@@ -13,7 +13,8 @@
     <copyright>$copyright$</copyright>
     <tags>C# OpenTK Xwt Gtk WPF XamMac</tags>
     <dependencies>
-      <dependency id="BB74.Media.Base" version="1.0.7073.20740" />
+      <dependency id="BB74.Media.Base" version="1.0.7074.25260" />
+      <dependency id="BB74.Xwt.OpenTK" version="1.0.7074.26806" />
       <dependency id="Xwt" version="0.2.167" />
     </dependencies>
   </metadata>

@@ -2,12 +2,13 @@
 using BaseLib.Media.OpenTK;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using Xwt;
 
 namespace BaseLib.Platforms
 {
-    public class WPF :  IXwtRender
+    public class WPF : IXwtRender
     {
         class viewinfo
         {
@@ -18,6 +19,17 @@ namespace BaseLib.Platforms
         readonly  Dictionary<Widget, viewinfo> views = new Dictionary<Widget, viewinfo>();
 
         public WPF(out IRendererFactory render)
+        {
+            Initialize(out render);
+        }
+        ~WPF()
+        {
+        }
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+        }
+        public void Initialize(out IRendererFactory render)
         {
             render = new BaseLib.Display.WPF.FrameFactory();
 

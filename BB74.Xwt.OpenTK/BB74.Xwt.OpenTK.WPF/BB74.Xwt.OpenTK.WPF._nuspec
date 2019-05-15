@@ -4,7 +4,7 @@
     <id>$id$</id>
     <version>$version$</version>
     <title>$title$</title>
-    <authors>$author$</authors>
+    <authors>Bert Bruggeman</authors>
     <owners>$author$</owners>
     <license type="expression">MIT</license>
     <projectUrl>https://github.com/Bert1974/BB74.OpenTK.Xwt</projectUrl>
@@ -14,6 +14,11 @@
     <tags>C# OpenTK Xwt Gtk WPF XamMac</tags>
     <dependencies>
       <dependency id="BB74.Media.Base" version="1.0.7073.20740" />
+      <dependency id="BB74.Xwt.OpenTK" version="1.0.7074.26806" />
+      <dependency id="BB74.Xwt.OpenTK.GTK" version="1.0.7074.26810" />
+      <dependency id="SharpDX" version="4.2.0"  />
+      <dependency id="SharpDX.Direct3D9" version="4.2.0"  />
+      <dependency id="SharpDX.Mathematics" version="4.2.0"  />
       <dependency id="Xwt" version="0.2.167" />
     </dependencies>
   </metadata>

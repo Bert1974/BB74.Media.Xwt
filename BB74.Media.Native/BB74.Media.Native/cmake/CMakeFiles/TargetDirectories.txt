@@ -1,3 +1,0 @@
-/home/bert/Projects/BBR/BaseLib/BaseLib.FFMPEG/cmake/CMakeFiles/edit_cache.dir
-/home/bert/Projects/BBR/BaseLib/BaseLib.FFMPEG/cmake/CMakeFiles/rebuild_cache.dir
-/home/bert/Projects/BBR/BaseLib/BaseLib.FFMPEG/cmake/CMakeFiles/BaseLib.FFMPEG.dll.dir

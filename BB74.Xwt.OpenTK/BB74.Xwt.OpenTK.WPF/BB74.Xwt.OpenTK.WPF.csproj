@@ -8,12 +8,10 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Media.OpenTK.WPF</RootNamespace>
-    <AssemblyName>Media.OpenTK.WPF</AssemblyName>
+    <AssemblyName>BB74.Xwt.OpenTK.WPF</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <Deterministic>false</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,22 +31,28 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BB74.Media.Base, Version=1.0.7073.20740, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BB74.Media.Base.1.0.7073.20740\lib\net40\BB74.Media.Base.dll</HintPath>
+    <Reference Include="BB74.Media.Base, Version=1.0.7074.22071, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Media.Base.1.0.7074.22071-debug\lib\net40\BB74.Media.Base.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OpenTK-3.0-EGL-disabled.1.0.0\lib\net20\OpenTK.dll</HintPath>
+    <Reference Include="OpenTK, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OpenTK.3.0.1\lib\net20\OpenTK.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="SharpDX, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SharpDX.4.2.0\lib\net40\SharpDX.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.Direct3D9, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SharpDX.Direct3D9.4.2.0\lib\net40\SharpDX.Direct3D9.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.Mathematics, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SharpDX.Mathematics.4.2.0\lib\net40\SharpDX.Mathematics.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -60,9 +64,11 @@
     <Reference Include="WindowsBase" />
     <Reference Include="Xwt, Version=0.2.167.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xwt.0.2.167\lib\net40\Xwt.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Xwt.WPF, Version=0.2.167.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xwt.WPF.0.2.167\lib\net40\Xwt.WPF.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -78,17 +84,13 @@
     <Compile Include="SharpDX\VideoFrame.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BB74.Media.OpenTK.GTK\BB74.Media.OpenTK.GTK.csproj">
-      <Project>{efd07f85-af34-4cb3-82e3-dd3d15ec011b}</Project>
-      <Name>Media.OpenTK.GTK</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BB74.Media.OpenTK\BB74.Media.OpenTK.csproj">
-      <Project>{D7CAD493-7F4B-4C83-A592-8D071B01CF28}</Project>
-      <Name>Media.OpenTK</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="OpenTK.dll.config" />
+    <None Include="app.config" />
+    <None Include="BB74.Xwt.OpenTK.WPF._nuspec">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="OpenTK.dll.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -108,6 +110,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="render3.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BB74.Xwt.OpenTK.GTK\BB74.Xwt.OpenTK.GTK.csproj">
+      <Project>{efd07f85-af34-4cb3-82e3-dd3d15ec011b}</Project>
+      <Name>BB74.Xwt.OpenTK.GTK</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\BB74.Xwt.OpenTK\BB74.Xwt.OpenTK.csproj">
+      <Project>{d7cad493-7f4b-4c83-a592-8d071b01cf28}</Project>
+      <Name>BB74.Xwt.OpenTK</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -101,7 +101,7 @@ rem IF ERRORLEVEL 1 GOTO Error
 
 :versiononly
 
-..\bin\getversion -version_ext "%BB74_VERSION%" package\lib\net40\BB74.Media.Interop.dll BB74.Media.FFMPEG._nuspec _tmp\BB74.Media.FFMPEG.nuspec
+..\bin\getversion -version_ext "%BB74_VERSION%" -assembly package\lib\net40\BB74.Media.Interop.dll BB74.Media.FFMPEG._nuspec _tmp\BB74.Media.FFMPEG.nuspec
 IF ERRORLEVEL 1 GOTO Error
 
 if "%BB74_VERSIONONLY%"=="TRUE" goto exit
@@ -111,7 +111,7 @@ if ERRORLEVEL 1 GOTO Error
 
 if NOT "%BB74_PUBLISH%"=="bert" goto exit
 
-..\bin\getversion -version_ext "%BB74_VERSION%" package\lib\net40\BB74.Media.Interop.dll copy._bat _tmp\copy.bat
+..\bin\getversion -version_ext "%BB74_VERSION%" assembly package\lib\net40\BB74.Media.Interop.dll copy._bat _tmp\copy.bat
 IF ERRORLEVEL 1 GOTO Error
 
 call _tmp\copy.bat
