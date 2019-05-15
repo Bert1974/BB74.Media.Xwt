@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\BB74.Xwt.OpenTK.1.0.7074.37375-debug\build\BB74.Xwt.OpenTK.props" Condition="Exists('..\..\packages\BB74.Xwt.OpenTK.1.0.7074.37375-debug\build\BB74.Xwt.OpenTK.props')" />
+  <Import Project="..\..\packages\BB74.Xwt.OpenTK.1.0.7074.39616-debug\build\BB74.Xwt.OpenTK.props" Condition="Exists('..\..\packages\BB74.Xwt.OpenTK.1.0.7074.39616-debug\build\BB74.Xwt.OpenTK.props')" />
   <Import Project="..\..\packages\Xwt.Gtk.0.2.168\build\Xwt.Gtk.props" Condition="Exists('..\..\packages\Xwt.Gtk.0.2.168\build\Xwt.Gtk.props')" />
   <Import Project="..\packages\Xwt.Gtk3.0.2.167\build\Xwt.Gtk3.props" Condition="Exists('..\packages\Xwt.Gtk3.0.2.167\build\Xwt.Gtk3.props')" />
   <Import Project="..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props" Condition="Exists('..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props')" />
@@ -80,21 +80,19 @@
       <HintPath>..\..\packages\OpenTK.3.0.1\lib\net20\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="BB74.Media.Base">
-      <HintPath>..\..\packages\BB74.Xwt.OpenTK.GTK.1.0.7074.37376-debug\lib\net40\BB74.Media.Base.dll</HintPath>
+      <HintPath>..\..\packages\BB74.Xwt.OpenTK.1.0.7074.39616-debug\lib\net40\BB74.Media.Base.dll</HintPath>
     </Reference>
     <Reference Include="BB74.Xwt.OpenTK">
-      <HintPath>..\..\packages\BB74.Xwt.OpenTK.1.0.7074.37375-debug\lib\net40\BB74.Xwt.OpenTK.dll</HintPath>
+      <HintPath>..\..\packages\BB74.Xwt.OpenTK.1.0.7074.39616-debug\lib\net40\BB74.Xwt.OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="Xwt">
-      <HintPath>..\..\packages\BB74.Xwt.OpenTK.GTK.1.0.7074.37376-debug\lib\net40\Xwt.dll</HintPath>
+      <HintPath>..\..\packages\BB74.Xwt.OpenTK.1.0.7074.39616-debug\lib\net40\Xwt.dll</HintPath>
     </Reference>
     <Reference Include="BB74.Xwt.OpenTK.GTK">
-      <HintPath>..\..\packages\BB74.Xwt.OpenTK.GTK.1.0.7074.37376-debug\lib\net40\BB74.Xwt.OpenTK.GTK.dll</HintPath>
+      <HintPath>..\..\packages\BB74.Xwt.OpenTK.GTK.1.0.7074.39618-debug\lib\net40\BB74.Xwt.OpenTK.GTK.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
-    <Compile Include="MainWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -117,6 +115,12 @@
     </Compile>
     <None Include="Info.plist" />
     <None Include="OpenTK.dll.config" />
+    <Compile Include="..\SimpleExample\MainWindow.cs">
+      <Link>MainWindow.cs</Link>
+    </Compile>
+    <Compile Include="..\SimpleExample\Program.cs">
+      <Link>Program.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BB74.Xwt.OpenTK\BB74.Xwt.OpenTK.XamMac\BB74.Xwt.OpenTK.XamMac.csproj">
@@ -125,5 +129,5 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
-  <Import Project="..\..\packages\BB74.Xwt.OpenTK.1.0.7074.37375-debug\build\BB74.Xwt.OpenTK.targets" Condition="Exists('..\..\packages\BB74.Xwt.OpenTK.1.0.7074.37375-debug\build\BB74.Xwt.OpenTK.targets')" />
+  <Import Project="..\..\packages\BB74.Xwt.OpenTK.1.0.7074.39616-debug\build\BB74.Xwt.OpenTK.targets" Condition="Exists('..\..\packages\BB74.Xwt.OpenTK.1.0.7074.39616-debug\build\BB74.Xwt.OpenTK.targets')" />
 </Project>
