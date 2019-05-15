@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/Bert1974/BB74.OpenTK.Xwt</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>Copyright 2019 Bert Bruggeman</copyright>
+    <tags>C# OpenTK Xwt Gtk WPF XamMac</tags>
+  </metadata>
+</package>
