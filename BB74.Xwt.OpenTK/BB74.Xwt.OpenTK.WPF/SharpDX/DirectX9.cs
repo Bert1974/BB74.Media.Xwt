@@ -1,4 +1,5 @@
-﻿using BaseLib.Media.Display;
+﻿using BaseLib.Media;
+using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
 using BaseLib.Media.Video;
 using BaseLib.Platforms;
@@ -526,7 +527,7 @@ namespace BaseLib.Display.WPF
             
         }
 
-        internal DirectX9Renderer(FrameFactory owner, IXwtRender xwt, Canvas widget, System.Windows.FrameworkElement window, System.Windows.Window main, IRenderOwner renderer, size videosize)
+        internal DirectX9Renderer(FrameFactory owner, IXwtRender xwt, Canvas widget, System.Windows.FrameworkElement window, System.Windows.Window main, IRenderOwner renderer, FPS fps, size videosize)
         {
             this.owner = owner;
             this.xwt = xwt;
@@ -556,7 +557,7 @@ namespace BaseLib.Display.WPF
 
             xwt.CreateForWidgetContext(this, renderer, widget);
 
-            this.opentk = this.owner.opentk.Open(this.owner.opentkxwt, widget, renderer, videosize);
+            this.opentk = this.owner.opentk.Open(this.owner.opentkxwt, widget, renderer,fps, videosize);
 
             this.thread = new WorkerThread();
             this.thread.Do(() =>
@@ -1164,7 +1165,7 @@ namespace BaseLib.Display.WPF
         {
             throw new NotImplementedException();
         }*/
-        IRenderer IRendererFactory.Open(IXwtRender xwt, Canvas w, IRenderOwner renderer, size videosize)
+        IRenderer IRendererFactory.Open(IXwtRender xwt, Canvas w, IRenderOwner renderer, FPS fps, size videosize)
         {
             lock (this)
             {
@@ -1173,7 +1174,7 @@ namespace BaseLib.Display.WPF
                 var wBackend = global::Xwt.Toolkit.CurrentEngine.GetSafeBackend(w);
                 var e = (System.Windows.FrameworkElement)wBackend.GetType().GetPropertyValue(wBackend, "Widget");
 
-                return new DirectX9Renderer(this, xwt,w,e, wFrame.Window, renderer, videosize);
+                return new DirectX9Renderer(this, xwt,w,e, wFrame.Window, renderer, fps, videosize);
             }
         }
         internal void Close(IRenderer renderer)

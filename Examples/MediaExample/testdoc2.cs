@@ -1,5 +1,7 @@
-﻿using BaseLib.Media.Display;
+﻿using BaseLib.Media;
+using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
+using BaseLib.Media.Video;
 using BaseLib.Xwt;
 using BaseLib.Xwt.Controls.DockPanel;
 using OpenTK;
@@ -47,7 +49,7 @@ namespace DockExample
         {
             Debug.Assert(this.Renderer == null);
 
-            this.Renderer = factory.Open(xwtrender, this, this, new size(1920, 1080));
+            this.Renderer = factory.Open(xwtrender, this, this, new FPS(1,25,true), new size(1920, 1080));
 
             using (var lck = this.Renderer.GetDrawLock())
             {

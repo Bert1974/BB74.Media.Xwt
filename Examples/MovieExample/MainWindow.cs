@@ -87,7 +87,7 @@ namespace MovieExample
             {
                 try
                 {
-                    this.Renderer = this.RenderFactory.Open(this.XwtRender, this, this, new size(1920, 1080));
+                    this.Renderer = this.RenderFactory.Open(this.XwtRender, this, this, new FPS(1,25,true), new size(1920, 1080));
 
                     this.Audio = new AudioOut(48000, AudioFormat.Float32, ChannelsLayout.Stereo, 2);
                     this.Mixer = new Mixer(this.Audio.SampleRate, this.Audio.Format, this.Audio.ChannelLayout);

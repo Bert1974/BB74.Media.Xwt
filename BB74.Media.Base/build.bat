@@ -20,7 +20,7 @@ call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary
 if "%DevEnvDir%"=="" goto Error;
 :devenvok
 
-msbuild BB74.Media.Base.csproj /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=.\package\lib\net40
+msbuild BB74.Media.Base.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=.\package\lib\net40
 IF ERRORLEVEL 1 GOTO Error
 rem msbuild BB74.Media.Base.csproj /p:TargetFrameworkVersion=v4.5;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=.\package\lib\net45
 rem IF ERRORLEVEL 1 GOTO Error

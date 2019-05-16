@@ -1,7 +1,7 @@
   <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <UsingTask TaskName="OsVersionInformationOpenTK" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
     <ParameterGroup>
-      <_PlatformID ParameterType="System.String" Output="true" />
+      <_PlatformIDOpenTK ParameterType="System.String" Output="true" />
     </ParameterGroup>
     <Task>
       <Using Namespace="System.Reflection" />
@@ -33,7 +33,7 @@
 
   <Target Name="GetOSIdentifiersOpenTK" Condition=" '$(OSPlatform)' == '' ">
     <OsVersionInformationOpenTK>
-      <Output TaskParameter="_PlatformID" PropertyName="OSPlatform" />
+      <Output TaskParameter="_PlatformIDOpenTK" PropertyName="OSPlatformOpenTK" />
     </OsVersionInformationOpenTK>
   </Target>
 

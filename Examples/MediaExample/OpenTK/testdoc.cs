@@ -1,5 +1,7 @@
-﻿using BaseLib.Media.Display;
+﻿using BaseLib.Media;
+using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
+using BaseLib.Media.Video;
 using BaseLib.Xwt;
 using BaseLib.Xwt.Controls.DockPanel;
 using OpenTK;
@@ -44,7 +46,7 @@ namespace DockExample.OpenTK
 
             this.xwtdisplay = new OpenTK.XwtRender(this, this.xwtrender,this.xwt, TimeBase);
             this.xwtdisplay.FrameRenderer = new MovieRender(this);
-            this.xwtdisplay.Initialize(this.factory, this.xwtrender, new size(1920, 1080));
+            this.xwtdisplay.Initialize(this.factory, this.xwtrender, new FPS(1, 25, true), new size(1920, 1080));
             this.xwtdisplay.Play(0);
         }
         void IDockNotify.OnUnloading()

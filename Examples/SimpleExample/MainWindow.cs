@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using BaseLib.Media;
 using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
+using BaseLib.Media.Video;
 using BaseLib.Xwt;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -54,7 +56,7 @@ namespace SimpleExample
             }
             internal void OnLoaded()
             {
-                this.Renderer = this.RenderFactory.Open(this.XwtRender, this, this, new size(1920, 1080));
+                this.Renderer = this.RenderFactory.Open(this.XwtRender, this, this, new FPS(1,25,true), new size(1920, 1080));
 
                 using (var lck = this.Renderer.GetDrawLock())
                 {

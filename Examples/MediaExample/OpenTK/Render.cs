@@ -1,5 +1,7 @@
-﻿using BaseLib.Media.Display;
+﻿using BaseLib.Media;
+using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
+using BaseLib.Media.Video;
 using BaseLib.Xwt;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -150,7 +152,7 @@ namespace DockExample.OpenTK
                 this.presentframe = null;
             }
         }
-        public void Initialize(IRendererFactory factory, IXwtRender xwt, size videosize)
+        public void Initialize(IRendererFactory factory, IXwtRender xwt, FPS fps, size videosize)
         {
             Debug.Assert(this.renderer != null);
 
@@ -161,7 +163,7 @@ namespace DockExample.OpenTK
                 //       SwapChainBackgroundPanel
 
                 this.RenderFactory = factory;
-                this.Renderer = factory.Open(xwt, this.window, this, videosize);
+                this.Renderer = factory.Open(xwt, this.window, this, fps, videosize);
             }
             this.videorun = new VideoRun(this);
             this.renderer.Initialize(videosize, this.TimeBase);

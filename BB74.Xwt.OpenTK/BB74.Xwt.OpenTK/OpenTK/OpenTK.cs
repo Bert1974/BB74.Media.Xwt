@@ -850,7 +850,7 @@ precision mediump float;
           {
               throw new NotImplementedException();
           }*/
-        IRenderer IRendererFactory.Open(IXwtRender xwt, Canvas widget, OpenTK.IRenderOwner renderer, size videosize)
+        IRenderer IRendererFactory.Open(IXwtRender xwt, Canvas widget, OpenTK.IRenderOwner renderer, FPS fps, size videosize)
         {
             lock (this)
             {

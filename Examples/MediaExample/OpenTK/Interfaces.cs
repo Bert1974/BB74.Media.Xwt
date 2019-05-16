@@ -1,5 +1,7 @@
-﻿using BaseLib.Media.Display;
+﻿using BaseLib.Media;
+using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
+using BaseLib.Media.Video;
 using System;
 
 namespace DockExample.OpenTK
@@ -20,7 +22,7 @@ namespace DockExample.OpenTK
 
         long Time { get; }
 
-        void Initialize(IRendererFactory factory, IXwtRender xwt, size videosize);
+        void Initialize(IRendererFactory factory, IXwtRender xwt, FPS fps, size videosize);
         
         void Pause();
         void Pause(long time);

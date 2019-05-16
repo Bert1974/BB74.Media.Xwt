@@ -1,7 +1,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <Target Name="CopyOpenTK301" DependsOnTargets="GetOSIdentifiersOpenTK" AfterTargets="Build">
-    <ItemGroup Condition=" $(OSPlatform) == 'OSX' " >
+  <Target Name="CopyOpenTK301" DependsOnTargets="GetOSIdentifiersOpenTK" AfterTargets="Build" Condition=" $(OSPlatformOpenTK) == 'OSX' " >
+    <ItemGroup >
       <OSX_64_OPENTK Include="$(MSBuildThisFileDirectory)..\..\OpenTK.3.0.1\lib\net20\OpenTK.dll">
         <Link>OpenTK.dll</Link>
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
