@@ -39,9 +39,18 @@ namespace MovieExample
                     TryLoad(ToolkitType.XamMac);
                 }
 #else
-                    if (System.Environment.OSVersion.Platform == PlatformID.Unix || System.Environment.OSVersion.Platform == PlatformID.MacOSX)
+                    if (BaseLib.Xwt.Platform.OSPlatform == PlatformID.MacOSX)
                     {
-                        TryLoad(args.Contains("gtk3") ? ToolkitType.Gtk3 : ToolkitType.Gtk);
+                        if (args.Contains("-gtk"))
+                        {
+                            try { TryLoad(ToolkitType.Gtk); }
+                            catch { TryLoad(ToolkitType.XamMac); }
+                        }
+                        else { TryLoad(ToolkitType.XamMac); }
+                    }
+                    else if (BaseLib.Xwt.Platform.OSPlatform == PlatformID.Unix)
+                    {
+                        TryLoad(args.Contains("-gtk3") ? ToolkitType.Gtk3 : ToolkitType.Gtk);
                     }
                     else // assume windows
                     {

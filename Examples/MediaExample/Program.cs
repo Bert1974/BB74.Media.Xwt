@@ -32,10 +32,19 @@ namespace DockExample
         public static BaseLib.Xwt.IXwt Xwt { get; private set; }
         public static BaseLib.Media.Display.IRendererFactory Render { get; private set; }
 
-        private static BaseLib.Media.OpenTK.IXwtRender TryLoad(string type, ToolkitType toolkit)
+        private static BaseLib.Media.OpenTK.IXwtRender TryLoad(ToolkitType toolkit)
         {
             try
             {
+                string type;
+                switch (toolkit)
+                {
+                    case ToolkitType.XamMac: type = "XamMac"; break;
+                    case ToolkitType.Gtk: type = "GTK"; break;
+                    case ToolkitType.Gtk3: type = "GTK"; break;
+                    case ToolkitType.Wpf: type = "WPF"; break;
+                    default: throw new NotImplementedException();
+                }
                 var a = Assembly.Load($"BB74.Xwt.OpenTK.{type}");
                 var t = a.GetType($"BaseLib.Platforms.{type}");
                 var o = new object[] { null };
@@ -61,9 +70,18 @@ namespace DockExample
 #if (__MACOS__)
                 XwtRender = TryLoad("XamMac", ToolkitType.XamMac);
 #else
-                if (System.Environment.OSVersion.Platform == PlatformID.Unix || System.Environment.OSVersion.Platform == PlatformID.MacOSX)
+                if (BaseLib.Xwt.Platform.OSPlatform == PlatformID.MacOSX)
                 {
-                    XwtRender = TryLoad("GTK", args.Contains("gtk3") ? ToolkitType.Gtk3 : ToolkitType.Gtk);
+                    if (args.Contains("-gtk"))
+                    {
+                        try { XwtRender = TryLoad(ToolkitType.Gtk); }
+                        catch { XwtRender = TryLoad(ToolkitType.XamMac); }
+                    }
+                    else { XwtRender = TryLoad(ToolkitType.XamMac); }
+                }
+                else if (BaseLib.Xwt.Platform.OSPlatform == PlatformID.Unix)
+                {
+                    XwtRender = TryLoad(args.Contains("-gtk3") ? ToolkitType.Gtk3 : ToolkitType.Gtk);
                 }
                 else
                 {
@@ -71,16 +89,16 @@ namespace DockExample
                     {
                         try
                         {
-                            XwtRender = TryLoad("GTK", ToolkitType.Gtk); // i386 only
+                            XwtRender = TryLoad(ToolkitType.Gtk); // i386 only
                         }
                         catch (Exception e)
                         {
-                            XwtRender = TryLoad("WPF", ToolkitType.Wpf);
+                            XwtRender = TryLoad(ToolkitType.Wpf);
                         }
                     }
                     else
                     {
-                        XwtRender = TryLoad("WPF", ToolkitType.Wpf);
+                        XwtRender = TryLoad(ToolkitType.Wpf);
                     }
                 }
 #endif
