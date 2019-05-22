@@ -143,7 +143,7 @@ namespace DockExample.OpenTK
         {
             this.displaytime += BBR.Base.Time.FromTicks(ticks, TimeBase);
         }*/
-        void IRenderOwner.render(IRenderFrame desitination, long time, Xwt.Rectangle r)
+        void IRenderOwner.render(IRenderFrame desitination, long time, rectangle r)
         {
             if (this.presentframe != null)
             {

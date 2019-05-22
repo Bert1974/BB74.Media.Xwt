@@ -498,7 +498,7 @@ precision mediump float;
                         {
                             using (var lck = this.GetDrawLock())
                             {
-                                var r = new Xwt.Rectangle(0, 0,
+                                var r = new rectangle(0, 0,
                                     Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Width),
                                     Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Height));
                                 /*   Convert.ToInt32((this.window as Xwt.Canvas).ParentBounds.Left), 
@@ -647,13 +647,13 @@ precision mediump float;
             Unlock();
         }
 
-        object IRenderer.StartRender(IRenderFrame destination, Rectangle r)
+        object IRenderer.StartRender(IRenderFrame destination, rectangle r)
         {
             try
             {
                 if (destination == null)
                 {
-                    GL.Viewport(Convert.ToInt32(r.X), Convert.ToInt32(r.Y), Convert.ToInt32(r.Width), Convert.ToInt32(r.Height));// new Rectangle(this.window.Location,this.window.ClientSize));
+                    GL.Viewport(r.x, r.y, r.width, r.height);// new Rectangle(this.window.Location,this.window.ClientSize));
                 }
                 else
                 {
@@ -725,7 +725,7 @@ precision mediump float;
                 }
             }
         }
-        void IRenderer.Present(IVideoFrame renderedframe, Xwt.Rectangle dstrec, IntPtr ctl)
+        void IRenderer.Present(IVideoFrame renderedframe, rectangle dstrec, IntPtr ctl)
         {
             try
             {
@@ -751,7 +751,7 @@ precision mediump float;
                         vertices3.Apply(this.presentshader);
                         var frame = (RenderFrame)renderedframe;
 
-                        GL.Viewport(Convert.ToInt32(dstrec.Left), Convert.ToInt32(dstrec.Top), Convert.ToInt32(dstrec.Width), Convert.ToInt32(dstrec.Height));// new Rectangle(this.window.Location,this.window.ClientSize));
+                        GL.Viewport(dstrec.x, dstrec.y, dstrec.width, dstrec.height);// new Rectangle(this.window.Location,this.window.ClientSize));
 
                         GL.ClearColor(1, 1, 0, 1);
                         GL.Clear(ClearBufferMask.ColorBufferBit); // We're not using stencil buffer so why bother with clearing?            

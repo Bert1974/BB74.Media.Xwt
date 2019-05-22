@@ -50,8 +50,8 @@ namespace BaseLib.Media.Interop
         {
             try
             {
-                messagefunc = new BaseLib.Interop.messagefunction(message);
-                BaseLib.Interop.Imports.__setprintf(Marshal.GetFunctionPointerForDelegate((Delegate)messagefunc));
+        //        messagefunc = new BaseLib.Interop.messagefunction(message);
+          //      BaseLib.Interop.Imports.__setprintf(Marshal.GetFunctionPointerForDelegate((Delegate)messagefunc));
             }
             catch (Exception e)
             {

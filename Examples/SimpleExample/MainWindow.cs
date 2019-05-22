@@ -122,7 +122,7 @@ void main()
             {
                 return true;
             }
-            void IRenderOwner.render(IRenderFrame destination, long time, Rectangle r)
+            void IRenderOwner.render(IRenderFrame destination, long time, rectangle r)
             {
           //      var state = this.Renderer.StartRender(destination, r);
                 

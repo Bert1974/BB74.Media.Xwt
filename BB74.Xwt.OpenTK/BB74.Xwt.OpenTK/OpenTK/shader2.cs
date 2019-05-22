@@ -34,11 +34,16 @@ namespace BaseLib.Media.OpenTK
         }
         public void define(string key, string fld)
         {
-            this.p[key] = new i()
+            var fi = typeof(T).GetField(fld);
+
+            if (fi != null)
             {
-                len = Marshal.SizeOf(typeof(T).GetField(fld).FieldType),
-                fi = (typeof(T).GetField(fld).GetCustomAttributes(typeof(FieldOffsetAttribute), true)[0] as FieldOffsetAttribute).Value
-            };
+                this.p[key] = new i()
+                {
+                    len = Marshal.SizeOf(fi.FieldType),
+                    fi = (fi.GetCustomAttributes(typeof(FieldOffsetAttribute), true)[0] as FieldOffsetAttribute).Value
+                };
+            }
         }
         ~vertices()
         {

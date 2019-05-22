@@ -26,7 +26,7 @@ namespace BaseLib.Media.Display
         void Start();
         void PrepareRender();
         void StopRender();
-        object StartRender(IRenderFrame destination, Rectangle r);
+        object StartRender(IRenderFrame destination, rectangle r);
         void EndRender(object state);
         /*    Object^ StartRender(params IVideoFrame^>^ destination);
             void EndRender(Object^renderdata);*/
@@ -34,7 +34,7 @@ namespace BaseLib.Media.Display
    //     void Paint(IRenderFrame destination, IVideoFrame src, int index, Rectangle dstrec);
         /*   void Paint(IVideoFrame^ destination, IVideoFrame^ src, paintinfo^ paintinfo);
            void Paint(IVideoFrame^ destination, array<IVideoFrame^>^ src, effectinfo^ effectinfo);*/
-        void Present(IVideoFrame frame, Rectangle dstrec, IntPtr ctl);
+        void Present(IVideoFrame frame, rectangle dstrec, IntPtr ctl);
         /*    void Prepare(IVideoFrame^ frame, DeinterlaceModes deinterlace);*/
         IVideoFrame GetFrame();
         IRenderFrame GetRenderFrame(int levels);

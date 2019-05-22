@@ -134,7 +134,7 @@ void main()
                 var cc = new Xwt.Drawing.Color(c, c, c, 255);
 
                 // render
-                var state = this.Display.Renderer.StartRender(frame, new Rectangle(0,0,frame.Width,frame.Height));
+                var state = this.Display.Renderer.StartRender(frame, new rectangle(0,0,frame.Width,frame.Height));
 
                 GL.ClearColor((float)cc.Red, (float)cc.Green, (float)cc.Blue, (float)cc.Alpha);
                 GL.Clear(ClearBufferMask.ColorBufferBit/*ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit*/); // We're not using stencil buffer so why bother with clearing?            

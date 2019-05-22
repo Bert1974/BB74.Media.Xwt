@@ -10,6 +10,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -196,7 +197,7 @@ namespace BaseLib.Display.WPF
         public Device device { get; private set; }
         private Texture depthtexture;
         private Surface depthsurface, olddepth;
-        private Effect effect, effect2, effect3;
+        private Effect presenteffect, effect2, effect3;
         public VertexDeclaration vertexDecl2 { get; private set; }
         private EffectHandle technique, technique2;
         public VertexBuffer vertices2 { get; private set; }
@@ -489,8 +490,9 @@ namespace BaseLib.Display.WPF
 
               //      using (var dl = (this.owner as ).GetDrawLock()) // render using opengl
                     {
-                       var state = this.owner.StartRender(null, global::Xwt.Rectangle.Zero);
-                        this.owner.renderer.render(null, this.frametime, global::Xwt.Rectangle.Zero);
+                       var state = this.owner.StartRender(null, rectangle.Zero);
+                        var r = new rectangle(0,0,this.owner.renderframe.Width,this.owner.renderframe.Height);
+                        this.owner.renderer.render(null, this.frametime, rectangle.Zero);
                         this.owner.EndRender(state);
                     }
                     /*
@@ -598,8 +600,8 @@ namespace BaseLib.Display.WPF
                 //       this.lastsize = r.Size;
 
                 // Compiles the effect
-                this.effect = _LoadEffect("render");// Effect.FromFile(device, "render.fx", ShaderFlags.None);
-                this.technique = effect.GetTechnique(0);
+                this.presenteffect = _LoadEffect("render");// Effect.FromFile(device, "render.fx", ShaderFlags.None);
+                this.technique = presenteffect.GetTechnique(0);
                 this.effect2 = _LoadEffect("render2");
                 this.technique2 = effect2.GetTechnique(0);
                 this.effect3 = _LoadEffect("render3");
@@ -682,7 +684,7 @@ namespace BaseLib.Display.WPF
                     this.technique.Dispose();
                     this.effect3.Dispose();
                     this.effect2.Dispose();
-                    this.effect.Dispose();
+                    this.presenteffect.Dispose();
 
                     this.device.DepthStencilSurface = this.olddepth;
                     this.olddepth.Dispose();
@@ -697,14 +699,14 @@ namespace BaseLib.Display.WPF
                     this.olddepth = this.device.DepthStencilSurface;
                     this.device.DepthStencilSurface = this.depthsurface;
 
-                    this.effect = _LoadEffect("render");
+                    this.presenteffect = _LoadEffect("render");
                     this.effect2 = _LoadEffect("render2");
                     this.effect3 = _LoadEffect("render3");
 
                     // Compiles the effect
 
                     //  this.effect = Effect.FromFile(device, "render.fx", ShaderFlags.None);
-                    this.technique = effect.GetTechnique(0);
+                    this.technique = presenteffect.GetTechnique(0);
                     //this.effect2 = Effect.FromFile(device, "render2.fx", ShaderFlags.None);
                     this.technique2 = effect2.GetTechnique(0);
                     // Get the technique
@@ -750,7 +752,7 @@ namespace BaseLib.Display.WPF
                 depthtexture?.Dispose(); depthtexture = null;
                 effect3?.Dispose(); effect3 = null;
                 effect2?.Dispose(); effect2 = null;
-                effect?.Dispose(); effect = null;
+                presenteffect?.Dispose(); presenteffect = null;
                 vertices2?.Dispose(); vertices2 = null;
                 indices?.Dispose(); indices = null;
                 device?.Dispose(); device = null;
@@ -835,7 +837,7 @@ namespace BaseLib.Display.WPF
                   this.EndRender(state);
               }*/
         }
-        public object StartRender(IRenderFrame destination, Xwt.Rectangle r)
+        public object StartRender(IRenderFrame destination, rectangle r)
         {
             Monitor.Enter(this);
 
@@ -849,7 +851,7 @@ namespace BaseLib.Display.WPF
                     this.renderframe.Set(0, this.videosize.width, this.videosize.height, 0);
                 }
                 this.gllock = this.opentk.GetDrawLock();
-                this.opentk.StartRender(this.renderframe, new Xwt.Rectangle(0, 0, this.videosize.width, this.videosize.height));
+                this.opentk.StartRender(this.renderframe, new rectangle(point.Zero, this.videosize));
                 return null;
             }
             else
@@ -949,10 +951,11 @@ namespace BaseLib.Display.WPF
             Monitor.Exit(this);
         }
 
+        byte[] fill = Enumerable.Repeat((byte)0xff, 1920 * 1080 * 4).ToArray();
 
-        void IRenderer.Present(IVideoFrame src, global::Xwt.Rectangle dstrec, IntPtr window) // painting on block or rpreview-something with alpha=255
+        void IRenderer.Present(IVideoFrame src, rectangle dstrec, IntPtr window) // painting on block or rpreview-something with alpha=255
         {
-            dstrec = new global::Xwt.Rectangle(global::Xwt.Point.Zero, this.viewsize.ToSize());
+            dstrec = new rectangle(point.Zero, this.viewsize);
 
             if (islost || device.TestCooperativeLevel() == ResultCode.DeviceLost /*||
                 this.lastsize.Width != r.Width || this.lastsize.Height != r.Height*/)
@@ -973,9 +976,11 @@ namespace BaseLib.Display.WPF
                 Debug.Assert(this.frame.Width == src.Width);
                 Debug.Assert(this.frame.Height == src.Height);
 
+
                 using (var lck = this.opentk.GetDrawLock())
                 {
                     src.CopyTo(dr.DataPointer, dr.Pitch);
+             //       Marshal.Copy(fill, 0, dr.DataPointer, dr.Pitch * src.Height);
                 }
                 (this.frame as IDirectXFrame).Textures[0].UnlockRectangle(0);
             }
@@ -991,6 +996,7 @@ namespace BaseLib.Display.WPF
                 using (var lck = this.opentk.GetDrawLock())
                 {
                     this.renderframe.CopyTo(dr.DataPointer, dr.Pitch);
+             //       Marshal.Copy(fill, 0, dr.DataPointer, dr.Pitch * renderframe.Height);
                 }
                 (this.frame as IDirectXFrame).Textures[0].UnlockRectangle(0);
             }
@@ -1013,28 +1019,28 @@ namespace BaseLib.Display.WPF
             device.SetStreamSource(0, vertices2, 0, Utilities.SizeOf<vertex>());
             device.VertexDeclaration = vertexDecl2;
 
-            var m = Matrix.Scaling((float)dstrec.Width, (float)-dstrec.Height, 1) * Matrix.Translation((float)dstrec.Left, (float)dstrec.Bottom, 0);
+            var m = Matrix.Scaling(dstrec.width, -dstrec.height, 1) * Matrix.Translation(dstrec.x, dstrec.height, 0);
 
          //   Matrix proj = Matrix.Scaling(1, -1, 1);
          //   m= Matrix.Multiply(m, proj);
             var worldViewProj = m * CreateViewMatrix(this.viewsize.width, this.viewsize.height);
 
-            effect.SetValue("worldViewProj", worldViewProj);
-            effect.SetValue("alpha", 1.0f);
-            effect.SetTexture("texture0", (this.frame as IDirectXFrame).Textures[0]);
+            presenteffect.SetValue("worldViewProj", worldViewProj);
+            presenteffect.SetValue("alpha", 1.0f);
+            presenteffect.SetTexture("texture0", (this.frame as IDirectXFrame).Textures[0]);
 
             //       effect.Technique = technique;
-            effect.Begin();
-            effect.BeginPass(0);
+            presenteffect.Begin();
+            presenteffect.BeginPass(0);
 
             device.DrawPrimitives(PrimitiveType.TriangleList, 0, 2);
 
-            effect.EndPass();
-            effect.End();
+            presenteffect.EndPass();
+            presenteffect.End();
 
             device.EndScene();
 
-            effect.SetTexture("texture0", null);
+            presenteffect.SetTexture("texture0", null);
         }
         void IRenderer.AllocFunc(int width, int height, VideoFormat fmt, ref IntPtr data, ref int pitch, ref VideoFormat framefmt)
         {
@@ -1084,7 +1090,7 @@ namespace BaseLib.Display.WPF
                     case DeinterlaceModes.Blend:
                     case DeinterlaceModes.Split:
                         {
-                            var state = this.StartRender(destination, global::Xwt.Rectangle.Zero);
+                            var state = this.StartRender(destination,rectangle.Zero);
                             try
                             {
                                 /*         var dstrec = new System.Drawing.Rectangle(0, 0, destination.Width, destination.Height);
