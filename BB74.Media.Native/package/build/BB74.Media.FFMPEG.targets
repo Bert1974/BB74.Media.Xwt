@@ -48,40 +48,40 @@
 
   <Target Name="CopyFFMPEG_Win32_32" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="Build" Condition=" '$(Platform)' != 'x64' And $(OSPlatform) == 'Win32' ">
     <ItemGroup >
-      <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\avcodec-58.dll">
-        <Link>x64\avcodec-58.dll</Link>
+      <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\avcodec-58.dll">
+        <Link>x86\avcodec-58.dll</Link>
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </FFMPEG_Win32_32>
-      <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\avdevice-58.dll">
-        <Link>x64\avdevice-58.dll</Link>
+      <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\avdevice-58.dll">
+        <Link>x86\avdevice-58.dll</Link>
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </FFMPEG_Win32_32>
-      <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\avfilter-7.dll">
-        <Link>x64\avfilter-7.dll</Link>
+      <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\avfilter-7.dll">
+        <Link>x86\avfilter-7.dll</Link>
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </FFMPEG_Win32_32>
-      <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\avformat-58.dll">
-        <Link>x64\avformat-58.dll</Link>
+      <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\avformat-58.dll">
+        <Link>x86\avformat-58.dll</Link>
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </FFMPEG_Win32_32>
-      <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\avresample-4.dll">
-        <Link>x64\avresample-4.dll</Link>
+      <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\avresample-4.dll">
+        <Link>x86\avresample-4.dll</Link>
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </FFMPEG_Win32_32>
-      <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\avutil-56.dll">
-        <Link>x64\avutil-56.dll</Link>
+      <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\avutil-56.dll">
+        <Link>x86\avutil-56.dll</Link>
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </FFMPEG_Win32_32>
-      <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\swresample-3.dll">
-        <Link>x64\swresample-3.dll</Link>
+      <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\swresample-3.dll">
+        <Link>x86\swresample-3.dll</Link>
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </FFMPEG_Win32_32>
-      <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\swscale-5.dll">
-        <Link>x64\swscale-5.dll</Link>
+      <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\swscale-5.dll">
+        <Link>x86\swscale-5.dll</Link>
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </FFMPEG_Win32_32>
-      <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\BB74.Media.Native.dll">
-        <Link>x64\BB74.Media.Native.dll</Link>
+      <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\BB74.Media.Native.dll">
+        <Link>x86\BB74.Media.Native.dll</Link>
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </FFMPEG_Win32_32>
     </ItemGroup>
@@ -108,7 +108,7 @@
         />
     <Message Importance="High" Text="copied OS-X ffmpeg files" />
   </Target>
- 
+
   <Target Name="CopyFFMPEG_Linux" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="Build" Condition=" $(OSPlatform) == 'Linux' ">
     <ItemGroup >
       <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\libBB74.Media.Native.dll.so">
@@ -123,28 +123,4 @@
     <Message Importance="High" Text="copied Linux ffmpeg files" />
   </Target>
 
-  <Target Name="UpdateInteropFFMEG" AfterTargets="ResolveReferences" DependsOnTargets="GetOSIdentifiersFFMPEG" >
-    <ItemGroup Condition=" '$(OSPlatform)' == 'Win32' ">
-      <None Include="$(MSBuildThisFileDirectory)..\ref\net40\BB74.Media.Interop.Impl.dll">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </None>
-      <None Include="$(MSBuildThisFileDirectory)..\ref\net40\BB74.Media.Interop.x86.dll">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Include="$(MSBuildThisFileDirectory)..\ref\net40\BB74.Media.Interop.x64.dll">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-    <ItemGroup  Condition=" '$(OSPlatform)' != 'Win32' ">
-      <None Include="$(MSBuildThisFileDirectory)..\ref\net40\BB74.Media.Interop.Impl.dll">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Include="$(MSBuildThisFileDirectory)..\ref\net40\BB74.Media.Interop.x86.dll">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </None>
-      <None Include="$(MSBuildThisFileDirectory)..\ref\net40\BB74.Media.Interop.x64.dll">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-  </Target>
 </Project>

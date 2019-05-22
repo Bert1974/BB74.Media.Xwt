@@ -8,6 +8,10 @@ IF "%~1"=="debug" set BB74_CONFIG=Debug
 IF "%~1"=="release" set BB74_CONFIG=Release
 IF "%~1"=="versiononly" set BB74_VERSIONONLY=true
 IF "%~1"=="bert" set BB74_PUBLISH=bert
+IF NOT "%~1"=="clean" goto noclean
+for %%i in (.\packages\*) do if not "%%i"==".\packages\.gitignore" del %%i
+goto Exit
+:noclean
 SHIFT
 GOTO parse
 :endparse
@@ -62,9 +66,9 @@ IF ERRORLEVEL 1 GOTO Error
 cd ..
 msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=..\package\ref\net40
 IF ERRORLEVEL 1 GOTO Error
-msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=x64 /p:OutputPath=..\package\ref\net40 /p:DefineConstants=X64_BUILD /p:AssemblyName=BB74.Media.Interop.x64
+msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=x64 /p:OutputPath=..\package\lib\net40 /p:DefineConstants=X64_BUILD /p:AssemblyName=BB74.Media.Interop.x64
 IF ERRORLEVEL 1 GOTO Error
-msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=x86 /p:OutputPath=..\package\ref\net40 /p:DefineConstants=X86_BUILD /p:AssemblyName=BB74.Media.Interop.x86
+msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=x86 /p:OutputPath=..\package\lib\net40 /p:DefineConstants=X86_BUILD /p:AssemblyName=BB74.Media.Interop.x86
 IF ERRORLEVEL 1 GOTO Error
 msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=Release,Platform=AnyCPU
 IF ERRORLEVEL 1 GOTO Error
@@ -106,7 +110,7 @@ IF ERRORLEVEL 1 GOTO Error
 
 if "%BB74_VERSIONONLY%"=="TRUE" goto exit
 
-nuget pack _tmp\BB74.Media.FFMPEG.nuspec -BasePath .\package -properties configuration=%BB74_CONFIG% -OutputDirectory packages\
+nuget pack _tmp\BB74.Media.FFMPEG.nuspec -BasePath .\package -OutputDirectory packages\ -properties configuration=%BB74_CONFIG%
 if ERRORLEVEL 1 GOTO Error
 
 if NOT "%BB74_PUBLISH%"=="bert" goto exit

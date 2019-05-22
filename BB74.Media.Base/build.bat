@@ -4,6 +4,10 @@ set BB74_PUBLISH=default
 IF "%~1"=="" GOTO endparse
 IF "%~1"=="debug" set BB74_CONFIG=Debug
 if "%~1"=="bert" set BB74_PUBLISH=bert
+IF NOT "%~1"=="clean" goto noclean
+for %%i in (.\packages\*) do if not "%%i"==".\packages\.gitignore" del %%i
+goto exit
+:noclean
 SHIFT
 GOTO parse
 :endparse
@@ -30,7 +34,7 @@ rem IF ERRORLEVEL 1 GOTO Error
 ..\bin\getversion -version_ext "%BB74_VERSION%" -assembly package\lib\net40\BB74.Media.Base.dll BB74.Media.Base._nuspec _tmp\BB74.Media.Base.nuspec
 IF ERRORLEVEL 1 GOTO Error
 
-nuget pack _tmp/BB74.Media.Base.nuspec -BasePath .\package -properties configuration=%BB74_CONFIG% -OutputDirectory packages\
+nuget pack _tmp/BB74.Media.Base.nuspec -BasePath .\package -OutputDirectory packages\ -properties configuration=%BB74_CONFIG%
 IF ERRORLEVEL 1 GOTO Error
 
 if NOT "%BB74_PUBLISH%"=="bert" goto exit

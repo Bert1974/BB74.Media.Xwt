@@ -6,6 +6,16 @@ IF "%~1"=="" GOTO endparse
 IF "%~1"=="debug" set BB74_CONFIG=Debug
 IF "%~1"=="release" set BB74_CONFIG=Release
 IF "%~1"=="bert" set BB74_PUBLISH=bert
+IF NOT "%~1"=="clean" goto noclean
+for %%i in (.\packages\*) do if not "%%i"==".\packages\.gitignore" del %%i
+msbuild BB74.Xwt.OpenTK\BB74.Xwt.OpenTK.csproj /t:Clean /p:Configuration=Debug,Platform=AnyCPU
+msbuild BB74.Xwt.OpenTK\BB74.Xwt.OpenTK.csproj /t:Clean	/p:Configuration=Release,Platform=AnyCPU
+msbuild BB74.Xwt.OpenTK.GTK\BB74.Xwt.OpenTK.GTK.csproj /t:Clean /p:Configuration=Debug,Platform=AnyCPU
+msbuild BB74.Xwt.OpenTK.GTK\BB74.Xwt.OpenTK.GTK.csproj /t:Clean /p:Configuration=Release,Platform=AnyCPU
+msbuild BB74.Xwt.OpenTK.WPF\BB74.Xwt.OpenTK.WPF.csproj /t:Clean /p:Configuration=Debug,Platform=AnyCPU
+msbuild BB74.Xwt.OpenTK.WPF\BB74.Xwt.OpenTK.WPF.csproj /t:Clean	/p:Configuration=Release,Platform=AnyCPU
+goto exit
+:noclean
 SHIFT
 GOTO parse
 :endparse
@@ -33,7 +43,7 @@ IF ERRORLEVEL 1 GOTO Error
 ..\..\bin\getversion -version_ext "%BB74_VERSION%" -assembly .\package\lib\net40\BB74.Xwt.OpenTK.dll BB74.Xwt.OpenTK._nuspec BB74.Xwt.OpenTK.nuspec
 IF ERRORLEVEL 1 GOTO Error
 
-nuget pack BB74.Xwt.OpenTK.nuspec -BasePath .\package -build -properties configuration=%BB74_CONFIG%;Platform=AnyCPU -OutputDirectory ..\packages\
+nuget pack BB74.Xwt.OpenTK.nuspec -BasePath .\package -build -OutputDirectory ..\packages\ -properties configuration=%BB74_CONFIG%;Platform=AnyCPU
 IF ERRORLEVEL 1 GOTO Error
 
 
@@ -59,7 +69,7 @@ IF ERRORLEVEL 1 GOTO Error
 ..\..\bin\getversion -version_ext "%BB74_VERSION%" -assembly .\package\lib\net40\BB74.Xwt.OpenTK.GTK.dll BB74.Xwt.OpenTK.GTK._nuspec BB74.Xwt.OpenTK.GTK.nuspec
 IF ERRORLEVEL 1 GOTO Error
 
-nuget pack BB74.Xwt.OpenTK.GTK.nuspec -BasePath .\package  -properties configuration=%BB74_CONFIG%;Platform=AnyCPU -OutputDirectory ..\packages\
+nuget pack BB74.Xwt.OpenTK.GTK.nuspec -BasePath .\package -OutputDirectory ..\packages\  -properties configuration=%BB74_CONFIG%;Platform=AnyCPU
 IF ERRORLEVEL 1 GOTO Error
 
 
@@ -85,9 +95,8 @@ IF ERRORLEVEL 1 GOTO Error
 ..\..\bin\getversion -version_ext "%BB74_VERSION%" -assembly .\package\lib\net40\BB74.Xwt.OpenTK.WPF.dll BB74.Xwt.OpenTK.WPF._nuspec BB74.Xwt.OpenTK.WPF.nuspec
 IF ERRORLEVEL 1 GOTO Error
 
-nuget pack BB74.Xwt.OpenTK.WPF.nuspec -BasePath .\package  -properties configuration=%BB74_CONFIG%;Platform=AnyCPU -OutputDirectory ..\packages\
+nuget pack BB74.Xwt.OpenTK.WPF.nuspec -BasePath .\package -OutputDirectory ..\packages\ -properties configuration=%BB74_CONFIG%;Platform=AnyCPU
 IF ERRORLEVEL 1 GOTO Error
-
 
 if NOT "%BB74_PUBLISH%"=="bert" goto skip3
 
