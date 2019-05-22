@@ -11,20 +11,27 @@ namespace BaseLib.Media
 {
     public struct point
     {
+        public static readonly point Zero = new point(0, 0);
         public int x, y;
 
         public point(int x, int y) { this.x = x; this.y = y; }
     }
     public struct size
     {
+        public static readonly size Zero = new size(0, 0);
         public int width, height;
 
         public size(int width, int height) { this.width = width; this.height = height; }
     }
     public struct rectangle
     {
+        public static readonly rectangle Zero = new rectangle(point.Zero, size.Zero);
         public int x, y, width, height;
 
+        public size size => new size(width, height);
+        public size Location => new size(x, y);
+
+        public rectangle(point pt, size size) { this.x = pt.x; this.y = pt.y; this.width = size.width; this.height = size.height; }
         public rectangle(int x, int y, int width, int height) { this.x = x; this.y = y; this.width = width; this.height = height; }
     }
     namespace Video
