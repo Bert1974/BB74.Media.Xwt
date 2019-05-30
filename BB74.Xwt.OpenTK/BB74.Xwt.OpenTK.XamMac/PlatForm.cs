@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Threading;
 using AppKit;
 using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
@@ -115,7 +114,7 @@ namespace BaseLib.Platforms
 
         private CGRect ViewPostion(Widget w, IWidgetBackend wBackend)
         {
-            var be = Extensions.GetBackend(w);
+            var be = BaseLib.Xwt.Extensions.GetBackend(w);
             var r = new Rectangle(be.ConvertToWindowCoordinates(Point.Zero), be.Size);
             return new CGRect(0, 0, r.Width, r.Height);
         }

@@ -34,7 +34,15 @@ namespace BaseLib.Media.Interop
 
                     if (IntPtr.Size == 8)
                     {
-                        return Assembly.LoadFile(Path.Combine(dir, "BB74.Media.Interop.x64.dll"));
+                        if (System.Environment.OSVersion.Platform != PlatformID.MacOSX &&
+                            System.Environment.OSVersion.Platform != PlatformID.Unix) // ->windows
+                        {
+                            return Assembly.LoadFile(Path.Combine(dir, "BB74.Media.Interop.x64.dll"));
+                        }
+                        else//->non windows
+                        {
+                            return Assembly.LoadFile(Path.Combine(dir, "x64", "BB74.Media.Interop.Impl.dll"));
+                        }
                     }
                     else
                     {

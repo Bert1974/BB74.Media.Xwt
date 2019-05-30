@@ -50,7 +50,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DockExample", "Examples\Med
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleExample", "Examples\SimpleExample\SimpleExample.csproj", "{655F8313-AD60-44DA-A862-1D795372D1E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BB74.Xwt.Controls.OpenTK", "BB74.Xwt.Controls.OpenTK\BB74.Xwt.Controls.OpenTK.csproj", "{565A402B-419E-4E99-8947-460B2E61C7BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BB74.Xwt.Media.Controls", "BB74.Xwt.Media.Controls\BB74.Xwt.Media.Controls.csproj", "{565A402B-419E-4E99-8947-460B2E61C7BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

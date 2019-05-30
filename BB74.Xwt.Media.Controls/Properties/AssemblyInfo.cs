@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SimpleExample")]
+[assembly: AssemblyTitle("BB74.Xwt.Controls.OpenTK")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SimpleExample")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyCompany("Bert Bruggeman")]
+[assembly: AssemblyProduct("BB74.Xwt.Controls.OpenTK")]
+[assembly: AssemblyCopyright("Copyright ©  2019 Bert Bruggeman")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("655f8313-ad60-44da-a862-1d795372d1e1")]
+[assembly: Guid("565a402b-419e-4e99-8947-460b2e61c7ba")]
 
 // Version information for an assembly consists of the following four values:
 //

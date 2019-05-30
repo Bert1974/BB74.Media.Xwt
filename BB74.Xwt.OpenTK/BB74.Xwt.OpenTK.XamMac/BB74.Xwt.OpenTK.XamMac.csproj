@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\BB74.Xwt.OpenTK.1.0.7086.38760-debug\build\BB74.Xwt.OpenTK.props" Condition="Exists('..\..\packages\BB74.Xwt.OpenTK.1.0.7086.38760-debug\build\BB74.Xwt.OpenTK.props')" />
   <Import Project="..\..\packages\Xwt.Gtk.0.2.168\build\Xwt.Gtk.props" Condition="Exists('..\..\packages\Xwt.Gtk.0.2.168\build\Xwt.Gtk.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -43,43 +44,25 @@
     <AOTMode>None</AOTMode>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BB74.Media.Base, Version=1.0.7086.24510, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Xwt.OpenTK.1.0.7086.38760-debug\lib\net40\BB74.Media.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="BB74.Xwt.OpenTK, Version=1.0.7086.38760, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Xwt.OpenTK.1.0.7086.38760-debug\lib\net40\BB74.Xwt.OpenTK.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Xwt.XamMac">
-      <HintPath>..\..\packages\Xwt.XamMac.0.2.168\lib\net40\Xwt.XamMac.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Mac">
       <HintPath>\Library\Frameworks\Xamarin.Mac.framework\Versions\5.8.0.0\lib\reference\full\Xamarin.Mac.dll</HintPath>
-    </Reference>
-    <Reference Include="Xwt.Gtk">
-      <HintPath>..\..\packages\Xwt.Gtk.0.2.168\lib\net40\Xwt.Gtk.dll</HintPath>
-    </Reference>
-    <Reference Include="Xwt.Gtk.Mac">
-      <HintPath>..\..\packages\Xwt.Gtk.Mac.0.2.168\lib\net40\Xwt.Gtk.Mac.dll</HintPath>
-    </Reference>
-    <Reference Include="Xwt.Gtk.Windows">
-      <HintPath>..\..\packages\Xwt.Gtk.Windows.0.2.168\lib\net40\Xwt.Gtk.Windows.dll</HintPath>
-    </Reference>
-    <Reference Include="Xwt.WPF">
-      <HintPath>..\..\packages\Xwt.WPF.0.2.168\lib\net40\Xwt.WPF.dll</HintPath>
-    </Reference>
-    <Reference Include="BB74.Xwt.Controls">
-      <HintPath>..\..\packages\BB74.Xwt.Controls.1.0.7074.28838-debug\lib\net40\BB74.Xwt.Controls.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK">
       <HintPath>..\..\packages\OpenTK.3.0.1\lib\net20\OpenTK.dll</HintPath>
     </Reference>
-    <Reference Include="BB74.Xwt.OpenTK">
-      <HintPath>..\..\packages\BB74.Xwt.OpenTK.1.0.7074.26990-debug\lib\net40\BB74.Xwt.OpenTK.dll</HintPath>
-    </Reference>
-    <Reference Include="BB74.Media.Base">
-      <HintPath>..\..\packages\BB74.Xwt.OpenTK.GTK.1.0.7074.37376-debug\lib\net40\BB74.Media.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="BB74.Xwt.OpenTK.GTK">
-      <HintPath>..\..\packages\BB74.Xwt.OpenTK.GTK.1.0.7074.37376-debug\lib\net40\BB74.Xwt.OpenTK.GTK.dll</HintPath>
+    <Reference Include="BB74.Xwt.Controls">
+      <HintPath>..\..\..\MovieEdit.Xwt\packages\BB74.Xwt.Controls.1.0.7089.5388-debug\lib\net40\BB74.Xwt.Controls.dll</HintPath>
     </Reference>
     <Reference Include="Xwt">
-      <HintPath>..\..\packages\BB74.Xwt.OpenTK.GTK.1.0.7074.37376-debug\lib\net40\Xwt.dll</HintPath>
+      <HintPath>..\..\..\MovieEdit.Xwt\packages\BB74.Xwt.Controls.1.0.7089.5388-debug\lib\net40\Xwt.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -95,4 +78,12 @@
     <None Include="OpenTK.dll.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\BB74.Xwt.OpenTK.1.0.7086.38760-debug\build\BB74.Xwt.OpenTK.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\BB74.Xwt.OpenTK.1.0.7086.38760-debug\build\BB74.Xwt.OpenTK.props'))" />
+    <Error Condition="!Exists('..\..\packages\BB74.Xwt.OpenTK.1.0.7086.38760-debug\build\BB74.Xwt.OpenTK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\BB74.Xwt.OpenTK.1.0.7086.38760-debug\build\BB74.Xwt.OpenTK.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\BB74.Xwt.OpenTK.1.0.7086.38760-debug\build\BB74.Xwt.OpenTK.targets" Condition="Exists('..\..\packages\BB74.Xwt.OpenTK.1.0.7086.38760-debug\build\BB74.Xwt.OpenTK.targets')" />
 </Project>

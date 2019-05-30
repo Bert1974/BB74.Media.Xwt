@@ -1,5 +1,6 @@
 ﻿using AppKit;
 using BaseLib;
+using BaseLib.Media;
 using BaseLib.Media.OpenTK;
 using CoreAnimation;
 using CoreGraphics;
@@ -189,7 +190,7 @@ namespace BaseLib.Platforms
 
                                 try
                                 {
-                                    var r = new Xwt.Rectangle(0, 0, this.owner.Bounds.Width, this.owner.Bounds.Height);
+                                    var r = new rectangle(0, 0, Convert.ToInt32(this.owner.Bounds.Width), Convert.ToInt32(this.owner.Bounds.Height));
 
                                     this.owner.renderer.render(null, time, r);
                                 }
