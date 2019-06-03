@@ -2,8 +2,8 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\packages\BB74.Xwt.OpenTK.1.0.7074.39616-debug\build\BB74.Xwt.OpenTK.props" Condition="Exists('..\..\packages\BB74.Xwt.OpenTK.1.0.7074.39616-debug\build\BB74.Xwt.OpenTK.props')" />
   <Import Project="..\..\packages\Xwt.Gtk.0.2.168\build\Xwt.Gtk.props" Condition="Exists('..\..\packages\Xwt.Gtk.0.2.168\build\Xwt.Gtk.props')" />
-  <Import Project="..\packages\Xwt.Gtk3.0.2.167\build\Xwt.Gtk3.props" Condition="Exists('..\packages\Xwt.Gtk3.0.2.167\build\Xwt.Gtk3.props')" />
-  <Import Project="..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props" Condition="Exists('..\packages\Xwt.Gtk.0.2.167\build\Xwt.Gtk.props')" />
+  <Import Project="..\packages\Xwt.Gtk3.0.2.168\build\Xwt.Gtk3.props" Condition="Exists('..\packages\Xwt.Gtk3.0.2.168\build\Xwt.Gtk3.props')" />
+  <Import Project="..\packages\Xwt.Gtk.0.2.168\build\Xwt.Gtk.props" Condition="Exists('..\packages\Xwt.Gtk.0.2.168\build\Xwt.Gtk.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>

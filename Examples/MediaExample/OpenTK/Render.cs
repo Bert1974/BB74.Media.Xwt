@@ -3,13 +3,10 @@ using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
 using BaseLib.Media.Video;
 using BaseLib.Xwt;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading;
 using Xwt;
 

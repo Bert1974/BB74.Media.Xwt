@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <Target Name="CopyFFMPEG_Win32_64" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="Build" Condition=" '$(Platform)' != 'x86' And $(OSPlatform) == 'Win32' ">
+  <Target Name="CopyFFMPEG_Win32_64" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="Build" Condition=" '$(Platform)' != 'x86' ">
     <ItemGroup >
       <FFMPEG_Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\avcodec-58.dll">
         <Link>x64\avcodec-58.dll</Link>
@@ -46,7 +46,7 @@
     <Message Importance="High" Text="copied win32 ffmpeg files" />
   </Target>
 
-  <Target Name="CopyFFMPEG_Win32_32" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="Build" Condition=" '$(Platform)' != 'x64' And $(OSPlatform) == 'Win32' ">
+  <Target Name="CopyFFMPEG_Win32_32" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="Build" Condition=" '$(Platform)' != 'x64' ">
     <ItemGroup >
       <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\avcodec-58.dll">
         <Link>x86\avcodec-58.dll</Link>
@@ -91,7 +91,7 @@
         />
     <Message Importance="High" Text="copied win64 ffmpeg files" />
   </Target>
-  <Target Name="CopyFFMPEG_OSX" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="Build" Condition=" $(OSPlatform) == 'OSX' ">
+  <Target Name="CopyFFMPEG_OSX" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="Build" Condition=" '$(Platform)' != 'x86' ">
     <ItemGroup >
       <OSX_64_FFMPEG Include="$(MSBuildThisFileDirectory)..\data\x64\libBB74.Media.Native.dll.dylib">
         <Link>x64\libBB74.Media.Native.dll.dylib</Link>
@@ -100,7 +100,7 @@
     </ItemGroup>
     <Copy
         SourceFiles="@(OSX_64_FFMPEG)"
-        DestinationFolder="$(TargetDir)"
+        DestinationFolder="$(TargetDir)x64"
         />
     <Copy
         SourceFiles="@(OSX_64_FFMPEG)"
@@ -109,16 +109,25 @@
     <Message Importance="High" Text="copied OS-X ffmpeg files" />
   </Target>
 
-  <Target Name="CopyFFMPEG_Linux" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="Build" Condition=" $(OSPlatform) == 'Linux' ">
+  <Target Name="CopyFFMPEG_Other" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="Build" Condition=" '$(Platform)' != 'x86' ">
     <ItemGroup >
-      <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x64\libBB74.Media.Native.dll.so">
+      <FFMPEG_Other Include="$(MSBuildThisFileDirectory)..\ref\net40\BB74.Media.Interop.Impl.dll">
+        <Link>x64\libBB74.Media.Native.dll.dylib</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </FFMPEG_Other>
+      <FFMPEG_Other Include="$(MSBuildThisFileDirectory)..\data\x64\libBB74.Media.Native.dll.dylib">
+        <Link>x64\libBB74.Media.Native.dll.dylib</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </FFMPEG_Other>
+      <FFMPEG_Other Include="$(MSBuildThisFileDirectory)..\data\x64\libBB74.Media.Native.dll.so">
         <Link>x64\libBB74.Media.Native.dll.so</Link>
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </FFMPEG_Win32_32>
-    </ItemGroup>
+      </FFMPEG_Other>
+    
+  </ItemGroup>
     <Copy
-        SourceFiles="@(FFMPEG_Win32_32)"
-        DestinationFolder="$(TargetDir)"
+        SourceFiles="@(FFMPEG_Other)"
+        DestinationFolder="$(TargetDir)x64"
         />
     <Message Importance="High" Text="copied Linux ffmpeg files" />
   </Target>

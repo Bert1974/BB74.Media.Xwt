@@ -13,15 +13,19 @@ namespace BaseLib.Media.Interop
     {
         private static object messagefunc;
         private static bool doinit = true;
+        private static object initlock = new object();
 
         public static void Initialize()
         {
-            if (doinit)
+            lock (initlock)
             {
-                doinit = false;
+                if (doinit)
+                {
+                    doinit = false;
 
-                string dir = Path.GetDirectoryName(new Uri(typeof(staticinit).Assembly.Location).AbsolutePath);
-                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+                    string dir = Path.GetDirectoryName(new Uri(typeof(staticinit).Assembly.Location).AbsolutePath);
+                    AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+                }
             }
         }
         private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
