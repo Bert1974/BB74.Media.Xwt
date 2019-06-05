@@ -47,6 +47,8 @@ namespace BaseLib.Media.Display
         VideoFormat AlphaFormat { get; }
 
         IDisposable GetDrawLock();
+
+        WaitHandle stopevent { get; }
     }
     public interface IFrameListener
     {

@@ -34,8 +34,8 @@ namespace BaseLib.Xwt.Controls.Media
         void OnLoaded(bool renderlocked);
         void Unloading(bool renderlocked);
         void Stop();
-        bool StartRender(long time, bool dowait);
-        void Render(long time, rectangle viewport);
+        bool StartRender(long time, bool dowait, out object data);
+        void Render(long time, rectangle viewport, object data);
 
         long Frame(long time);
         long Time(long frame);

@@ -173,10 +173,11 @@ void AudioOut::SampleDone(WAVEHDR *h)
 
 			m_wpos += wlen; data -= wlen; samples -= wlen / wfxext.Format.nBlockAlign;
 
+			bool playing = WaitForSingleObject(m_playing, 0) == WAIT_OBJECT_0;
 			if (m_wpos == m_writelen * m_buffers)
 			{
 				ResetEvent(m_canwrite);
-				if (WaitForSingleObject(m_playing,0)!=WAIT_OBJECT_0)
+				if (!playing)
 				{
 					if (m_callback)
 					{
@@ -186,7 +187,7 @@ void AudioOut::SampleDone(WAVEHDR *h)
 			}
 			if (m_wpos >= m_writelen)
 			{
-				if (WaitForSingleObject(m_playing, 0) == WAIT_OBJECT_0)
+				if (playing)
 				{
 					SetEvent(m_gotdata); // start/continue play
 				}
@@ -414,11 +415,16 @@ void AudioOut::Stop()
 	{
 		WaitForSingleObject(m_stoppedpevent, INFINITE);
 	}
-	m_wpos = 0;
 
 	EnterCriticalSection(&m_bufferlock);
+	m_wpos = 0;
+	ResetEvent(m_stopevent);
+	ResetEvent(m_stoppedpevent);
+	ResetEvent(m_gotdata);
+	SetEvent(m_canwrite);
 	ResetEvent(m_playing);
 	LeaveCriticalSection(&m_bufferlock);
+
 }
 
 extern "C" {

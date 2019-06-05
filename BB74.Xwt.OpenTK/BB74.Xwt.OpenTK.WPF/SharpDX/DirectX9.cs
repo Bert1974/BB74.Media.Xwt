@@ -210,6 +210,8 @@ namespace BaseLib.Display.WPF
         private size viewsize;
         private ReaderWriterLockNoThreading movieslock = new ReaderWriterLockNoThreading();
 
+        WaitHandle IRenderer.stopevent => this.stopevent;
+        protected ManualResetEvent stopevent = new ManualResetEvent(false);
         private ManualResetEvent ready = new ManualResetEvent(true);
         internal readonly List<RenderFrame> renderframes = new List<RenderFrame>();
         internal readonly List<VideoFrame> videoframes = new List<VideoFrame>();
@@ -638,6 +640,7 @@ namespace BaseLib.Display.WPF
 
         void IRenderer.Start()
         {
+            this.stopevent.Reset();
             this._layer.BeginRenderingScene();
         }
 
@@ -721,6 +724,7 @@ namespace BaseLib.Display.WPF
         }
         public void Stop()
         {
+            this.stopevent.Set();
             //       stopevent.Set();
         }
 

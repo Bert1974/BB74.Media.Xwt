@@ -213,7 +213,8 @@ precision mediump float;
         //  public int buf_vertices2, buf_vertices3;
         //     private IAsyncResult update_ar;
 
-        private ManualResetEvent stopevent = new ManualResetEvent(false);
+        WaitHandle IRenderer.stopevent => this.stopevent;
+        public ManualResetEvent stopevent  = new ManualResetEvent(false);
         private int _lockcnt;
         private Thread lockthread;
 

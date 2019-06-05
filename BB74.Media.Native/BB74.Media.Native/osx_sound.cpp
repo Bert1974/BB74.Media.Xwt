@@ -187,7 +187,7 @@ private:
 	}
 public:
 	osx_sound(int samplerate, AudioFormat format, ChannelsLayout channels, int __frames, int buffers)
-		: m_empty(true), m_full(false), m_quiting(false), m_quitted(false)
+		: m_empty(true), m_full(false), m_quiting(false), m_quitted(false), m_stopped(true)
 		, m_format(format), m_channelslayout(channels), m_frames(buffers)
 		, m_buffered(false)
 		, m_queue (0), frames(samplerate/ __frames)
@@ -466,7 +466,6 @@ public:
 
 		assert(m_bufferpos == -1);
 
-		m_stopped = false;
 		
 		status=AudioQueueStart(m_queue, 0);
 	}
@@ -485,6 +484,13 @@ public:
 		{
 			m_maincond.wait(lk);
 		}
+		m_full = false;
+		m_empty = true;
+		m_bufferpos = 0;
+		m_wpos = 0;
+		m_quiting = false;
+		m_stopped = false;
+		m_buffered = false;
 	}
 	void SetBufferedCallback(osx_sound::BufferedFucnction callback)
 	{

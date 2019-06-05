@@ -74,7 +74,7 @@ namespace BaseLib.Media.OpenTK
 
         public static implicit operator int (shader s)=>s.shaderProgram;
 
-        public shader(string vertexshader, string fragmentshader, vertices vertices)
+        public shader(string vertexshader, string fragmentshader, vertices vertices= null)
         {
             this.vertices = vertices;
 
@@ -125,7 +125,10 @@ namespace BaseLib.Media.OpenTK
         }
         public void Bind()
         {
-            Bind(this.vertices);
+            if (this.vertices != null)
+            {
+                Bind(this.vertices);
+            }
         }
         public void Bind(vertices vertices)
         {
