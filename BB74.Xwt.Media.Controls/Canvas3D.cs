@@ -23,7 +23,41 @@ namespace BaseLib.Xwt.Controls.Media
         IAudioOut ICanvas3DControl.Audio => this.Audio;
         IMixer ICanvas3DControl.Mixer => this.Mixer;
         IRenderer ICanvas3DControl.Renderer => this.Renderer;
-        
+
+        public virtual void Start(long time)
+        {
+           this.audiostop.Reset();
+            this.audiothread = new Thread(() =>
+            {
+                while (!audiostop.WaitOne(0, false))
+                {
+                    try
+                    {
+                        var data = this.Mixer.Read(0, 48000 / 25);
+                        Audio.Write(data, data.Length / 8);
+                    }
+                    catch { }
+                }
+            });
+            this.audiothread.Start();
+            
+            this.Audio.Buffered.WaitOne(-1, false);
+
+       //     this.Audio?.Start();
+            this.Renderer.Start();
+        }
+
+        public virtual void Stop()
+        {
+            this.audiostop.Set();
+            this.Renderer.Stop();
+            this.Audio?.Stop();
+
+            this.impl.Stop();
+
+            try { this.audiothread?.Join(); } catch { }
+        }
+
         protected IVideoAudioInformation info { get; private set; }
         protected ICanvas3DImplmentation impl { get; private set; }
         protected IRenderer Renderer;
@@ -31,6 +65,7 @@ namespace BaseLib.Xwt.Controls.Media
         protected IMixer Mixer;
         private Thread audiothread;
         private ManualResetEvent audiostop = new ManualResetEvent(false);
+        private object renderdata;
 
         public void /*ICanvas3DControl.*/Initialize (IVideoAudioInformation info, ICanvas3DImplmentation impl)
         {
@@ -56,26 +91,7 @@ namespace BaseLib.Xwt.Controls.Media
                 //this.Display.WaitBuffered();
                 //    this.Audio?.Buffered.WaitOne(-1, false);
 
-                this.audiostop.Reset();
-                this.audiothread = new Thread(() =>
-                {
-                    while (!audiostop.WaitOne(0, false))
-                    {
-                        try
-                        {
-                            var data = this.Mixer.Read(0, 48000 / 25);
-                            Audio.Write(data, data.Length / 8);
-                        }
-                        catch { }
-                    }
-                });
 
-                this.audiothread.Start();
-
-                this.Audio.Buffered.WaitOne(-1, false);
-
-                this.Audio?.Start();
-                this.Renderer.Start();
 
                 //this.movie.p
             }
@@ -114,11 +130,11 @@ namespace BaseLib.Xwt.Controls.Media
         }
         bool IRenderOwner.preparerender(IRenderFrame destination, long time, bool dowait)
         {
-            return this.impl.StartRender(time, dowait);
+            return this.impl.StartRender(time, dowait, out this.renderdata);
         }
         void IRenderOwner.render(IRenderFrame destination, long time, rectangle r)
         {
-            this.impl.Render(time, r);
+            this.impl.Render(time, r, this.renderdata);
             this.Renderer.Present(destination, r, IntPtr.Zero);
         }
         void IRenderOwner.StartRender(IRenderer renderer)
