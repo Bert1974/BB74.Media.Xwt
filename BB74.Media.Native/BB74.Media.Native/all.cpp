@@ -8,7 +8,7 @@ extern "C" {
 		g_callback = callback;
 	}
 }
-FUNCEXP void __printf(std::string fmt, ...)
+FUNCEXP void __printf(int logflags, const std::string group, const std::string fmt, ...)
 {
 	if (g_callback)
 	{
@@ -29,6 +29,6 @@ FUNCEXP void __printf(std::string fmt, ...)
 			else
 				size *= 2;      // Guess at a larger size (OS specific)
 		}
-		g_callback(str.c_str());
+		g_callback(logflags, group.c_str(), str.c_str());
 	}
 }

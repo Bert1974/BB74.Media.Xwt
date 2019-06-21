@@ -31,6 +31,6 @@ void EndScene(Widget win, GraphicsContext ctx);*/
         void EndRender(IRenderer renderer);
         /*     void SkipRender(long ticks);*/
 
-        void DoEvents();
+        void DoEvents(Func<bool> cancelfunc);
     }
 }

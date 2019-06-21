@@ -201,7 +201,7 @@ namespace BaseLib.Media.OpenTK
         {
             Lock();
 
-        /*    using (var bmp = new System.Drawing.Bitmap(this.Width, this.Height, this.Stride, System.Drawing.Imaging.PixelFormat.Format32bppArgb, this.Data))
+            using (var bmp = new System.Drawing.Bitmap(this.Width, this.Height, this.Stride, System.Drawing.Imaging.PixelFormat.Format32bppArgb, this.Data))
             {
                 try
                 {
@@ -209,7 +209,7 @@ namespace BaseLib.Media.OpenTK
                 }
                 catch { }
             }
-            */
+            
                 Unlock();
         }
 

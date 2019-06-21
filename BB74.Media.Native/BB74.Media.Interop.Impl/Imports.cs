@@ -41,7 +41,7 @@ namespace BaseLib.Media
 }
 namespace BaseLib.Interop
 {
-    internal delegate void messagefunction([MarshalAs(UnmanagedType.LPStr)]string text);
+    internal delegate void messagefunction(int level, [MarshalAs(UnmanagedType.LPStr)]string group, [MarshalAs(UnmanagedType.LPStr)]string text);
 
     internal static class Imports
     {

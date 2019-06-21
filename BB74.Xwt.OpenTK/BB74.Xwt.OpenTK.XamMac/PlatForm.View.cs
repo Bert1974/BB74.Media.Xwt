@@ -9,6 +9,7 @@ using OpenGL;
 //using OpenTK.Graphics.OpenGL;
 using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Xwt;
@@ -43,6 +44,7 @@ namespace BaseLib.Platforms
                     base.Asynchronous = true;
 
                     lastupdate = -1;
+                    timebase = 0;
 
 #if (false)
                     this.thread = new Thread(() =>
@@ -115,7 +117,7 @@ namespace BaseLib.Platforms
                     this._ctx2?.Dispose();
                     this._ctx2 = null;
 
-                    var r = new NSOpenGLContext(GetOpenGLPixelFormat(0), this.owner.openglctx);
+                    var r = new NSOpenGLContext(pixelFormat/*GetOpenGLPixelFormat(0)*/, this.owner.openglctx);
 
                     if (r != null)
                     {
@@ -125,8 +127,8 @@ namespace BaseLib.Platforms
                             r.CGLContext.Lock();
                             r.MakeCurrentContext();
                             this._ctx2 = new _GraphicsContext(); // register active context handle
-                            r.CGLContext.Unlock();
                             NSOpenGLContext.ClearCurrentContext();
+                            r.CGLContext.Unlock();
                         }
                         return r;
                     }
@@ -168,18 +170,28 @@ namespace BaseLib.Platforms
 
                              Interlocked.Exchange(ref lastupdate, DateTime.Now.Ticks);
                              var now = DateTime.Now.Ticks;*/
+
+                        long time;
+
                         if (lastupdate == -1)
                         {
-                            this.timebase = now;
-                            lastupdate = 0;
+                            time = lastupdate = this.timebase;
+                            this.timebase = now - this.timebase;
+                      //      Log.Verbose($"viewtime={0} first");
                         }
-                        var time = now - this.timebase;
-
-                        if (lastupdate != -1 && (time - lastupdate) > 25000000)
+                        else
                         {
-                            this.timebase += time - lastupdate;
-                            time = lastupdate;
+                            time = now - this.timebase;
+
+                              if ((time - lastupdate) > 25000000)
+                              {
+                                  this.timebase = now - lastupdate;
+                                  time = lastupdate;
+                                  Log.Verbose($"viewtime={time} reset");
+                              }
                         }
+                 //       Log.Verbose($"viewtime={time}");
+
                         lastupdate = time;
                         if (this.owner.renderer.preparerender(null, time, false))
                         {
@@ -200,10 +212,11 @@ namespace BaseLib.Platforms
                                 }
 
                                 this.OpenGLContext.FlushBuffer();
-                                this.OpenGLContext.CGLContext.Unlock();
                                 NSOpenGLContext.ClearCurrentContext();
+                                this.OpenGLContext.CGLContext.Unlock();
                             }
                         }
+               //         Log.Verbose($"viewtime-done={time}");
                     }
                     catch(Exception e)
                     {
@@ -265,8 +278,8 @@ namespace BaseLib.Platforms
                 catch { throw; }
                 finally
                 {
-                    this.openglctx.CGLContext.Unlock();
                     NSOpenGLContext.ClearCurrentContext();
+                    this.openglctx.CGLContext.Unlock();
                 }
 
                 /*      var wBackend = Xwt.Toolkit.CurrentEngine.GetSafeBackend(widget.ParentWindow) as Xwt.Backends.IWindowFrameBackend;
@@ -329,20 +342,27 @@ namespace BaseLib.Platforms
             {
                 /*  if (object.ReferenceEquals(Thread.CurrentThread, this.mainthread))
                   {*/
+                Debug.Assert(FrameFactory.getcurrentfunc().Handle == this.openglctx.CGLContext.Handle);
                 NSOpenGLContext.ClearCurrentContext();
-                this.openglctx.CGLContext.Unlock();
+                if (Thread.CurrentThread == typeof(Application).GetProperty("UIThread", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null, new object[0]) as Thread)
+                {
+                    this.openglctx.CGLContext.Unlock();
+                }
                 /*   }
                    else
                    {
                        layer.CGLSetCurrentContext(IntPtr.Zero);
                    }*/
             }
-
             internal void StartRender()
             {
                 /*  if (object.ReferenceEquals(Thread.CurrentThread, this.mainthread))
                   {*/
-                this.openglctx.CGLContext.Lock();
+                  
+                if (Thread.CurrentThread == typeof(Application).GetProperty("UIThread", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null, new object[0]) as Thread)
+                {
+                    this.openglctx.CGLContext.Lock();
+                }
                 this.openglctx.MakeCurrentContext();
                 /*   }
                    else

@@ -276,6 +276,10 @@ precision mediump float;
                     {
                         a.action();
                     }
+                    else
+                    {
+                        break;
+                    }
                 }
                 catch (Exception e)
                 {
@@ -294,13 +298,13 @@ precision mediump float;
         private void Invoke(Action function)
         {
             var a = new actioninfo() { action = function };
-
+            
             actions.Add(a);
 
-            while (!a.done.WaitOne(0, false))
-            {
-                this.renderer.DoEvents();
-            }
+          //  while (!a.done.WaitOne(0, false))
+         //   {
+                this.renderer.DoEvents(()=> !a.done.WaitOne(0, false));
+         //   }
             a.Dispose();
         }
         class actioninfo
@@ -335,8 +339,8 @@ precision mediump float;
 
             this.Xwt.CreateForWidgetContext(this, this.renderer, window);
 
-            Invoke(() =>
-            {
+           // Invoke(() =>
+          //  {
                 this.Lock();
                 try
                 {
@@ -363,14 +367,14 @@ precision mediump float;
                            GL.EnableVertexAttribArray(0);
                            GL.EnableVertexAttribArray(1);*/
 
-                        GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+                   //     GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 
                         /*    this.presentshader = new shader(shadervertex, shaderfragment, vertices1);
                             GL.UseProgram(this.presentshader);
                             var pos = GL.GetUniformLocation(this.presentshader, "tex");
                             GL.Uniform1(pos, 0);
                             */
-                        this.combineshader = new shader(combineshadervertex, combineshaderfragment, vertices1);
+           /*             this.combineshader = new shader(combineshadervertex, combineshaderfragment, vertices1);
 
                         GL.UseProgram(combineshader);
                         var pos = GL.GetUniformLocation(this.combineshader, "tex");
@@ -387,7 +391,7 @@ precision mediump float;
 
                         GL.UseProgram(deinterlacesplitshader);
                         pos = GL.GetUniformLocation(this.deinterlacesplitshader, "vpHeight");
-                        GL.Uniform1(pos, (float)videosize.height);
+                        GL.Uniform1(pos, (float)videosize.height);*/
 
                     }
                     catch (Exception e)
@@ -402,7 +406,7 @@ precision mediump float;
                 {
                     Unlock();
                 }
-            });
+         //   });
 
         }
         ~OpenTKRenderer()
@@ -824,7 +828,7 @@ precision mediump float;
                 {
                     FrameFactory._getcurrentfunc = getcurrentfunc;
                     FrameFactory.getcurrentfunc = new GraphicsContext.GetCurrentContextDelegate(() => new ContextHandle(getcurrentfunc()));
-
+                    
                     typeof(GraphicsContext).SetFieldValuePrivateStatic("GetCurrentContext", FrameFactory.getcurrentfunc);
                 }
             }

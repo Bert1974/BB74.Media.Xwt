@@ -110,7 +110,7 @@ void main()
             this.Renderer = null;
         }
 
-        void IRenderOwner.DoEvents()
+        void IRenderOwner.DoEvents(Func<bool>cancelfunc)
         {
             this.xwt.DoEvents();
         }

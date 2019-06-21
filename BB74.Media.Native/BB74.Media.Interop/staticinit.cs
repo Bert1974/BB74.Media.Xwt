@@ -70,9 +70,16 @@ namespace BaseLib.Media.Interop
 
             }
         }
-        private static void message(string message)
+        private static void message(int level, string group, string message)
         {
-            Console.WriteLine(message);
+            if ((level & 0x8000) == 0)
+            {
+                Console.WriteLine($"{group}:{message}");
+            }
+            else
+            {
+                Console.Error.WriteLine($"{group}:{message}");
+            }
         }
     }
 }

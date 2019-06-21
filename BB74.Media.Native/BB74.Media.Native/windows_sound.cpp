@@ -344,7 +344,7 @@ bool  AudioOut::TryOpen()
 
 		StartThread();
 
-		__printf("sound open");
+		__printf(0,"SOUND", "sound open");
 
 		return true;
 	}

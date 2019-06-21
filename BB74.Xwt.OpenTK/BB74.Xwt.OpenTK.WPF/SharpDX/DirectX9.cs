@@ -843,7 +843,7 @@ namespace BaseLib.Display.WPF
         }
         public object StartRender(IRenderFrame destination, rectangle r)
         {
-            Monitor.Enter(this);
+      //      Monitor.Enter(this);
 
             if (destination == null) // render direct
             {
@@ -952,7 +952,7 @@ namespace BaseLib.Display.WPF
                    }*/
                 opentk.EndRender(state);
             }
-            Monitor.Exit(this);
+      //      Monitor.Exit(this);
         }
 
         byte[] fill = Enumerable.Repeat((byte)0xff, 1920 * 1080 * 4).ToArray();

@@ -48,7 +48,7 @@ namespace BaseLib.Media.Audio
         public int SampleRate { get; }
         public int SampleSize { get; }
 
-        private bool inaction = false;
+        protected bool inaction = false;
 
         public Mixer(int samplerate, AudioFormat format, ChannelsLayout channels)
         {
@@ -368,13 +368,6 @@ namespace BaseLib.Media.Audio
             }
         }
 
-       /* public void Action(long audiotime, FrameAction a)
-        {
-            this.inaction = true;
-            a.AudioAction?.Invoke(audiotime, a);
-            this.inaction = false;
-        }*/
-
         public void Start(FifoStream audiostream)
         {
             GetLock(out LockCookie cookie, out WriteLock wl);
@@ -457,6 +450,11 @@ namespace BaseLib.Media.Audio
                 }
                 //   ReleaseLock(cookie, wl);
             }
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
         }
     }
 }

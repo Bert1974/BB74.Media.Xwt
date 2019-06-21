@@ -110,7 +110,7 @@ void main()
                 }
                 }
 
-            void IRenderOwner.DoEvents()
+            void IRenderOwner.DoEvents(Func<bool> cancenlfunc)
             {
                 this.Xwt.DoEvents();
             }

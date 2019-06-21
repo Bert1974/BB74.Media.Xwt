@@ -122,7 +122,7 @@ namespace DockExample.OpenTK
 
             GC.SuppressFinalize(this);
         }
-        void IRenderOwner.DoEvents()
+        void IRenderOwner.DoEvents(Func<bool> cancelfunc)
         {
             this.xwt.DoEvents();
         }

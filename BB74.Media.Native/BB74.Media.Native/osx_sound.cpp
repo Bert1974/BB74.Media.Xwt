@@ -14,6 +14,15 @@
 #define ALSA_PCM_NEW_HW_PARAMS_API
 #include "AudioToolbox/AudioToolbox.h"
 
+void _verbose(const char *message)
+{
+	__printf(0, "SOUND", message);
+}
+void _error(const char *message)
+{
+	__printf(0x8000, "SOUND", message);
+}
+
 class osx_sound
 {
 public:
@@ -104,6 +113,8 @@ private:
 				m_stopped = true;
 				m_maincond.notify_all();
 
+				_verbose("audio playback fully stopped");
+
 				// In a "real example" we'd clean up the vf pointer with ov_clear() and
 				// the audio m_queue with AudioQueueDispose(); however, the latter is 
 				// better not called from within the listener function, so we just
@@ -124,6 +135,7 @@ private:
 	}
 	void _callback(AudioQueueBufferRef buffer)
 	{
+		//__printf(0x1000, "SOUND", "audio callback");
 		std::unique_lock<std::mutex> lk(m_mainmutex);
 
 		assert(m_bufferpos==-1);
@@ -180,9 +192,10 @@ private:
 				}
 			}
 		}
+		//__printf(0x1000, "SOUND", "audio callback enqueue");
 		OSStatus status = -1;
 		if ((status = AudioQueueEnqueueBuffer(m_queue, buffer, 0, 0))) {
-			__printf("AudioQueueEnqueueBuffer status = %d", status);
+			__printf(0x8000,"SOUND", "AudioQueueEnqueueBuffer status = %d", status);
 		}
 	}
 public:
@@ -380,13 +393,13 @@ private:
 public:
 	void Write(uint8_t *data, int samples)
 	{
+	//	__printf(0,"SOUND","write %d", samples);
+
 		OSStatus status = -1;
 		std::unique_lock<std::mutex> lk(m_mainmutex);
 
 		while (samples > 0)
 		{
-			__printf("write %d", samples);
-
 			if (m_quiting)
 			{
 				lk.unlock();
@@ -407,7 +420,7 @@ public:
 					{
 						if (!m_buffered)
 						{
-							__printf("sound bufferd");
+							_verbose("sound bufferd");
 							m_buffered = true;
 							m_callback();
 						}
@@ -416,13 +429,13 @@ public:
 					}
 					else
 					{
-						__printf("write copy to buffer len=%d", tl);
+					//	__printf(0,"""write copy to buffer len=%d", tl);
 						memcpy(&m_buffer.get()[m_wpos], data, tl);
 						m_wpos += tl; data += tl; samples -= tl / (m_samplesize*m_channels);
 
 						while (m_wpos >= m_bufferlen)
 						{
-							__printf("write got full buffer");
+						//	__printf("write got full buffer");
 							if (m_bufferpos != -1) // preroll?
 							{
 								AudioQueueBufferRef b = m_buffers[m_bufferpos++];
@@ -431,7 +444,7 @@ public:
 								memcpy(b->mAudioData, &m_buffer.get()[m_wpos], m_bufferlen);
 
 								if ((status = AudioQueueEnqueueBuffer(m_queue, b, 0, 0))) {
-									__printf("AudioQueueEnqueueBuffer status = %d", status);
+									__printf(0x8000,"SOUND","AudioQueueEnqueueBuffer status = %d", status);
 									//exit(1);
 								}
 								memmove(m_buffer.get(), &m_buffer.get()[m_bufferlen], m_writelen-m_bufferlen);
@@ -439,10 +452,10 @@ public:
 								m_empty = (0 == m_wpos);
 								//		m_maincond.notify_all();
 
-								__printf("write prrerolled");
+							//	_verbode("write prrerolled");
 								if (m_bufferpos == m_buffers.size()) // preroll done?
 								{
-									__printf("sound queued");
+									_verbose("sound preroll done");
 									m_bufferpos = -1;
 									//	m_maincond.notify_all();
 								}
@@ -458,39 +471,50 @@ public:
 				} while (!m_full && samples > 0);
 			}
 		}
+	//	__printf(0, "SOUND", "write done");
 	}
 	void Start()
 	{
 		OSStatus status = -1;
 		std::unique_lock<std::mutex> lk(m_mainmutex);
 
+		m_stopped = false;
 		assert(m_bufferpos == -1);
 
+		__printf(0x1000, "SOUND", "sound starting");
 		
 		status=AudioQueueStart(m_queue, 0);
 	}
 	void Stop()
 	{
+		{
+			std::unique_lock<std::mutex> lk(m_mainmutex);
+			if (m_stopped)
+			{
+				__printf(0x1000, "SOUND", "sound already stopped");
+				return;
+			}
+		}
 		OSStatus status = -1;
-
 
 		status = AudioQueueStop(m_queue, 0);
 
-		__printf("audio stopped?");
-		std::unique_lock<std::mutex> lk(m_mainmutex);
-		m_quiting = true;
-		m_maincond.notify_all();
-		while (!m_stopped)
 		{
-			m_maincond.wait(lk);
+			std::unique_lock<std::mutex> lk(m_mainmutex);
+			m_quiting = true;
+			m_maincond.notify_all();
+			while (!m_stopped)
+			{
+				m_maincond.wait(lk);
+			}
+			m_full = false;
+			m_empty = true;
+			m_bufferpos = 0;
+			m_wpos = 0;
+			m_quiting = false;
+			m_buffered = false;
 		}
-		m_full = false;
-		m_empty = true;
-		m_bufferpos = 0;
-		m_wpos = 0;
-		m_quiting = false;
-		m_stopped = false;
-		m_buffered = false;
+		__printf(0x1000, "SOUND", "sound stopped");
 	}
 	void SetBufferedCallback(osx_sound::BufferedFucnction callback)
 	{
@@ -505,11 +529,7 @@ extern "C" {
 	{
 		try
 		{
-			auto result = new osx_sound(bitrate, format, channels, frames, buffers);
-
-			__printf("audioptr=%lx", (long)result);
-
-			return result;
+			return new osx_sound(bitrate, format, channels, frames, buffers);
 		}
 		catch (_err *e)
 		{

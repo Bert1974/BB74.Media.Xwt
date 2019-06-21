@@ -34,12 +34,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BB74.Media.Base, Version=1.0.7086.24510, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BB74.Media.Base.1.0.7086.24510-debug\lib\net40\BB74.Media.Base.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="BB74.Media.Base, Version=1.0.7110.27003, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Media.Base.1.0.7110.27003-debug\lib\net40\BB74.Media.Base.dll</HintPath>
     </Reference>
     <Reference Include="BB74.Media.Interop.Impl">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\BB74.Media.Interop.Impl\bin\Release\BB74.Media.Interop.Impl.dll</HintPath>
       <Private>False</Private>
     </Reference>

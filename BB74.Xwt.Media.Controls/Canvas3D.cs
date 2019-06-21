@@ -17,17 +17,54 @@ using Xwt.Drawing;
 
 namespace BaseLib.Xwt.Controls.Media
 {
-    public class Canvas3D : Canvas, ICanvas3DControl, IRenderOwner
+    public partial class Canvas3D : Canvas, ICanvas3DControl, IRenderOwner
     {
         long ICanvas3DControl.TimeBase => this.impl.Timebase;
         IAudioOut ICanvas3DControl.Audio => this.Audio;
         IMixer ICanvas3DControl.Mixer => this.Mixer;
         IRenderer ICanvas3DControl.Renderer => this.Renderer;
 
+        protected IVideoAudioInformation info { get; private set; }
+        protected ICanvas3DImplmentation impl { get; private set; }
+        protected IRenderer Renderer;
+        protected IAudioOut Audio;
+        protected IMixer Mixer;
+        private Thread audiothread;
+        protected ManualResetEvent audiostop = new ManualResetEvent(false);
+        private object renderdata;
+
         public virtual void Start(long time)
         {
+         //   this.videotime = time;
+         //   this.audio.Run(time);
            this.audiostop.Reset();
-            this.audiothread = new Thread(() =>
+            this.audiothread = new Thread(AudioRun) { Name = "audiopush", Priority = ThreadPriority.Highest };
+            this.audiothread.Start();
+            
+            this.Audio.Buffered.WaitOne(-1, false);
+
+        //    this.IsPlaying = true;
+        //    this.audio.StartForReal();
+            this.Renderer.Start();
+            this.Audio?.Start();
+
+
+        //    this.Buffered.Reset();
+      //      this.audio.StartForReal(); // starts and buffers audio
+
+         /*   if (!this.Renderer.UseNoThreading)
+            {
+                this.renderrun.Run(time); //start render frames
+            }
+            else
+            {
+                this.renderrun.Set(time); //
+            }*/
+        }
+
+        protected virtual void AudioRun()
+        {
+            try
             {
                 while (!audiostop.WaitOne(0, false))
                 {
@@ -38,39 +75,24 @@ namespace BaseLib.Xwt.Controls.Media
                     }
                     catch { }
                 }
-            });
-            this.audiothread.Start();
-            
-            this.Audio.Buffered.WaitOne(-1, false);
-
-       //     this.Audio?.Start();
-            this.Renderer.Start();
+            }
+            catch { }
         }
 
         public virtual void Stop()
         {
-            this.audiostop.Set();
             this.Renderer.Stop();
             this.Audio?.Stop();
 
             this.impl.Stop();
 
-            try { this.audiothread?.Join(); } catch { }
         }
-
-        protected IVideoAudioInformation info { get; private set; }
-        protected ICanvas3DImplmentation impl { get; private set; }
-        protected IRenderer Renderer;
-        protected IAudioOut Audio;
-        protected IMixer Mixer;
-        private Thread audiothread;
-        private ManualResetEvent audiostop = new ManualResetEvent(false);
-        private object renderdata;
 
         public void /*ICanvas3DControl.*/Initialize (IVideoAudioInformation info, ICanvas3DImplmentation impl)
         {
             this.info = info;
             this.impl = impl;
+
         }
         void ICanvas3DControl.OnLoaded()
         {
@@ -105,13 +127,11 @@ namespace BaseLib.Xwt.Controls.Media
         {
             if (this.Renderer != null)
             {
-                this.audiostop.Set();
                 this.Renderer.Stop();
                 this.Audio?.Stop();
 
                 this.impl.Stop();
 
-                try { this.audiothread.Join(); } catch { }
 
                 this.impl.Unloading(false);
 
@@ -128,13 +148,13 @@ namespace BaseLib.Xwt.Controls.Media
                 this.Renderer = null;
             }
         }
-        bool IRenderOwner.preparerender(IRenderFrame destination, long time, bool dowait)
+        public virtual bool preparerender(IRenderFrame destination, long time, bool dowait)
         {
             return this.impl.StartRender(time, dowait, out this.renderdata);
         }
-        void IRenderOwner.render(IRenderFrame destination, long time, rectangle r)
+        public virtual void render(IRenderFrame destination, long time, rectangle r)
         {
-            this.impl.Render(time, r, this.renderdata);
+            this.impl.Render(destination, time, r, this.renderdata);
             this.Renderer.Present(destination, r, IntPtr.Zero);
         }
         void IRenderOwner.StartRender(IRenderer renderer)
@@ -145,9 +165,9 @@ namespace BaseLib.Xwt.Controls.Media
         {
             this.info.XwtRender.EndRender(renderer, this);
         }
-        void IRenderOwner.DoEvents()
+        void IRenderOwner.DoEvents(Func<bool> cancelfunc)
         {
-            this.info.XwtHelper.DoEvents();
+            this.info.XwtHelper.DoEvents(cancelfunc);
         }
         long ICanvas3DControl.Frame(long time)
         {

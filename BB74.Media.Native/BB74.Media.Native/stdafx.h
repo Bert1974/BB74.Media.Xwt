@@ -114,9 +114,9 @@ std::string string_format(const std::string fmt, ...);
 std::string ERRSTR(int error);
 
 
-typedef void(__stdcall *debugstringfunction)(const char *txt);
+typedef void(__stdcall *debugstringfunction)(int logflags, const char *group, const char *txt);
 extern "C" {
-	FUNCEXP void __printf(std::string fmt, ...);
+	FUNCEXP void __printf(int mask, const std::string group, std::string fmt, ...);
 }
 class _err
 {
