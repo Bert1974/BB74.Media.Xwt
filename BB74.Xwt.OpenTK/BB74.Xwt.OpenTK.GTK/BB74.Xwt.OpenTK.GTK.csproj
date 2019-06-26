@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BB74.Media.Base, Version=1.1.7112.36938, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\MovieEdit.Xwt\packages\BB74.Media.Base.1.1.7112.36938-debug\lib\net40\BB74.Media.Base.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\..\packages\OpenTK.3.0.1\lib\net20\OpenTK.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
@@ -45,9 +48,6 @@
     <Reference Include="Xwt, Version=0.2.169.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xwt.0.2.169\lib\net40\Xwt.dll</HintPath>
       <Private>False</Private>
-    </Reference>
-    <Reference Include="BB74.Media.Base">
-      <HintPath>..\..\..\MovieEdit.Xwt\packages\BB74.Media.Base.1.0.7110.27003-debug\lib\net40\BB74.Media.Base.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

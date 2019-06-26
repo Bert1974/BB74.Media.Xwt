@@ -73,7 +73,7 @@ namespace BaseLib.Media
         }
         public override string ToString()
         {
-            return $"{Number.den}/{Number.num}/{(Interlaced ? 2 : 1)}";
+            return $"{Number.num}/{Number.den}/{(Interlaced ? 2 : 1)}";
         }
         public static bool TryParse(string fps, out FPS result)
         {

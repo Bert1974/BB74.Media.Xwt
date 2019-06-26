@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\BB74.Xwt.OpenTK.1.1.1.41930-debug\build\BB74.Xwt.OpenTK.props" Condition="Exists('..\..\packages\BB74.Xwt.OpenTK.1.1.1.41930-debug\build\BB74.Xwt.OpenTK.props')" />
   <Import Project="..\..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.0.7109.32832-debug\build\BB74.Xwt.OpenTK.props" Condition="Exists('..\..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.0.7109.32832-debug\build\BB74.Xwt.OpenTK.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -43,6 +44,9 @@
     <AOTMode>None</AOTMode>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BB74.Xwt.OpenTK, Version=1.1.1.41930, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Xwt.OpenTK.1.1.1.41930-debug\lib\net40\BB74.Xwt.OpenTK.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.Mac">
@@ -54,10 +58,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="BB74.Media.Base">
-      <HintPath>..\..\..\MovieEdit.Xwt\packages\BB74.Media.Base.1.0.7110.27003-debug\lib\net40\BB74.Media.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="BB74.Xwt.OpenTK">
-      <HintPath>..\..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.0.7109.32832-debug\lib\net40\BB74.Xwt.OpenTK.dll</HintPath>
+      <HintPath>..\..\..\MovieEdit.Xwt\packages\BB74.Media.Base.1.1.7112.33144-debug\lib\net40\BB74.Media.Base.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -85,4 +86,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.0.7109.32832-debug\build\BB74.Xwt.OpenTK.targets" Condition="Exists('..\..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.0.7109.32832-debug\build\BB74.Xwt.OpenTK.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\BB74.Xwt.OpenTK.1.1.1.41930-debug\build\BB74.Xwt.OpenTK.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\BB74.Xwt.OpenTK.1.1.1.41930-debug\build\BB74.Xwt.OpenTK.props'))" />
+    <Error Condition="!Exists('..\..\packages\BB74.Xwt.OpenTK.1.1.1.41930-debug\build\BB74.Xwt.OpenTK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\BB74.Xwt.OpenTK.1.1.1.41930-debug\build\BB74.Xwt.OpenTK.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\BB74.Xwt.OpenTK.1.1.1.41930-debug\build\BB74.Xwt.OpenTK.targets" Condition="Exists('..\..\packages\BB74.Xwt.OpenTK.1.1.1.41930-debug\build\BB74.Xwt.OpenTK.targets')" />
 </Project>

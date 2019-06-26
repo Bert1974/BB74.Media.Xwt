@@ -35,8 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BB74.Media.Base, Version=1.0.7110.27003, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\BB74.Xwt.OpenTK.WPF.1.1.1.41933-debug\lib\net40\BB74.Media.Base.dll</HintPath>
+    <Reference Include="BB74.Media.Base, Version=1.1.7112.36938, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\MovieEdit.Xwt\packages\BB74.Media.Base.1.1.7112.36938-debug\lib\net40\BB74.Media.Base.dll</HintPath>
     </Reference>
     <Reference Include="BB74.Media.Interop, Version=1.1.1.41909, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\BB74.Media.FFMPEG.1.1.1.41909-debug\lib\net40\BB74.Media.Interop.dll</HintPath>
@@ -92,7 +92,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="OpenTK.dll.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BB74.Controls.Xwt\BB74.Controls\BB74.Xwt.Controls.csproj">

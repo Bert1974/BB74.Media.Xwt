@@ -58,6 +58,7 @@ namespace BaseLib.Media.OpenTK
         {
             GL.BindVertexArray(this.vao);
             GL.BindBuffer(BufferTarget.ArrayBuffer, (int)this);
+            GL.UseProgram((int)shader);
 
             foreach (var kv in this.p)
             {
@@ -72,7 +73,6 @@ namespace BaseLib.Media.OpenTK
                     }
                 }
             }
-            GL.UseProgram((int)shader);
         }
      /*   internal void Bind(shader shader)
         {

@@ -16,12 +16,27 @@ namespace BaseLib.Media
 
         public point(int x, int y) { this.x = x; this.y = y; }
     }
+    [TypeConverter(typeof(BaseLib.ExpandTypeConverter))]
     public struct size
     {
+        [Browsable(false)]
         public static readonly size Zero = new size(0, 0);
         public int width, height;
 
         public size(int width, int height) { this.width = width; this.height = height; }
+
+        public bool Equals(size obj)
+        {
+            return this.width == obj.width && this.height == obj.height;
+        }
+    /*    public static bool operator ==(size c1, size c2)
+        {
+            return c1.width == c2.width && c1.height == c2.height;
+        }
+        public static bool operator !=(size c1, size c2)
+        {
+            return c1.width != c2.width || c1.height != c2.height;
+        }*/
     }
     public struct rectangle
     {
