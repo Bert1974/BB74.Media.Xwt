@@ -159,7 +159,7 @@ void movieplayer::_mainthread()
 	{
 		std::unique_lock<std::mutex> lk(_mainmutex);
 
-		if (!m_running)
+		if (!m_running && !m_quiting)
 		{
 			_maincond.wait(lk);
 		}

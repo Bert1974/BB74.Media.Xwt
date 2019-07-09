@@ -494,7 +494,7 @@ namespace BaseLib.Display.WPF
                     {
                        var state = this.owner.StartRender(null, rectangle.Zero);
                         var r = new rectangle(0,0,this.owner.renderframe.Width,this.owner.renderframe.Height);
-                        this.owner.renderer.render(null, this.frametime, rectangle.Zero);
+                        this.owner.renderer.render(this.owner.renderframe, this.frametime, r);
                         this.owner.EndRender(state);
                     }
                     /*
@@ -855,8 +855,7 @@ namespace BaseLib.Display.WPF
                     this.renderframe.Set(0, this.videosize.width, this.videosize.height, 0);
                 }
                 this.gllock = this.opentk.GetDrawLock();
-                this.opentk.StartRender(this.renderframe, new rectangle(point.Zero, this.videosize));
-                return null;
+                return new object[] { this.opentk.StartRender(this.renderframe, new rectangle(point.Zero, this.videosize)) };
             }
             else
             {
@@ -918,9 +917,9 @@ namespace BaseLib.Display.WPF
         }*/
         public void EndRender(object state)
         {
-            if (state == null)
+            if (state is object[]l)
             {
-               opentk.EndRender(this.renderframe);
+               opentk.EndRender(((object[])state)[0]);
                 this.gllock.Dispose();
  /*
                 this.frame.Set(0, this.viewsize.width, this.viewsize.height, 0);

@@ -93,6 +93,8 @@ namespace BaseLib.Xwt.Controls.Media
             this.info = info;
             this.impl = impl;
 
+            base.MinWidth = base.MinHeight = 0;
+
         }
         void ICanvas3DControl.OnLoaded()
         {

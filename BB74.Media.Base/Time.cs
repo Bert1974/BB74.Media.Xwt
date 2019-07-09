@@ -25,7 +25,7 @@ namespace BaseLib
         }
         public static long GetFrame(long time, FPS fps, long timebase)
         {
-            return (long)(double)((time * fps.Number.den) / (timebase * fps.Number.num));
+            return (long)(double)((time * (double)fps.Number.den) / (timebase * fps.Number.num));
         }
     }
 }

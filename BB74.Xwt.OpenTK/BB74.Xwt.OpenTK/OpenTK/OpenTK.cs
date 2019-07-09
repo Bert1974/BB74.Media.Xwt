@@ -654,6 +654,7 @@ precision mediump float;
 
         object IRenderer.StartRender(IRenderFrame destination, rectangle r)
         {
+            var oldframebuffer = (uint)GL.GetInteger(GetPName.FramebufferBinding);
             try
             {
                 if (destination == null)
@@ -674,7 +675,7 @@ precision mediump float;
             {
                 //      Log.LogException(e);
             }
-            return destination;
+            return oldframebuffer;// destination;
         }
         /*   void IRenderer.Paint(IRenderFrame destination, IVideoFrame src, Xwt.Rectangle dstrec)
            {
@@ -710,18 +711,18 @@ precision mediump float;
            }*/
         void IRenderer.EndRender(object state)
         {
-            if (state == null)
+        //    if (state == null)
             {
 
             }
-            else
+         //   else
             {
                 try
                 {
                     //     GL.Flush();
                     //    var frame = (RenderFrame)state;
                     //     frame.Save("E:\\bbr_test.png");
-                    GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+                    GL.BindFramebuffer(FramebufferTarget.Framebuffer, (uint)state);
                     //    Unlock();
                 }
                 catch (Exception e)

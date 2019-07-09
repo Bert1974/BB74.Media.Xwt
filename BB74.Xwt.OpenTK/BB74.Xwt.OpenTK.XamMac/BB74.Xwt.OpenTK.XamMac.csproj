@@ -46,6 +46,7 @@
   <ItemGroup>
     <Reference Include="BB74.Xwt.OpenTK, Version=1.1.1.41930, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\BB74.Xwt.OpenTK.1.1.1.41930-debug\lib\net40\BB74.Xwt.OpenTK.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -58,7 +59,8 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="BB74.Media.Base">
-      <HintPath>..\..\..\MovieEdit.Xwt\packages\BB74.Media.Base.1.1.7112.33144-debug\lib\net40\BB74.Media.Base.dll</HintPath>
+      <HintPath>..\..\..\MovieEdit.Xwt\packages\BB74.Media.Base.1.1.7112.36938-debug\lib\net40\BB74.Media.Base.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
