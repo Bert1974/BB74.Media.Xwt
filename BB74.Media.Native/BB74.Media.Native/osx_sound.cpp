@@ -48,6 +48,7 @@ public:
 private:
 	void Free()
 	{
+		__printf(0x1000, "SOUND", "sound free");
 		OSStatus status = -1;
 		if (m_queue)
 		{
@@ -276,6 +277,7 @@ public:
 			{
 				throw new _err("AudioQueueAddPropertyListener status = %d\n", status);
 			}
+			__printf(0x1000, "SOUND", "sound initialized");
 		}
 		catch(_err*)
 		{
@@ -393,7 +395,7 @@ private:
 public:
 	void Write(uint8_t *data, int samples)
 	{
-	//	__printf(0,"SOUND","write %d", samples);
+		__printf(0,"SOUND","write %d", samples);
 
 		OSStatus status = -1;
 		std::unique_lock<std::mutex> lk(m_mainmutex);
@@ -422,6 +424,7 @@ public:
 						{
 							_verbose("sound bufferd");
 							m_buffered = true;
+							m_empty = false;
 							m_callback();
 						}
 						m_full = true;
@@ -460,7 +463,7 @@ public:
 									//	m_maincond.notify_all();
 								}
 							}
-							else if (m_bufferpos == -1)
+							else// if (m_buffered)
 							{
 								m_empty = false;
 								m_maincond.notify_all();

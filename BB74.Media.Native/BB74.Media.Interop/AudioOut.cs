@@ -52,7 +52,7 @@ namespace BaseLib.Media.Audio
         {
             Interop.staticinit.Initialize2();
             var error = new StringBuilder(1024);
-            this.audio = Imports.openaudio(this.SampleRate, this.Format, this.ChannelLayout, 25, 3, error);
+            this.audio = Imports.openaudio(this.SampleRate, (int)this.Format, (long)this.ChannelLayout, 25, 3, error);
 
             if (this.audio == IntPtr.Zero)
             {

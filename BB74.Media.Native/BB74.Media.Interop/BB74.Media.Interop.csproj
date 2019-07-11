@@ -34,9 +34,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BB74.Media.Base, Version=1.2.0.7768, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BB74.Media.Base.1.2.0.7768-debug\lib\net40\BB74.Media.Base.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="BB74.Media.Base, Version=1.2.2.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Media.Base.1.2.2.3\lib\net40\BB74.Media.Base.dll</HintPath>
     </Reference>
     <Reference Include="BB74.Media.Interop.Impl">
       <HintPath>..\BB74.Media.Interop.Impl\bin\Release\BB74.Media.Interop.Impl.dll</HintPath>
@@ -62,4 +61,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>$(ProjectDir)..\..\bin\incversion.exe -inc build $(ProjectDir)Properties\AssemblyInfo.cs</PreBuildEvent>
+  </PropertyGroup>
 </Project>

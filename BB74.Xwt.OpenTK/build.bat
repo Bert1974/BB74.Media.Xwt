@@ -37,6 +37,8 @@ cd BB74.Xwt.OpenTK
 rem del /s /q .\bin\%BB74_CONFIG%\*.*
 rem IF ERRORLEVEL 1 GOTO Error
 
+..\..\bin\incversion
+
 msbuild BB74.Xwt.OpenTK.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=.\package\lib\net40
 IF ERRORLEVEL 1 GOTO Error
 
@@ -63,6 +65,8 @@ cd BB74.Xwt.OpenTK.GTK
 del /s /q .\package\*.*
 IF ERRORLEVEL 1 GOTO Error
 
+..\..\bin\incversion
+
 msbuild BB74.Xwt.OpenTK.GTK.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=.\package\lib\net40
 IF ERRORLEVEL 1 GOTO Error
 
@@ -88,6 +92,8 @@ cd BB74.Xwt.OpenTK.WPF
 
 del /s /q .\package\*.*
 IF ERRORLEVEL 1 GOTO Error
+
+..\..\bin\incversion
 
 msbuild BB74.Xwt.OpenTK.WPF.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=.\package\lib\net40
 IF ERRORLEVEL 1 GOTO Error

@@ -38,9 +38,8 @@
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BB74.Media.Base, Version=1.2.0.7768, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BB74.Media.Base.1.2.0.7768-debug\lib\net40\BB74.Media.Base.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="BB74.Media.Base, Version=1.2.2.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BB74.Media.Base.1.2.2.3\lib\net40\BB74.Media.Base.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
@@ -62,5 +61,8 @@ cp "$(TargetPath)" "$(ProjectDir)..\package\data\x64"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent />
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>$(ProjectDir)..\..\bin\incversion.exe -inc build $(ProjectDir)Properties\AssemblyInfo.cs</PreBuildEvent>
   </PropertyGroup>
 </Project>

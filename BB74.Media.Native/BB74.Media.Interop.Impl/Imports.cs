@@ -62,7 +62,7 @@ namespace BaseLib.Audio.Interop
     {
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BaseLib.Interop.Imports._dll_name, CallingConvention = CallingConvention.Cdecl, PreserveSig = true)]
-        public static extern IntPtr openaudio(int bitrate, AudioFormat format, ChannelsLayout layout, int frames, int buffers, [MarshalAs(UnmanagedType.LPStr)] StringBuilder error);
+        public static extern IntPtr openaudio(int bitrate, int format, long layout, int frames, int buffers, [MarshalAs(UnmanagedType.LPStr)] StringBuilder error);
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BaseLib.Interop.Imports._dll_name, CallingConvention = CallingConvention.Cdecl, PreserveSig = true)]
         public static extern void closeaudio(IntPtr audio);
