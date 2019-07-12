@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <Target Name="CopyFFMPEG_Win32_64" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="Build" Condition=" '$(Platform)' != 'x86' ">
+  <Target Name="CopyFFMPEG_Win32_64" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="AfterCompile" Condition=" '$(Platform)' != 'x86' ">
     <ItemGroup >
       <FFMPEG_Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\avcodec-58.dll">
         <Link>x64\avcodec-58.dll</Link>
@@ -46,7 +46,7 @@
     <Message Importance="High" Text="copied win32 ffmpeg files" />
   </Target>
 
-  <Target Name="CopyFFMPEG_Win32_32" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="Build" Condition=" '$(Platform)' != 'x64' ">
+  <Target Name="CopyFFMPEG_Win32_32" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="AfterCompile" Condition=" '$(Platform)' != 'x64' ">
     <ItemGroup >
       <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\avcodec-58.dll">
         <Link>x86\avcodec-58.dll</Link>
@@ -91,7 +91,7 @@
         />
     <Message Importance="High" Text="copied win64 ffmpeg files" />
   </Target>
-  <Target Name="CopyFFMPEG_OSX" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="Build" Condition=" '$(Platform)' != 'x86' ">
+  <Target Name="CopyFFMPEG_OSX" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="AfterCompile" Condition=" '$(Platform)' != 'x86' ">
     <ItemGroup >
       <OSX_64_FFMPEG Include="$(MSBuildThisFileDirectory)..\data\x64\libBB74.Media.Native.dll.dylib">
         <Link>x64\libBB74.Media.Native.dll.dylib</Link>
@@ -109,7 +109,7 @@
     <Message Importance="High" Text="copied OS-X ffmpeg files" />
   </Target>
 
-  <Target Name="CopyFFMPEG_Other" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="Build" Condition=" '$(Platform)' != 'x86' ">
+  <Target Name="CopyFFMPEG_Other" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="AfterCompile" Condition=" '$(Platform)' != 'x86' ">
     <ItemGroup >
       <FFMPEG_Other Include="$(MSBuildThisFileDirectory)..\ref\net40\BB74.Media.Interop.Impl.dll">
         <Link>x64\libBB74.Media.Native.dll.dylib</Link>

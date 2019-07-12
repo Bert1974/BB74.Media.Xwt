@@ -454,11 +454,11 @@ precision mediump float;
                 this.vertices2?.Dispose();
                 this.vertices3?.Dispose();
 
-                this.Xwt.FreeWindowInfo(window);
             }
             finally
             {
                 this.Unlock();
+                this.Xwt.FreeWindowInfo(window);
             }
             window.BoundsChanged -= viewsizechanged;
             Invoke(null);
