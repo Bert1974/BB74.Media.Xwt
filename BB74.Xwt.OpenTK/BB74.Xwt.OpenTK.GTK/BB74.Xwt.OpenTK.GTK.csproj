@@ -45,9 +45,9 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Xwt">
-      <HintPath>..\..\..\MovieEdit.Xwt\packages\Xwt.0.2.171\lib\net40\Xwt.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Xwt, Version=0.2.173.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Xwt.0.2.173\lib\net40\Xwt.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -4,39 +4,39 @@
     <ItemGroup >
       <FFMPEG_Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\avcodec-58.dll">
         <Link>x64\avcodec-58.dll</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_64>
       <FFMPEG_Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\avdevice-58.dll">
         <Link>x64\avdevice-58.dll</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_64>
       <FFMPEG_Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\avfilter-7.dll">
         <Link>x64\avfilter-7.dll</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_64>
       <FFMPEG_Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\avformat-58.dll">
         <Link>x64\avformat-58.dll</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_64>
       <FFMPEG_Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\avresample-4.dll">
         <Link>x64\avresample-4.dll</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_64>
       <FFMPEG_Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\avutil-56.dll">
         <Link>x64\avutil-56.dll</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_64>
       <FFMPEG_Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\swresample-3.dll">
         <Link>x64\swresample-3.dll</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_64>
       <FFMPEG_Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\swscale-5.dll">
         <Link>x64\swscale-5.dll</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_64>
       <FFMPEG_Win32_64 Include="$(MSBuildThisFileDirectory)..\data\x64\BB74.Media.Native.dll">
         <Link>x64\BB74.Media.Native.dll</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_64>
     </ItemGroup>
     <Copy
@@ -50,39 +50,39 @@
     <ItemGroup >
       <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\avcodec-58.dll">
         <Link>x86\avcodec-58.dll</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_32>
       <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\avdevice-58.dll">
         <Link>x86\avdevice-58.dll</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_32>
       <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\avfilter-7.dll">
         <Link>x86\avfilter-7.dll</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_32>
       <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\avformat-58.dll">
         <Link>x86\avformat-58.dll</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_32>
       <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\avresample-4.dll">
         <Link>x86\avresample-4.dll</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_32>
       <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\avutil-56.dll">
         <Link>x86\avutil-56.dll</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_32>
       <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\swresample-3.dll">
         <Link>x86\swresample-3.dll</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_32>
       <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\swscale-5.dll">
         <Link>x86\swscale-5.dll</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_32>
       <FFMPEG_Win32_32 Include="$(MSBuildThisFileDirectory)..\data\x86\BB74.Media.Native.dll">
         <Link>x86\BB74.Media.Native.dll</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_32>
     </ItemGroup>
     <Copy
@@ -95,13 +95,9 @@
     <ItemGroup >
       <OSX_64_FFMPEG Include="$(MSBuildThisFileDirectory)..\data\x64\libBB74.Media.Native.dll.dylib">
         <Link>x64\libBB74.Media.Native.dll.dylib</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </OSX_64_FFMPEG>
     </ItemGroup>
-    <Copy
-        SourceFiles="@(OSX_64_FFMPEG)"
-        DestinationFolder="$(TargetDir)x64"
-        />
     <Copy
         SourceFiles="@(OSX_64_FFMPEG)"
         DestinationFolder="bin/$(Configuration)/$(AssemblyName).app/Contents/MonoBundle/"
@@ -113,15 +109,15 @@
     <ItemGroup >
       <FFMPEG_Other Include="$(MSBuildThisFileDirectory)..\ref\net40\BB74.Media.Interop.Impl.dll">
         <Link>x64\libBB74.Media.Native.dll.dylib</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Other>
       <FFMPEG_Other Include="$(MSBuildThisFileDirectory)..\data\x64\libBB74.Media.Native.dll.dylib">
         <Link>x64\libBB74.Media.Native.dll.dylib</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Other>
       <FFMPEG_Other Include="$(MSBuildThisFileDirectory)..\data\x64\libBB74.Media.Native.dll.so">
         <Link>x64\libBB74.Media.Native.dll.so</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Other>
     
   </ItemGroup>

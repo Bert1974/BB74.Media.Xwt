@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
+using BaseLib.Media.OpenTK.Linq;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;

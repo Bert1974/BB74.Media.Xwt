@@ -118,14 +118,16 @@
       <AdditionalDependencies>avcodec-58.lib;avdevice-58.lib;avfilter-7.lib;avformat-58.lib;avresample-4.lib;avutil-56.lib;swresample-3.lib;swscale-5.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>lib /def:$(ProjectDir)sandbox\win32\lib\avcodec-58.def /out:$(ProjectDir)sandbox\win32\lib\avcodec-58.lib /MACHINE:X86
+      <Command>if exist "$(ProjectDir)sandbox\win32\lib\swscale-5.lib" goto nocopy
+lib /def:$(ProjectDir)sandbox\win32\lib\avcodec-58.def /out:$(ProjectDir)sandbox\win32\lib\avcodec-58.lib /MACHINE:X86
 lib /def:$(ProjectDir)sandbox\win32\lib\avdevice-58.def /out:$(ProjectDir)sandbox\win32\lib\avdevice-58.lib /MACHINE:X86
 lib /def:$(ProjectDir)sandbox\win32\lib\avfilter-7.def /out:$(ProjectDir)sandbox\win32\lib\avfilter-7.lib /MACHINE:X86
 lib /def:$(ProjectDir)sandbox\win32\lib\avformat-58.def /out:$(ProjectDir)sandbox\win32\lib\avformat-58.lib /MACHINE:X86
 lib /def:$(ProjectDir)sandbox\win32\lib\avresample-4.def /out:$(ProjectDir)sandbox\win32\lib\avresample-4.lib /MACHINE:X86
 lib /def:$(ProjectDir)sandbox\win32\lib\avutil-56.def /out:$(ProjectDir)sandbox\win32\lib\avutil-56.lib /MACHINE:X86
 lib /def:$(ProjectDir)sandbox\win32\lib\swresample-3.def /out:$(ProjectDir)sandbox\win32\lib\swresample-3.lib /MACHINE:X86
-lib /def:$(ProjectDir)sandbox\win32\lib\swscale-5.def /out:$(ProjectDir)sandbox\win32\lib\swscale-5.lib /MACHINE:X86</Command>
+lib /def:$(ProjectDir)sandbox\win32\lib\swscale-5.def /out:$(ProjectDir)sandbox\win32\lib\swscale-5.lib /MACHINE:X86
+:nocopy</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>copy "$(TargetPath)" "$(ProjectDir)..\package\data\$(PlatformTarget)\"
@@ -149,14 +151,16 @@ copy "$(ProjectDir)sandbox\win64\bin\*.dll" "$(ProjectDir)..\package\data\x64\"
       <AdditionalDependencies>avcodec-58.lib;avdevice-58.lib;avfilter-7.lib;avformat-58.lib;avresample-4.lib;avutil-56.lib;swresample-3.lib;swscale-5.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>lib /def:$(ProjectDir)sandbox\win64\lib\avcodec-58.def /out:$(ProjectDir)sandbox\win64\lib\avcodec-58.lib /MACHINE:X64
+      <Command>if exist "$(ProjectDir)sandbox\win64\lib\swscale-5.lib" goto nocopy
+lib /def:$(ProjectDir)sandbox\win64\lib\avcodec-58.def /out:$(ProjectDir)sandbox\win64\lib\avcodec-58.lib /MACHINE:X64
 lib /def:$(ProjectDir)sandbox\win64\lib\avdevice-58.def /out:$(ProjectDir)sandbox\win64\lib\avdevice-58.lib /MACHINE:X64
 lib /def:$(ProjectDir)sandbox\win64\lib\avfilter-7.def /out:$(ProjectDir)sandbox\win64\lib\avfilter-7.lib /MACHINE:X64
 lib /def:$(ProjectDir)sandbox\win64\lib\avformat-58.def /out:$(ProjectDir)sandbox\win64\lib\avformat-58.lib /MACHINE:X64
 lib /def:$(ProjectDir)sandbox\win64\lib\avresample-4.def /out:$(ProjectDir)sandbox\win64\lib\avresample-4.lib /MACHINE:X64
 lib /def:$(ProjectDir)sandbox\win64\lib\avutil-56.def /out:$(ProjectDir)sandbox\win64\lib\avutil-56.lib /MACHINE:X64
 lib /def:$(ProjectDir)sandbox\win64\lib\swresample-3.def /out:$(ProjectDir)sandbox\win64\lib\swresample-3.lib /MACHINE:X64
-lib /def:$(ProjectDir)sandbox\win64\lib\swscale-5.def /out:$(ProjectDir)sandbox\win64\lib\swscale-5.lib /MACHINE:X64</Command>
+lib /def:$(ProjectDir)sandbox\win64\lib\swscale-5.def /out:$(ProjectDir)sandbox\win64\lib\swscale-5.lib /MACHINE:X64
+:nocopy</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>copy "$(TargetPath)" "$(ProjectDir)..\package\data\$(PlatformTarget)\"
@@ -184,14 +188,16 @@ copy "$(ProjectDir)sandbox\win64\bin\*.dll" "$(ProjectDir)..\package\data\x64\"
       <AdditionalDependencies>avcodec-58.lib;avdevice-58.lib;avfilter-7.lib;avformat-58.lib;avresample-4.lib;avutil-56.lib;swresample-3.lib;swscale-5.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>lib /def:$(ProjectDir)sandbox\win32\lib\avcodec-58.def /out:$(ProjectDir)sandbox\win32\lib\avcodec-58.lib /MACHINE:X86
+      <Command>if exist "$(ProjectDir)sandbox\win32\lib\swscale-5.lib" goto nocopy
+lib /def:$(ProjectDir)sandbox\win32\lib\avcodec-58.def /out:$(ProjectDir)sandbox\win32\lib\avcodec-58.lib /MACHINE:X86
 lib /def:$(ProjectDir)sandbox\win32\lib\avdevice-58.def /out:$(ProjectDir)sandbox\win32\lib\avdevice-58.lib /MACHINE:X86
 lib /def:$(ProjectDir)sandbox\win32\lib\avfilter-7.def /out:$(ProjectDir)sandbox\win32\lib\avfilter-7.lib /MACHINE:X86
 lib /def:$(ProjectDir)sandbox\win32\lib\avformat-58.def /out:$(ProjectDir)sandbox\win32\lib\avformat-58.lib /MACHINE:X86
 lib /def:$(ProjectDir)sandbox\win32\lib\avresample-4.def /out:$(ProjectDir)sandbox\win32\lib\avresample-4.lib /MACHINE:X86
 lib /def:$(ProjectDir)sandbox\win32\lib\avutil-56.def /out:$(ProjectDir)sandbox\win32\lib\avutil-56.lib /MACHINE:X86
 lib /def:$(ProjectDir)sandbox\win32\lib\swresample-3.def /out:$(ProjectDir)sandbox\win32\lib\swresample-3.lib /MACHINE:X86
-lib /def:$(ProjectDir)sandbox\win32\lib\swscale-5.def /out:$(ProjectDir)sandbox\win32\lib\swscale-5.lib /MACHINE:X86</Command>
+lib /def:$(ProjectDir)sandbox\win32\lib\swscale-5.def /out:$(ProjectDir)sandbox\win32\lib\swscale-5.lib /MACHINE:X86
+:nocopy</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>copy "$(TargetPath)" "$(ProjectDir)..\package\data\$(PlatformTarget)\"
@@ -219,14 +225,16 @@ copy "$(ProjectDir)sandbox\win64\bin\*.dll" "$(ProjectDir)..\package\data\x64\"
       <AdditionalDependencies>avcodec-58.lib;avdevice-58.lib;avfilter-7.lib;avformat-58.lib;avresample-4.lib;avutil-56.lib;swresample-3.lib;swscale-5.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>lib /def:$(ProjectDir)sandbox\win64\lib\avcodec-58.def /out:$(ProjectDir)sandbox\win64\lib\avcodec-58.lib /MACHINE:X64
+      <Command>if exist "$(ProjectDir)sandbox\win64\lib\swscale-5.lib" goto nocopy
+lib /def:$(ProjectDir)sandbox\win64\lib\avcodec-58.def /out:$(ProjectDir)sandbox\win64\lib\avcodec-58.lib /MACHINE:X64
 lib /def:$(ProjectDir)sandbox\win64\lib\avdevice-58.def /out:$(ProjectDir)sandbox\win64\lib\avdevice-58.lib /MACHINE:X64
 lib /def:$(ProjectDir)sandbox\win64\lib\avfilter-7.def /out:$(ProjectDir)sandbox\win64\lib\avfilter-7.lib /MACHINE:X64
 lib /def:$(ProjectDir)sandbox\win64\lib\avformat-58.def /out:$(ProjectDir)sandbox\win64\lib\avformat-58.lib /MACHINE:X64
 lib /def:$(ProjectDir)sandbox\win64\lib\avresample-4.def /out:$(ProjectDir)sandbox\win64\lib\avresample-4.lib /MACHINE:X64
 lib /def:$(ProjectDir)sandbox\win64\lib\avutil-56.def /out:$(ProjectDir)sandbox\win64\lib\avutil-56.lib /MACHINE:X64
 lib /def:$(ProjectDir)sandbox\win64\lib\swresample-3.def /out:$(ProjectDir)sandbox\win64\lib\swresample-3.lib /MACHINE:X64
-lib /def:$(ProjectDir)sandbox\win64\lib\swscale-5.def /out:$(ProjectDir)sandbox\win64\lib\swscale-5.lib /MACHINE:X64</Command>
+lib /def:$(ProjectDir)sandbox\win64\lib\swscale-5.def /out:$(ProjectDir)sandbox\win64\lib\swscale-5.lib /MACHINE:X64
+:nocopy</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>copy "$(TargetPath)" "$(ProjectDir)..\package\data\$(PlatformTarget)\"
