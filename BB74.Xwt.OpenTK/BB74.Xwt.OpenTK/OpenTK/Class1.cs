@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using BaseLib.Media.Display;
+using BaseLib.Media.OpenTK.Linq;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
@@ -15,98 +16,101 @@ namespace BaseLib.Media.OpenTK
         int[] Textures { get; }
         void Save(string filename);
     }
-    public static class Extensions
+    namespace Linq
     {
-        public static Xwt.Size ToSize(this size size)
+        public static class Extensions
         {
-            return new Xwt.Size(size.width, size.height);
-        }
+            public static Xwt.Size ToSize(this size size)
+            {
+                return new Xwt.Size(size.width, size.height);
+            }
 
-        public static Type GetType(string typeName)
-        {
-            var type = Type.GetType(typeName);
-            if (type != null) return type;
-            foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
+            public static Type GetType(string typeName)
             {
-                type = a.GetType(typeName);
-                if (type != null)
-                    return type;
+                var type = Type.GetType(typeName);
+                if (type != null) return type;
+                foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
+                {
+                    type = a.GetType(typeName);
+                    if (type != null)
+                        return type;
+                }
+                return null;
             }
-            return null;
-        }
-        public static void CheckShaderLog(this int shader)
-        {
-            var log = GL.GetShaderInfoLog(shader);
-            if (log.Length > 0)
+            public static void CheckShaderLog(this int shader)
             {
-                throw new Exception(log);
+                var log = GL.GetShaderInfoLog(shader);
+                if (log.Length > 0)
+                {
+                    throw new Exception(log);
+                }
             }
-        }
-        public static void GetProgramInfoLog(this int shader)
-        {
-            var log = GL.GetProgramInfoLog(shader);
-            if (log.Length > 0 && !log.StartsWith("WARNING:"))
+            public static void GetProgramInfoLog(this int shader)
             {
-                throw new Exception(log);
+                var log = GL.GetProgramInfoLog(shader);
+                if (log.Length > 0 && !log.StartsWith("WARNING:",StringComparison.InvariantCulture))
+                {
+                    throw new Exception(log);
+                }
             }
-        }
-        public static Xwt.Backends.IWidgetBackend GetBackend(this Xwt.Widget o)
-        {
-            return (Xwt.Backends.IWidgetBackend)Xwt.Toolkit.CurrentEngine.GetSafeBackend(o);
-        }
-        public static Xwt.Backends.IWindowBackend GetBackend(this Xwt.WindowFrame o)
-        {
-            return (Xwt.Backends.IWindowBackend)Xwt.Toolkit.CurrentEngine.GetSafeBackend(o);
-        }
-        public static object InvokeStatic(this Type type, string method, params object[] arguments)
-        {
-            return type.GetMethod(method, BindingFlags.Public | BindingFlags.Static).Invoke(null, arguments);
-        }
-        public static object InvokeStaticPrivate(this Type type, string method, params object[] arguments)
-        {
-            return type.GetMethod(method, BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, arguments);
-        }
+            public static Xwt.Backends.IWidgetBackend GetBackend(this Xwt.Widget o)
+            {
+                return (Xwt.Backends.IWidgetBackend)Xwt.Toolkit.CurrentEngine.GetSafeBackend(o);
+            }
+            public static Xwt.Backends.IWindowBackend GetBackend(this Xwt.WindowFrame o)
+            {
+                return (Xwt.Backends.IWindowBackend)Xwt.Toolkit.CurrentEngine.GetSafeBackend(o);
+            }
+            public static object InvokeStatic(this Type type, string method, params object[] arguments)
+            {
+                return type.GetMethod(method, BindingFlags.Public | BindingFlags.Static).Invoke(null, arguments);
+            }
+            public static object InvokeStaticPrivate(this Type type, string method, params object[] arguments)
+            {
+                return type.GetMethod(method, BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, arguments);
+            }
 
-        public static object Invoke(this Type type, object instance, string method, params object[] arguments)
-        {
-            return type.GetMethod(method, BindingFlags.Public | BindingFlags.Instance).Invoke(instance, arguments);
-        }
-        public static object InvokePrivateStatic(this Type type, string method, params object[] arguments)
-        {
-            return type.GetMethod(method, BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, arguments);
-        }
-        public static object GetPropertyValue(this Type type, object instance, string propertyname)
-        {
-            return type.GetProperty(propertyname, BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty).GetValue(instance, new object[0]);
-        }
-        public static void SetPropertyValue(this Type type, object instance, string propertyname, object value)
-        {
-            type.GetProperty(propertyname, BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty).SetValue(instance, value, new object[0]);
-        }
-        public static object GetPropertyValuePrivate(this Type type, object instance, string propertyname)
-        {
-            return type.GetProperty(propertyname, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetProperty).GetValue(instance, new object[0]);
-        }
-        public static object GetPropertyValueStatic(this Type type, string propertyname)
-        {
-            return type.GetProperty(propertyname, BindingFlags.Public | BindingFlags.Static | BindingFlags.GetProperty).GetValue(null, new object[0]);
-        }
-        public static void SetFieldValuePrivate(this Type type, object instance, string fieldname, object value)
-        {
-            type.GetField(fieldname, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetField).SetValue(instance, value);
-        }
-        public static void SetFieldValuePrivateStatic(this Type type, string fieldname, object value)
-        {
-            type.GetField(fieldname, BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.SetField).SetValue(null, value);
-        }
-
-        public static bool IsDerived(this Type b, Type t)
-        {
-            while (b != null && !object.ReferenceEquals(b, t))
+            public static object Invoke(this Type type, object instance, string method, params object[] arguments)
             {
-                b = b.BaseType;
+                return type.GetMethod(method, BindingFlags.Public | BindingFlags.Instance).Invoke(instance, arguments);
             }
-            return b != null;
+            public static object InvokePrivateStatic(this Type type, string method, params object[] arguments)
+            {
+                return type.GetMethod(method, BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, arguments);
+            }
+            public static object GetPropertyValue(this Type type, object instance, string propertyname)
+            {
+                return type.GetProperty(propertyname, BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty).GetValue(instance, new object[0]);
+            }
+            public static void SetPropertyValue(this Type type, object instance, string propertyname, object value)
+            {
+                type.GetProperty(propertyname, BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty).SetValue(instance, value, new object[0]);
+            }
+            public static object GetPropertyValuePrivate(this Type type, object instance, string propertyname)
+            {
+                return type.GetProperty(propertyname, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetProperty).GetValue(instance, new object[0]);
+            }
+            public static object GetPropertyValueStatic(this Type type, string propertyname)
+            {
+                return type.GetProperty(propertyname, BindingFlags.Public | BindingFlags.Static | BindingFlags.GetProperty).GetValue(null, new object[0]);
+            }
+            public static void SetFieldValuePrivate(this Type type, object instance, string fieldname, object value)
+            {
+                type.GetField(fieldname, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetField).SetValue(instance, value);
+            }
+            public static void SetFieldValuePrivateStatic(this Type type, string fieldname, object value)
+            {
+                type.GetField(fieldname, BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.SetField).SetValue(null, value);
+            }
+
+            public static bool IsDerived(this Type b, Type t)
+            {
+                while (b != null && !object.ReferenceEquals(b, t))
+                {
+                    b = b.BaseType;
+                }
+                return b != null;
+            }
         }
     }
     /*    public static class OpenTKHandler

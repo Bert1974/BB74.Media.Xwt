@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using BaseLib.Media.Display;
+using BaseLib.Media.OpenTK.Linq;
 using BaseLib.Media.Video;
 using OpenTK;
 using OpenTK.Graphics;

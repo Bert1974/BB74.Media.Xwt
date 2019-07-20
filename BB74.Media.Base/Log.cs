@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -8,6 +9,7 @@ namespace BaseLib
 {
     public enum MessageTypes
     {
+        Debug,
         Verbose,
         Trace,
         Error
@@ -16,6 +18,10 @@ namespace BaseLib
     {
         public static string ErrorFile = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "errors.txt");
 
+        public static void Debug(string message)
+        {
+            Message(MessageTypes.Debug, message);
+        }
         public static void Trace(string message)
         {
             Message(MessageTypes.Trace, message);
@@ -37,7 +43,7 @@ namespace BaseLib
                     Console.Error.WriteLine($"{type.ToString().ToLower()} {DateTime.Now.ToLongTimeString()} : {message}");
                     break;
                 default:
-                  //  Console.WriteLine($"{type.ToString().ToLower()} {DateTime.Now.ToLongTimeString()} : {message}");
+                    Console.WriteLine($"{type.ToString().ToLower()} {DateTime.Now.ToLongTimeString()} : {message}");
                     break;
             }
         }
