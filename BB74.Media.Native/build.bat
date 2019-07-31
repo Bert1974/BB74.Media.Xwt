@@ -45,63 +45,64 @@ md data\x86
 md data\x64
 md lib
 md lib\net40
+md ref
 rem md lib\net45
 rem md lib\net472
 
 cd ..
 
+if NOT "%BB74_PUBLISH%"=="bert" goto _skipincver
+..\bin\incversion BB74.Media.Interop\Properties\AssemblyInfo.cs 
+IF ERRORLEVEL 1 GOTO Error
+..\bin\incversion BB74.Media.Interop.Impl\Properties\AssemblyInfo.cs 
+IF ERRORLEVEL 1 GOTO Error
+:_skipincver
+
+msbuild ..\BB74.OpenTK.Xwt.sln /t:BB74_Media_Native\BB74_Media_Interop_Impl:Rebuild;BB74_Media_Native\BB74_Media_Interop:Rebuild /p:ProjectReferences=false /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%;Platform="Any CPU"
+IF ERRORLEVEL 1 GOTO Error
+
+msbuild ..\BB74.OpenTK.Xwt.sln /t:BB74_Media_Native\BB74_Media_Native:Rebuild;BB74_Media_Native\BB74_Media_Interop_Impl:Rebuild /p:ProjectReferences=false /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%;Platform=x86
+IF ERRORLEVEL 1 GOTO Error
+
+msbuild ..\BB74.OpenTK.Xwt.sln /t:BB74_Media_Native\BB74_Media_Native:Rebuild;BB74_Media_Native\BB74_Media_Interop_Impl:Rebuild /p:ProjectReferences=false /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%;Platform=x64
+IF ERRORLEVEL 1 GOTO Error
+
 copy "BB74.Media.Native\make-x11\libBB74.Media.Native.dll.so" "package\data\x64"
 IF ERRORLEVEL 1 GOTO Error
+
 copy "BB74.Media.Native\make-osx\libBB74.Media.Native.dll.dylib" "package\data\x64"
 IF ERRORLEVEL 1 GOTO Error
 
-cd BB74.Media.Native
-msbuild BB74.Media.Native.vcxproj /t:Clean,Build /p:Configuration=%BB74_CONFIG%,Platform=Win32
-rem "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\devenv.com"  BB74.Media.Native.vcxproj /rebuild %BB74_CONFIG% /projectconfig "%BB74_CONFIG%|Win32"
+rem cd BB74.Media.Native
+rem msbuild BB74.Media.Native.vcxproj /t:Clean,Build /p:Configuration=%BB74_CONFIG%,Platform=Win32
+rem rem "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\devenv.com"  BB74.Media.Native.vcxproj /rebuild %BB74_CONFIG% /projectconfig "%BB74_CONFIG%|Win32"
+rem IF ERRORLEVEL 1 GOTO Error
+rem msbuild BB74.Media.Native.vcxproj /t:Clean,Build /p:Configuration=%BB74_CONFIG%,Platform=x64
+rem rem "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\devenv.com" BB74.Media.Native.vcxproj /rebuild "%BB74_CONFIG%|x64"
+rem IF ERRORLEVEL 1 GOTO Error
+
+copy BB74.Media.Interop\bin\%BB74_CONFIG%\BB74.Media.Interop.* package\lib\net40\
 IF ERRORLEVEL 1 GOTO Error
-msbuild BB74.Media.Native.vcxproj /t:Clean,Build /p:Configuration=%BB74_CONFIG%,Platform=x64
-rem "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\devenv.com" BB74.Media.Native.vcxproj /rebuild "%BB74_CONFIG%|x64"
+copy BB74.Media.Interop.Impl\bin\%BB74_CONFIG%\BB74.Media.Interop.Impl.* package\ref\net40
+IF ERRORLEVEL 1 GOTO Error
+copy BB74.Media.Interop.Impl\bin\x64\%BB74_CONFIG%\BB74.Media.Interop.x64.* package\lib\net40
+IF ERRORLEVEL 1 GOTO Error
+copy BB74.Media.Interop.Impl\bin\x86\%BB74_CONFIG%\BB74.Media.Interop.x86.* package\lib\net40
 IF ERRORLEVEL 1 GOTO Error
 
-cd ..
-msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=..\package\ref\net40
-IF ERRORLEVEL 1 GOTO Error
-msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=x64 /p:OutputPath=..\package\lib\net40 /p:DefineConstants=X64_BUILD /p:AssemblyName=BB74.Media.Interop.x64
-IF ERRORLEVEL 1 GOTO Error
-msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=x86 /p:OutputPath=..\package\lib\net40 /p:DefineConstants=X86_BUILD /p:AssemblyName=BB74.Media.Interop.x86
-IF ERRORLEVEL 1 GOTO Error
-msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=Release,Platform=AnyCPU
-IF ERRORLEVEL 1 GOTO Error
-msbuild BB74.Media.Interop\BB74.Media.Interop.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=..\package\lib\net40
-IF ERRORLEVEL 1 GOTO Error
+rem cd ..
+rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=..\package\ref\net40
+rem IF ERRORLEVEL 1 GOTO Error
+rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=x64 /p:OutputPath=..\package\lib\net40 /p:DefineConstants=X64_BUILD /p:AssemblyName=BB74.Media.Interop.x64
+rem IF ERRORLEVEL 1 GOTO Error
+rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=x86 /p:OutputPath=..\package\lib\net40 /p:DefineConstants=X86_BUILD /p:AssemblyName=BB74.Media.Interop.x86
+rem IF ERRORLEVEL 1 GOTO Error
+rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=Release,Platform=AnyCPU
+rem IF ERRORLEVEL 1 GOTO Error
+rem msbuild BB74.Media.Interop\BB74.Media.Interop.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=..\package\lib\net40
+rem IF ERRORLEVEL 1 GOTO Error
 del package\lib\net40\BB74.Media.Interop.Impl.*
 IF ERRORLEVEL 1 GOTO Error
-
-rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.5;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=..\package\ref\net45
-rem IF ERRORLEVEL 1 GOTO Error
-rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.x64.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.5;Configuration=%BB74_CONFIG%,Platform=x64 /p:OutputPath=..\package\lib\net45
-rem IF ERRORLEVEL 1 GOTO Error
-rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.x86.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.5;Configuration=%BB74_CONFIG%,Platform=x86 /p:OutputPath=..\package\lib\net45
-rem IF ERRORLEVEL 1 GOTO Error
-rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.5;Configuration=Release,Platform=AnyCPU
-rem IF ERRORLEVEL 1 GOTO Error
-rem msbuild BB74.Media.Interop\BB74.Media.Interop.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.5;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=..\package\lib\net45
-rem IF ERRORLEVEL 1 GOTO Error
-rem del .\package\lib\net45\BB74.Media.Interop.Impl.*
-rem IF ERRORLEVEL 1 GOTO Error
-
-rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.7.2;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=..\package\ref\net472
-rem IF ERRORLEVEL 1 GOTO Error
-rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.x64.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.7.2;Configuration=%BB74_CONFIG%,Platform=x64 /p:OutputPath=..\package\lib\net472
-rem IF ERRORLEVEL 1 GOTO Error
-rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.x86.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.7.2;Configuration=%BB74_CONFIG%,Platform=x86 /p:OutputPath=..\package\lib\net472
-rem IF ERRORLEVEL 1 GOTO Error
-rem msbuild BB74.Media.Interop.Impl\BB74.Media.Interop.Impl.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.7.2;Configuration=Release,Platform=AnyCPU
-rem IF ERRORLEVEL 1 GOTO Error
-rem msbuild BB74.Media.Interop\BB74.Media.Interop.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.7.2;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=..\package\lib\net472
-rem IF ERRORLEVEL 1 GOTO Error
-rem del .\package\lib\net472\BB74.Media.Interop.Impl.*
-rem IF ERRORLEVEL 1 GOTO Error
 
 :versiononly
 

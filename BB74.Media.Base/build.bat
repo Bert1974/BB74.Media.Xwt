@@ -24,6 +24,12 @@ call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary
 if "%DevEnvDir%"=="" goto Error;
 :devenvok
 
+
+if NOT "%BB74_PUBLISH%"=="bert" goto _noinc
+..\bin\incversion.exe -inc build "Properties\AssemblyInfo.cs"
+IF ERRORLEVEL 1 GOTO Error
+:_noinc
+
 msbuild BB74.Media.Base.csproj /t:Clean,Build /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=.\package\lib\net40
 IF ERRORLEVEL 1 GOTO Error
 rem msbuild BB74.Media.Base.csproj /p:TargetFrameworkVersion=v4.5;Configuration=%BB74_CONFIG%,Platform=AnyCPU /p:OutputPath=.\package\lib\net45
