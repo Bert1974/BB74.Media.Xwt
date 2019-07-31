@@ -38,10 +38,18 @@
         <Link>x64\BB74.Media.Native.dll</Link>
         <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_64>
+      <FFMPEG_Win32_64B Include="$(MSBuildThisFileDirectory)..\data\BB74.Media.Interop.x64.dll">
+        <Link>BB74.Media.Interop.x64.dll</Link>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
+      </FFMPEG_Win32_64B>
     </ItemGroup>
     <Copy
         SourceFiles="@(FFMPEG_Win32_64)"
         DestinationFolder="$(TargetDir)x64\"
+        />
+    <Copy
+        SourceFiles="@(FFMPEG_Win32_64B)"
+        DestinationFolder="$(TargetDir)"
         />
     <Message Importance="High" Text="copied win32 ffmpeg files" />
   </Target>
@@ -84,14 +92,22 @@
         <Link>x86\BB74.Media.Native.dll</Link>
         <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Win32_32>
+      <FFMPEG_Win32_32B Include="$(MSBuildThisFileDirectory)..\data\BB74.Media.Interop.x86.dll">
+        <Link>BB74.Media.Interop.x86.dll</Link>
+        <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
+      </FFMPEG_Win32_32B>
     </ItemGroup>
     <Copy
         SourceFiles="@(FFMPEG_Win32_32)"
         DestinationFolder="$(TargetDir)x86\"
         />
+    <Copy
+        SourceFiles="@(FFMPEG_Win32_32B)"
+        DestinationFolder="$(TargetDir)"
+        />
     <Message Importance="High" Text="copied win64 ffmpeg files" />
   </Target>
-  <Target Name="CopyFFMPEG_OSX" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="AfterCompile" Condition=" '$(Platform)' != 'x86' ">
+  <Target Name="CopyFFMPEG_OSX" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="AfterCompile" Condition=" '$(OSVersionInformationFFMPEG)' == 'OSX' ">
     <ItemGroup >
       <OSX_64_FFMPEG Include="$(MSBuildThisFileDirectory)..\data\x64\libBB74.Media.Native.dll.dylib">
         <Link>x64\libBB74.Media.Native.dll.dylib</Link>
@@ -102,10 +118,9 @@
         SourceFiles="@(OSX_64_FFMPEG)"
         DestinationFolder="bin/$(Configuration)/$(AssemblyName).app/Contents/MonoBundle/"
         />
-    <Message Importance="High" Text="copied OS-X ffmpeg files" />
+    <Message Importance="High" Text="copied OS-X-Bundle ffmpeg files" />
   </Target>
-
-  <Target Name="CopyFFMPEG_Other" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="AfterCompile" Condition=" '$(Platform)' != 'x86' ">
+  <Target Name="CopyFFMPEG_Other" DependsOnTargets="GetOSIdentifiersFFMPEG" AfterTargets="AfterCompile" >
     <ItemGroup >
       <FFMPEG_Other Include="$(MSBuildThisFileDirectory)..\ref\net40\BB74.Media.Interop.Impl.dll">
         <Link>x64\libBB74.Media.Native.dll.dylib</Link>
@@ -119,13 +134,13 @@
         <Link>x64\libBB74.Media.Native.dll.so</Link>
         <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       </FFMPEG_Other>
-    
-  </ItemGroup>
+
+    </ItemGroup>
     <Copy
         SourceFiles="@(FFMPEG_Other)"
         DestinationFolder="$(TargetDir)x64"
         />
-    <Message Importance="High" Text="copied Linux ffmpeg files" />
+    <Message Importance="High" Text="copied non windows 64 bit ffmpeg files" />
   </Target>
 
 </Project>

@@ -36,13 +36,11 @@
     <OutputPath>bin\Release</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BB74.Media.Base, Version=1.2.2.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BB74.Media.Base.1.2.2.3\lib\net40\BB74.Media.Base.dll</HintPath>
+    <Reference Include="BB74.Media.Base">
+      <HintPath>..\..\packages\BB74.Media.Base.1.2.2.161\lib\net40\BB74.Media.Base.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+    <Reference Include="OpenTK">
       <HintPath>..\..\packages\OpenTK.3.0.1\lib\net20\OpenTK.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,8 +50,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Xwt, Version=0.2.178.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\..\..\MovieEdit.Xwt\packages\Xwt.0.2.178\lib\net40\Xwt.dll</HintPath>
+    <Reference Include="Xwt">
+      <HintPath>..\..\packages\Xwt.0.2.179\lib\net40\Xwt.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -75,14 +73,19 @@
     <None Include="BB74.Xwt.OpenTK._nuspec">
       <SubType>Designer</SubType>
     </None>
-    <None Include="OpenTK.dll.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="package\build\BB74.Xwt.OpenTK.props" />
     <None Include="package\build\BB74.Xwt.OpenTK.targets" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BB74.Media.Base">
+      <Version>1.2.2.161</Version>
+    </PackageReference>
+    <PackageReference Include="OpenTK">
+      <Version>3.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xwt">
+      <Version>0.2.179</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

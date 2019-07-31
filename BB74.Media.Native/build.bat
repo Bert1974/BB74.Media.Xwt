@@ -46,6 +46,7 @@ md data\x64
 md lib
 md lib\net40
 md ref
+md ref\net40
 rem md lib\net45
 rem md lib\net472
 
@@ -81,13 +82,14 @@ rem msbuild BB74.Media.Native.vcxproj /t:Clean,Build /p:Configuration=%BB74_CONF
 rem rem "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\devenv.com" BB74.Media.Native.vcxproj /rebuild "%BB74_CONFIG%|x64"
 rem IF ERRORLEVEL 1 GOTO Error
 
-copy BB74.Media.Interop\bin\%BB74_CONFIG%\BB74.Media.Interop.* package\lib\net40\
+copy BB74.Media.Interop\bin\%BB74_CONFIG%\BB74.Media.Interop.pdb package\lib\net40\
+copy BB74.Media.Interop\bin\%BB74_CONFIG%\BB74.Media.Interop.dll package\lib\net40\
 IF ERRORLEVEL 1 GOTO Error
-copy BB74.Media.Interop.Impl\bin\%BB74_CONFIG%\BB74.Media.Interop.Impl.* package\ref\net40
+copy BB74.Media.Interop.Impl\bin\%BB74_CONFIG%\BB74.Media.Interop.Impl.* package\ref\net40\
 IF ERRORLEVEL 1 GOTO Error
-copy BB74.Media.Interop.Impl\bin\x64\%BB74_CONFIG%\BB74.Media.Interop.x64.* package\lib\net40
+copy BB74.Media.Interop.Impl\bin\x64\%BB74_CONFIG%\BB74.Media.Interop.x64.* package\data\
 IF ERRORLEVEL 1 GOTO Error
-copy BB74.Media.Interop.Impl\bin\x86\%BB74_CONFIG%\BB74.Media.Interop.x86.* package\lib\net40
+copy BB74.Media.Interop.Impl\bin\x86\%BB74_CONFIG%\BB74.Media.Interop.x86.* package\data\
 IF ERRORLEVEL 1 GOTO Error
 
 rem cd ..

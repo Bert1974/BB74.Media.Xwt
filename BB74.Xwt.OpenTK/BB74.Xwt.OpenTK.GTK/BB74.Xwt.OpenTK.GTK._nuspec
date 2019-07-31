@@ -16,7 +16,7 @@
       <dependency id="BB74.Media.Base" version="1.0.7074.25260" />
       <dependency id="BB74.Xwt.OpenTK" version="1.0.7074.26806" />
       <dependency id="OpenTK" version="3.0.1" />
-      <dependency id="Xwt" version="0.2.167" />
+      <dependency id="Xwt" version="0.2.179" />
     </dependencies>
   </metadata>
 </package>
