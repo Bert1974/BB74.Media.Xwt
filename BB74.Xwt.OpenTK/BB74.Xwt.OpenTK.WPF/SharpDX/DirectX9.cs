@@ -1179,11 +1179,11 @@ namespace BaseLib.Display.WPF
             lock (this)
             {
                 var window = w.ParentWindow;
-                var wFrame = global::Xwt.Toolkit.CurrentEngine.GetSafeBackend(window) as global::Xwt.WPFBackend.WindowFrameBackend;
+                var wFrame = global::Xwt.Toolkit.CurrentEngine.GetSafeBackend(window);// as global::Xwt.WPFBackend.WindowFrameBackend;
                 var wBackend = global::Xwt.Toolkit.CurrentEngine.GetSafeBackend(w);
                 var e = (System.Windows.FrameworkElement)wBackend.GetType().GetPropertyValue(wBackend, "Widget");
 
-                return new DirectX9Renderer(this, xwt,w,e, wFrame.Window, renderer, fps, videosize);
+                return new DirectX9Renderer(this, xwt,w,e,(System.Windows.Window)wFrame.GetType().GetPropertyValue(wFrame,"Window"), renderer, fps, videosize);
             }
         }
         internal void Close(IRenderer renderer)
