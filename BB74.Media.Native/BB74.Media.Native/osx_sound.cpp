@@ -450,7 +450,7 @@ public:
 									__printf(0x8000,"SOUND","AudioQueueEnqueueBuffer status = %d", status);
 									//exit(1);
 								}
-								memmove(m_buffer.get(), &m_buffer.get()[m_bufferlen], m_writelen-m_bufferlen);
+								memmove(m_buffer.get(), &m_buffer.get()[m_bufferlen], m_wpos-m_bufferlen);
 								m_wpos -= m_bufferlen;
 								m_empty = (0 == m_wpos);
 								//		m_maincond.notify_all();
@@ -501,6 +501,8 @@ public:
 		OSStatus status = -1;
 
 		status = AudioQueueStop(m_queue, 0);
+
+		AudioQueueFlush(m_queue);
 
 		{
 			std::unique_lock<std::mutex> lk(m_mainmutex);

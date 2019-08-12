@@ -1137,6 +1137,8 @@ namespace BaseLib.Display.WPF
         }
 
         public IDisposable GetDrawLock() => opentk.GetDrawLock();
+
+        public IDisposable GetDrawLock(bool hascontext) => opentk.GetDrawLock();
     }
     public class FrameFactory : IRendererFactory
     {
