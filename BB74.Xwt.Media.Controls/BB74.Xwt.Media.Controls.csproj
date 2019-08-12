@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\MovieEdit.Xwt\packages\BB74.Media.FFMPEG.1.2.2.16\build\BB74.Media.FFMPEG.props" Condition="Exists('..\..\MovieEdit.Xwt\packages\BB74.Media.FFMPEG.1.2.2.16\build\BB74.Media.FFMPEG.props')" />
-  <Import Project="..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.1.4.3\build\BB74.Xwt.OpenTK.props" Condition="Exists('..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.1.4.3\build\BB74.Xwt.OpenTK.props')" />
+  <Import Project="..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.1.4.9\build\BB74.Xwt.OpenTK.props" Condition="Exists('..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.1.4.9\build\BB74.Xwt.OpenTK.props')" />
+  <Import Project="..\..\MovieEdit.Xwt\packages\BB74.Media.FFMPEG.1.2.2.17\build\BB74.Media.FFMPEG.props" Condition="Exists('..\..\MovieEdit.Xwt\packages\BB74.Media.FFMPEG.1.2.2.17\build\BB74.Media.FFMPEG.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -35,17 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BB74.Media.Base, Version=1.2.2.161, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\BB74.Media.Base.1.2.2.161\lib\net40\BB74.Media.Base.dll</HintPath>
+    <Reference Include="BB74.Media.Base, Version=1.2.2.162, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\MovieEdit.Xwt\packages\BB74.Media.Base.1.2.2.162\lib\net40\BB74.Media.Base.dll</HintPath>
     </Reference>
-    <Reference Include="BB74.Media.Interop, Version=1.2.2.16, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\MovieEdit.Xwt\packages\BB74.Media.FFMPEG.1.2.2.16\lib\net40\BB74.Media.Interop.dll</HintPath>
+    <Reference Include="BB74.Media.Interop, Version=1.2.2.17, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\MovieEdit.Xwt\packages\BB74.Media.FFMPEG.1.2.2.17\lib\net40\BB74.Media.Interop.dll</HintPath>
     </Reference>
-    <Reference Include="BB74.Xwt.OpenTK, Version=1.1.4.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.1.4.3\lib\net40\BB74.Xwt.OpenTK.dll</HintPath>
+    <Reference Include="BB74.Xwt.OpenTK, Version=1.1.4.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.1.4.9\lib\net40\BB74.Xwt.OpenTK.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.WPF.1.1.4.3\lib\net40\OpenTK.dll</HintPath>
+    <Reference Include="OpenTK, Version=3.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\..\MovieEdit.Xwt\packages\OpenTK.3.1.0\lib\net20\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -54,8 +54,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Xwt, Version=0.2.179.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\..\MovieEdit.Xwt\packages\Xwt.0.2.179\lib\net40\Xwt.dll</HintPath>
+    <Reference Include="Xwt, Version=0.2.181.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\MovieEdit.Xwt\packages\Xwt.0.2.181\lib\net40\Xwt.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -84,11 +84,11 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.1.4.3\build\BB74.Xwt.OpenTK.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.1.4.3\build\BB74.Xwt.OpenTK.props'))" />
-    <Error Condition="!Exists('..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.1.4.3\build\BB74.Xwt.OpenTK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.1.4.3\build\BB74.Xwt.OpenTK.targets'))" />
-    <Error Condition="!Exists('..\..\MovieEdit.Xwt\packages\BB74.Media.FFMPEG.1.2.2.16\build\BB74.Media.FFMPEG.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\MovieEdit.Xwt\packages\BB74.Media.FFMPEG.1.2.2.16\build\BB74.Media.FFMPEG.props'))" />
-    <Error Condition="!Exists('..\..\MovieEdit.Xwt\packages\BB74.Media.FFMPEG.1.2.2.16\build\BB74.Media.FFMPEG.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\MovieEdit.Xwt\packages\BB74.Media.FFMPEG.1.2.2.16\build\BB74.Media.FFMPEG.targets'))" />
+    <Error Condition="!Exists('..\..\MovieEdit.Xwt\packages\BB74.Media.FFMPEG.1.2.2.17\build\BB74.Media.FFMPEG.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\MovieEdit.Xwt\packages\BB74.Media.FFMPEG.1.2.2.17\build\BB74.Media.FFMPEG.props'))" />
+    <Error Condition="!Exists('..\..\MovieEdit.Xwt\packages\BB74.Media.FFMPEG.1.2.2.17\build\BB74.Media.FFMPEG.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\MovieEdit.Xwt\packages\BB74.Media.FFMPEG.1.2.2.17\build\BB74.Media.FFMPEG.targets'))" />
+    <Error Condition="!Exists('..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.1.4.9\build\BB74.Xwt.OpenTK.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.1.4.9\build\BB74.Xwt.OpenTK.props'))" />
+    <Error Condition="!Exists('..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.1.4.9\build\BB74.Xwt.OpenTK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.1.4.9\build\BB74.Xwt.OpenTK.targets'))" />
   </Target>
-  <Import Project="..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.1.4.3\build\BB74.Xwt.OpenTK.targets" Condition="Exists('..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.1.4.3\build\BB74.Xwt.OpenTK.targets')" />
-  <Import Project="..\..\MovieEdit.Xwt\packages\BB74.Media.FFMPEG.1.2.2.16\build\BB74.Media.FFMPEG.targets" Condition="Exists('..\..\MovieEdit.Xwt\packages\BB74.Media.FFMPEG.1.2.2.16\build\BB74.Media.FFMPEG.targets')" />
+  <Import Project="..\..\MovieEdit.Xwt\packages\BB74.Media.FFMPEG.1.2.2.17\build\BB74.Media.FFMPEG.targets" Condition="Exists('..\..\MovieEdit.Xwt\packages\BB74.Media.FFMPEG.1.2.2.17\build\BB74.Media.FFMPEG.targets')" />
+  <Import Project="..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.1.4.9\build\BB74.Xwt.OpenTK.targets" Condition="Exists('..\..\MovieEdit.Xwt\packages\BB74.Xwt.OpenTK.1.1.4.9\build\BB74.Xwt.OpenTK.targets')" />
 </Project>

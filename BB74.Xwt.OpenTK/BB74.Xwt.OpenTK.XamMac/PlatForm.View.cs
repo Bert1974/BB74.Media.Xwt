@@ -1,12 +1,13 @@
 ﻿using AppKit;
 using BaseLib;
 using BaseLib.Media;
+using BaseLib.Media.Display;
 using BaseLib.Media.OpenTK;
 using CoreAnimation;
 using CoreGraphics;
 using CoreVideo;
 using OpenGL;
-//using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL;
 using System;
 using System.Diagnostics;
 using System.Reflection;
@@ -197,23 +198,28 @@ namespace BaseLib.Platforms
                         {
                             //  lock (this.owner)
                             {
-                                this.OpenGLContext.CGLContext.Lock();
-                                this.OpenGLContext.MakeCurrentContext();
-
-                                try
+                                using (this.owner.render.GetDrawLock(true))
                                 {
-                                    var r = new rectangle(0, 0, Convert.ToInt32(this.owner.Bounds.Width), Convert.ToInt32(this.owner.Bounds.Height));
+                                    this.OpenGLContext.CGLContext.Lock();
+                                    this.OpenGLContext.MakeCurrentContext();
 
-                                    this.owner.renderer.render(null, time, r);
-                                }
-                                catch (Exception e)
-                                {
-                                    //    Log.LogException(e);
-                                }
+                                    try
+                                    {
+                                        var r = new rectangle(0, 0, Convert.ToInt32(this.owner.Bounds.Width), Convert.ToInt32(this.owner.Bounds.Height));
 
-                                this.OpenGLContext.FlushBuffer();
-                                NSOpenGLContext.ClearCurrentContext();
-                                this.OpenGLContext.CGLContext.Unlock();
+                                        GL.Viewport(r.x,r.y,r.width,r.height);
+
+                                        this.owner.renderer.render(null, time, r);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        //    Log.LogException(e);
+                                    }
+
+                                    this.OpenGLContext.FlushBuffer();
+                                    NSOpenGLContext.ClearCurrentContext();
+                                    this.OpenGLContext.CGLContext.Unlock();
+                                }
                             }
                         }
                //         Log.Verbose($"viewtime-done={time}");
@@ -243,6 +249,7 @@ namespace BaseLib.Platforms
             }
 
             private readonly Thread mainthread;
+            private readonly IRenderer render;
 
             //     private CVDisplayLink dl;
             private readonly IRenderOwner renderer;
@@ -251,11 +258,12 @@ namespace BaseLib.Platforms
             public NSOpenGLContext openglctx { get; }
             internal ManualResetEvent initdone = new ManualResetEvent(false);
 
-            public viewwindow(IRenderOwner renderer, Widget widget, CGRect frame, NSOpenGLContext ctx)
+            public viewwindow(IRenderer render, IRenderOwner renderer, Widget widget, CGRect frame, NSOpenGLContext ctx)
                 : base(frame)
             {
                 this.mainthread = Thread.CurrentThread;
 
+                this.render = render;
                 this.renderer = renderer;
                 this.window = widget;
 

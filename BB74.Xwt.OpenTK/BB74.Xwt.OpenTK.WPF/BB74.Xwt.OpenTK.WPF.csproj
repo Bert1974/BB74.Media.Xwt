@@ -31,22 +31,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BB74.Media.Base, Version=1.2.2.161, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BB74.Media.Base.1.2.2.161\lib\net40\BB74.Media.Base.dll</HintPath>
+    <Reference Include="BB74.Media.Base, Version=1.2.2.162, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\MovieEdit.Xwt\packages\BB74.Media.Base.1.2.2.162\lib\net40\BB74.Media.Base.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OpenTK.3.0.1\lib\net20\OpenTK.dll</HintPath>
+    <Reference Include="OpenTK, Version=3.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\..\..\MovieEdit.Xwt\packages\OpenTK.3.1.0\lib\net20\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="SharpDX, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SharpDX.4.2.0\lib\net40\SharpDX.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.Direct3D9, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SharpDX.Direct3D9.4.2.0\lib\net40\SharpDX.Direct3D9.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.Mathematics, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SharpDX.Mathematics.4.2.0\lib\net40\SharpDX.Mathematics.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -56,8 +59,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
-    <Reference Include="Xwt, Version=0.2.179.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xwt.0.2.179\lib\net40\Xwt.dll</HintPath>
+    <Reference Include="Xwt, Version=0.2.181.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\..\MovieEdit.Xwt\packages\Xwt.0.2.181\lib\net40\Xwt.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

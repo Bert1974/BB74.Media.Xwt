@@ -84,7 +84,7 @@ namespace BaseLib.Platforms
 
             Application.InvokeAsync(() =>
             {
-                view = new viewwindow(rendererimpl, widget, ViewPostion(widget, wBackend), ctx);
+                view = new viewwindow(renderer, rendererimpl, widget, ViewPostion(widget, wBackend), ctx);
 
                 nsView.AddSubview(view);
 

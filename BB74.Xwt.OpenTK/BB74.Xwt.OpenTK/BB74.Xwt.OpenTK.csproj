@@ -38,9 +38,7 @@
   <ItemGroup>
     <Reference Include="BB74.Media.Base">
       <HintPath>..\..\packages\BB74.Media.Base.1.2.2.161\lib\net40\BB74.Media.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenTK">
-      <HintPath>..\..\packages\OpenTK.3.0.1\lib\net20\OpenTK.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -50,9 +48,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Xwt">
-      <HintPath>..\..\packages\Xwt.0.2.179\lib\net40\Xwt.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces.cs" />
@@ -78,13 +73,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BB74.Media.Base">
-      <Version>1.2.2.161</Version>
-    </PackageReference>
-    <PackageReference Include="OpenTK">
-      <Version>3.0.1</Version>
+      <Version>1.2.2.162</Version>
     </PackageReference>
     <PackageReference Include="Xwt">
-      <Version>0.2.179</Version>
+      <Version>0.2.181</Version>
+    </PackageReference>
+    <PackageReference Include="OpenTK">
+      <Version>3.1.0</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -20,7 +20,7 @@
       <dependency id="SharpDX" version="4.2.0"  />
       <dependency id="SharpDX.Direct3D9" version="4.2.0"  />
       <dependency id="SharpDX.Mathematics" version="4.2.0"  />
-      <dependency id="Xwt" version="0.2.179" />
+      <dependency id="Xwt" version="0.2.181" />
     </dependencies>
   </metadata>
 </package>

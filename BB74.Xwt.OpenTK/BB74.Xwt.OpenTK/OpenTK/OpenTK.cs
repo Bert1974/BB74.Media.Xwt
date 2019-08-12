@@ -19,11 +19,13 @@ namespace BaseLib.Media.OpenTK
     public class _rendererlock : IDisposable
     {
         private OpenTKRenderer renderer;
+        private readonly bool hascontext;
 
-        public _rendererlock(IRenderer renderer)
+        public _rendererlock(IRenderer renderer,bool  hascontext)
         {
             this.renderer = renderer as OpenTKRenderer;
-            this.renderer.Lock();
+            this.hascontext = hascontext;
+            this.renderer.Lock(hascontext);
         }
         ~_rendererlock()
         {
@@ -31,7 +33,7 @@ namespace BaseLib.Media.OpenTK
         }
         public void Dispose()
         {
-            this.renderer.Unlock();
+            this.renderer.Unlock(hascontext);
             this.renderer = null;
             GC.SuppressFinalize(this);
         }
@@ -75,13 +77,13 @@ namespace BaseLib.Media.OpenTK
         [StructLayout(LayoutKind.Explicit, Size = 4 * 4, CharSet = CharSet.Ansi)]
         struct vertex
         {
-            public vertex(float x,float y,float tx,float ty)
+            public vertex(float x, float y, float tx, float ty)
             {
                 this.position = new Vector2(x, y);
                 this.texcoord = new Vector2(tx, ty);
             }
             [FieldOffset(0)]
-            public Vector2  texcoord;
+            public Vector2 texcoord;
             [FieldOffset(8)]
             public Vector2 position;
         }
@@ -208,14 +210,14 @@ precision mediump float;
 
         public IXwtRender Xwt { get; }
 
-            private Size viewsize;
+        private Size viewsize;
 
         //  public int buf_vertices;//todo abc bert
         //  public int buf_vertices2, buf_vertices3;
         //     private IAsyncResult update_ar;
 
         WaitHandle IRenderer.stopevent => this.stopevent;
-        public ManualResetEvent stopevent  = new ManualResetEvent(false);
+        public ManualResetEvent stopevent = new ManualResetEvent(false);
         private int _lockcnt;
         private Thread lockthread;
 
@@ -225,7 +227,7 @@ precision mediump float;
         private ManualResetEvent stoppedevent = new ManualResetEvent(true);
         private long timebase, lastupdate;
 
-        public void Lock()
+        public void Lock(bool hascontext)
         {
             try
             {
@@ -238,7 +240,10 @@ precision mediump float;
                 if (this._lockcnt++ == 0)
                 {
                     this.lockthread = Thread.CurrentThread;
-                    this.renderer.StartRender(this);
+                    if (!hascontext)
+                    {
+                        this.renderer.StartRender(this);
+                    }
                 }
             }
             catch (Exception e)
@@ -247,14 +252,17 @@ precision mediump float;
             }
         }
 
-        public void Unlock()
+        public void Unlock(bool hascontext)
         {
             Debug.Assert(this._lockcnt > 0);
             try
             {
                 if (--_lockcnt == 0)
                 {
-                    this.renderer.EndRender(this);
+                    if (!hascontext)
+                    {
+                        this.renderer.EndRender(this);
+                    }
                     this.lockthread = null;
                     Monitor.Exit(this);
                 }
@@ -299,13 +307,13 @@ precision mediump float;
         private void Invoke(Action function)
         {
             var a = new actioninfo() { action = function };
-            
+
             actions.Add(a);
 
-          //  while (!a.done.WaitOne(0, false))
-         //   {
-                this.renderer.DoEvents(()=> !a.done.WaitOne(0, false));
-         //   }
+            //  while (!a.done.WaitOne(0, false))
+            //   {
+            this.renderer.DoEvents(() => !a.done.WaitOne(0, false));
+            //   }
             a.Dispose();
         }
         class actioninfo
@@ -340,74 +348,74 @@ precision mediump float;
 
             this.Xwt.CreateForWidgetContext(this, this.renderer, window);
 
-           // Invoke(() =>
-          //  {
-                this.Lock();
+            // Invoke(() =>
+            //  {
+            this.Lock(false);
+            try
+            {
                 try
                 {
-                    try
-                    {
-                        //        GL.GetInternalformat(TextureTarget.Texture2D, SizedInternalFormat.Rgba8, InternalFormatParameter..TEXTUREIMAGEFORMAT, 1, &preferred_format).
+                    //        GL.GetInternalformat(TextureTarget.Texture2D, SizedInternalFormat.Rgba8, InternalFormatParameter..TEXTUREIMAGEFORMAT, 1, &preferred_format).
 
-                        this.vertices1 = new vertices(_vertices);
-                        this.vertices2 = new vertices(_vertices2);
+                    this.vertices1 = new vertices(_vertices);
+                    this.vertices2 = new vertices(_vertices2);
 
-                        /*   GL.GenBuffers(1, out buf_vertices2); // Generate 1 buffer
-                           GL.BindBuffer(BufferTarget.ArrayBuffer, buf_vertices2);
-                           GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 4 * sizeof(float), 0);
-                           GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 4 * sizeof(float), 2 * sizeof(float));
-                           GL.BufferData(BufferTarget.ArrayBuffer, sizeof(float) * vertices2.Length, vertices2, BufferUsageHint.StaticDraw);
-                           GL.EnableVertexAttribArray(0);
-                           GL.EnableVertexAttribArray(1);
+                    /*   GL.GenBuffers(1, out buf_vertices2); // Generate 1 buffer
+                       GL.BindBuffer(BufferTarget.ArrayBuffer, buf_vertices2);
+                       GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 4 * sizeof(float), 0);
+                       GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 4 * sizeof(float), 2 * sizeof(float));
+                       GL.BufferData(BufferTarget.ArrayBuffer, sizeof(float) * vertices2.Length, vertices2, BufferUsageHint.StaticDraw);
+                       GL.EnableVertexAttribArray(0);
+                       GL.EnableVertexAttribArray(1);
 
-                           GL.GenBuffers(1, out buf_vertices3); // Generate 1 buffer
-                           GL.BindBuffer(BufferTarget.ArrayBuffer, buf_vertices3);
-                           GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 4 * sizeof(float), 0);
-                           GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 4 * sizeof(float), 2 * sizeof(float));
-                           GL.BufferData(BufferTarget.ArrayBuffer, sizeof(float) * vertices3.Length, vertices3, BufferUsageHint.StaticDraw);
-                           GL.EnableVertexAttribArray(0);
-                           GL.EnableVertexAttribArray(1);*/
+                       GL.GenBuffers(1, out buf_vertices3); // Generate 1 buffer
+                       GL.BindBuffer(BufferTarget.ArrayBuffer, buf_vertices3);
+                       GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 4 * sizeof(float), 0);
+                       GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 4 * sizeof(float), 2 * sizeof(float));
+                       GL.BufferData(BufferTarget.ArrayBuffer, sizeof(float) * vertices3.Length, vertices3, BufferUsageHint.StaticDraw);
+                       GL.EnableVertexAttribArray(0);
+                       GL.EnableVertexAttribArray(1);*/
 
-                   //     GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+                    //     GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 
-                        /*    this.presentshader = new shader(shadervertex, shaderfragment, vertices1);
-                            GL.UseProgram(this.presentshader);
-                            var pos = GL.GetUniformLocation(this.presentshader, "tex");
-                            GL.Uniform1(pos, 0);
-                            */
-           /*             this.combineshader = new shader(combineshadervertex, combineshaderfragment, vertices1);
-
-                        GL.UseProgram(combineshader);
-                        var pos = GL.GetUniformLocation(this.combineshader, "tex");
+                    /*    this.presentshader = new shader(shadervertex, shaderfragment, vertices1);
+                        GL.UseProgram(this.presentshader);
+                        var pos = GL.GetUniformLocation(this.presentshader, "tex");
                         GL.Uniform1(pos, 0);
-                        pos = GL.GetUniformLocation(this.combineshader, "vpHeight");
-                        GL.Uniform1(pos, (float)videosize.height);
+                        */
+                    /*             this.combineshader = new shader(combineshadervertex, combineshaderfragment, vertices1);
 
-                        this.deinterlaceblendshader = new shader(combineshadervertex, blendshaderfragment, vertices1);
-                        GL.UseProgram(deinterlaceblendshader);
-                        pos = GL.GetUniformLocation(this.deinterlaceblendshader, "vpHeight");
-                        GL.Uniform1(pos, (float)videosize.height);
+                                 GL.UseProgram(combineshader);
+                                 var pos = GL.GetUniformLocation(this.combineshader, "tex");
+                                 GL.Uniform1(pos, 0);
+                                 pos = GL.GetUniformLocation(this.combineshader, "vpHeight");
+                                 GL.Uniform1(pos, (float)videosize.height);
 
-                        this.deinterlacesplitshader = new shader(combineshadervertex, splitshaderfragment, vertices1);
+                                 this.deinterlaceblendshader = new shader(combineshadervertex, blendshaderfragment, vertices1);
+                                 GL.UseProgram(deinterlaceblendshader);
+                                 pos = GL.GetUniformLocation(this.deinterlaceblendshader, "vpHeight");
+                                 GL.Uniform1(pos, (float)videosize.height);
 
-                        GL.UseProgram(deinterlacesplitshader);
-                        pos = GL.GetUniformLocation(this.deinterlacesplitshader, "vpHeight");
-                        GL.Uniform1(pos, (float)videosize.height);*/
+                                 this.deinterlacesplitshader = new shader(combineshadervertex, splitshaderfragment, vertices1);
 
-                    }
-                    catch (Exception e)
-                    {
-                        //         Log.LogException(e);
-                        Dispose(true);
-                        GC.SuppressFinalize(this);
-                        throw;
-                    }
+                                 GL.UseProgram(deinterlacesplitshader);
+                                 pos = GL.GetUniformLocation(this.deinterlacesplitshader, "vpHeight");
+                                 GL.Uniform1(pos, (float)videosize.height);*/
+
                 }
-                finally
+                catch (Exception e)
                 {
-                    Unlock();
+                    //         Log.LogException(e);
+                    Dispose(true);
+                    GC.SuppressFinalize(this);
+                    throw;
                 }
-         //   });
+            }
+            finally
+            {
+                Unlock(false);
+            }
+            //   });
 
         }
         ~OpenTKRenderer()
@@ -428,9 +436,9 @@ precision mediump float;
 
         public void Start()
         {
+            this.stopevent.Reset();
             if (this.owner.NeedPresentThread)
             {
-                this.stopevent.Reset();
                 this.stoppedevent.Reset();
                 this.thread = new Thread(this.main) { Name = "opentk-present", IsBackground = true };
 
@@ -444,7 +452,7 @@ precision mediump float;
             this.stopevent.Set();
             this.stoppedevent.WaitOne(-1, false);
 
-            this.Lock();
+            this.Lock(false);
             try
             {
                 this.combineshader?.Dispose();
@@ -458,7 +466,7 @@ precision mediump float;
             }
             finally
             {
-                this.Unlock();
+                this.Unlock(false);
                 this.Xwt.FreeWindowInfo(window);
             }
             window.BoundsChanged -= viewsizechanged;
@@ -519,35 +527,35 @@ precision mediump float;
                                 this.Xwt.SwapBuffers(this.window);
                             }
                         }
-		           }
-		           catch (Exception e)
-		           {
-		               //  Log.LogException(e);
-		           }
-		           //         }).Wait();
-		       }
-		       catch
-		       {
-		           Thread.Sleep(100);
-		       }
-		   }
-		}
+                    }
+                    catch (Exception e)
+                    {
+                        //  Log.LogException(e);
+                    }
+                    //         }).Wait();
+                }
+                catch
+                {
+                    Thread.Sleep(100);
+                }
+            }
+        }
 
-		internal void Deinterlace(IVideoFrame frame, IRenderFrame destination, DeinterlaceModes mode)
-		{
-		   try
-		   {
-		       using (var ll = this.GetDrawLock())
-		       {
-		           //   Lock();
-		           GL.BindFramebuffer(FramebufferTarget.Framebuffer, (destination as RenderFrame).framebuffer);
-		
-		           var err = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
-		
-		           GL.Viewport(0, 0, destination.Width, destination.Height);// new Rectangle(this.window.Location,this.window.ClientSize));
-		
-		           GL.ClearColor(1, 1, 0, 1);
-		           GL.Clear(ClearBufferMask.ColorBufferBit /*| ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit*/); // We're not using stencil buffer so why bother with clearing?            
+        internal void Deinterlace(IVideoFrame frame, IRenderFrame destination, DeinterlaceModes mode)
+        {
+            try
+            {
+                using (var ll = this.GetDrawLock())
+                {
+                    //   Lock();
+                    GL.BindFramebuffer(FramebufferTarget.Framebuffer, (destination as RenderFrame).framebuffer);
+
+                    var err = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
+
+                    GL.Viewport(0, 0, destination.Width, destination.Height);// new Rectangle(this.window.Location,this.window.ClientSize));
+
+                    GL.ClearColor(1, 1, 0, 1);
+                    GL.Clear(ClearBufferMask.ColorBufferBit /*| ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit*/); // We're not using stencil buffer so why bother with clearing?            
 
                     GL.Disable(EnableCap.DepthTest);
                     GL.Disable(EnableCap.StencilTest);
@@ -588,7 +596,7 @@ precision mediump float;
             {
                 //      Log.LogException(e);
             }
-		}
+        }
 
         IVideoFrame IRenderer.GetFrame()
         {
@@ -622,7 +630,7 @@ precision mediump float;
                 GL.BindTexture(TextureTarget.Texture2D, (frames[1] as IOpenGLFrame).Textures[0]);
 
                 combineshader.Bind(vertices3);
-
+                
                 var locvpheight = GL.GetUniformLocation(this.combineshader, "vpHeight");
                 GL.Uniform1(locvpheight, frame.Height);
 
@@ -646,11 +654,11 @@ precision mediump float;
         }
         void IRenderer.PrepareRender()
         {
-            Lock();
+            Lock(false);
         }
         void IRenderer.StopRender()
         {
-            Unlock();
+            Unlock(false);
         }
 
         object IRenderer.StartRender(IRenderFrame destination, rectangle r)
@@ -712,15 +720,15 @@ precision mediump float;
            }*/
         void IRenderer.EndRender(object state)
         {
-        //    if (state == null)
+            //    if (state == null)
             {
 
             }
-         //   else
+            //   else
             {
                 try
                 {
-                    //     GL.Flush();
+          //          GL.Flush();
                     //    var frame = (RenderFrame)state;
                     //     frame.Save("E:\\bbr_test.png");
                     GL.BindFramebuffer(FramebufferTarget.Framebuffer, (uint)state);
@@ -740,7 +748,7 @@ precision mediump float;
                 {
                     if (renderedframe == null)
                     {
-                     //   this.Xwt.SwapBuffers(this.window);
+                        //   this.Xwt.SwapBuffers(this.window);
                     }
                     else
                     {
@@ -781,7 +789,7 @@ precision mediump float;
                         GL.UseProgram(0);
                         GL.BindVertexArray(0);
 
-                    //    this.Xwt.SwapBuffers(this.window);
+                        //    this.Xwt.SwapBuffers(this.window);
                         //       GL.Flush();
                     }
                 }
@@ -801,7 +809,11 @@ precision mediump float;
 
         public IDisposable GetDrawLock()
         {
-            return new _rendererlock(this);
+            return new _rendererlock(this, false);
+        }
+        public IDisposable GetDrawLock(bool hascontext)
+        {
+            return new _rendererlock(this,hascontext);
         }
     }
     public class FrameFactory : IRendererFactory

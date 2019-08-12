@@ -47,6 +47,7 @@ namespace BaseLib.Media.Display
         VideoFormat AlphaFormat { get; }
 
         IDisposable GetDrawLock();
+        IDisposable GetDrawLock(bool hascontext);
 
         WaitHandle stopevent { get; }
     }

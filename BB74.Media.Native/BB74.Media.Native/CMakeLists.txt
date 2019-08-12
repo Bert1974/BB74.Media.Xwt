@@ -15,7 +15,7 @@ IF(DEFINE_OSXBUILD)
 ENDIF(DEFINE_OSXBUILD)
 
 #set (FFMPEG_DIR ~/Projects/BBR/BaseLib/BaseLib.FFMPEG/sandbox/native/ffmpeg_git_xp_compat_lgpl_shared)
-set (FFMPEG_DIR ~/ffmpeg/sandbox/cross_compilers/native)
+set (FFMPEG_DIR ~/Projects/ffmpeg/sandbox/cross_compilers/native)
 #set (FFMPEG_DIR ~/tmp/sandbox-org/home/bert/ffmpeg/sandbox/native/ffmpeg_git_xp_compat_lgpl_shared)
 
 set (CMAKE_PREFIX_PATH ${FFMPEG_DIR}lib/pkgconfig )
@@ -49,6 +49,7 @@ add_library(BB74.Media.Native.dll SHARED
 #target_compile_options(BB74.Media.Native.dll PRIVATE -fPIC)
 target_compile_options(BB74.Media.Native.dll PRIVATE -march=core2)
 target_compile_options(BB74.Media.Native.dll PRIVATE -std=c++11)
+target_compile_options(BB74.Media.Native.dll PRIVATE -m64)
 
 include_directories(${FFMPEG_INCLUDE_DIRS})
 #include_directories(${CMAKE_PREFIX_PATH}/include)
