@@ -15,8 +15,7 @@ cache:
 - packages
 
 build_cloud: Docker
-build:
-  verbosity: verbose
+verbosity: verbose
   
 build_script:
 - nuget restore
