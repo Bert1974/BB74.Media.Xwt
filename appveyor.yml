@@ -1,6 +1,31 @@
+
+pull_requests:
+  do_not_increment_build_number: true
+branches:
+  only:
+  - master
+skip_tags: true
+
+configuration: Release
+platform: Any CPU
+
 version: 1.0.{build}
+
+cache:
+- packages
+
 build_cloud: Docker
 build:
-  verbosity: minimal
+  verbosity: verbose
+  
+build_script:
+- nuget restore
+- msbuild BB74.OpenTK.Xwt.sln /t:BB74_Media_Native\BB74_Media_Interop_Impl:Rebuild;BB74_Media_Native\BB74_Media_Interop:Build /verbosity:normal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:ProjectReferences=false /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%;Platform="Any CPU"
+- msbuild BB74.OpenTK.Xwt.sln /t:BB74_Media_Native\BB74_Media_Native:Rebuild;BB74_Media_Native\BB74_Media_Interop_Impl:Build /verbosity:normal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:ProjectReferences=false /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%;Platform=x86
+- msbuild BB74.OpenTK.Xwt.sln /t:BB74_Media_Native\BB74_Media_Native:Rebuild;BB74_Media_Native\BB74_Media_Interop_Impl:Build /verbosity:normal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:ProjectReferences=false /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%;Platform=x64
+
+- mkdir nuget
+- dir nuget
+
 deploy: off
 ...
