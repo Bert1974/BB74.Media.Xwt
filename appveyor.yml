@@ -19,9 +19,10 @@ verbosity: verbose
   
 build_script:
 - nuget restore
-- msbuild BB74.OpenTK.Xwt.sln /t:BB74_Media_Native\BB74_Media_Interop_Impl:Rebuild;BB74_Media_Native\BB74_Media_Interop:Build /verbosity:normal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:ProjectReferences=false /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%;Platform="Any CPU"
-- msbuild BB74.OpenTK.Xwt.sln /t:BB74_Media_Native\BB74_Media_Native:Rebuild;BB74_Media_Native\BB74_Media_Interop_Impl:Build /verbosity:normal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:ProjectReferences=false /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%;Platform=x86
-- msbuild BB74.OpenTK.Xwt.sln /t:BB74_Media_Native\BB74_Media_Native:Rebuild;BB74_Media_Native\BB74_Media_Interop_Impl:Build /verbosity:normal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:ProjectReferences=false /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%;Platform=x64
+- cmd echpo "hello"
+- msbuild BB74.OpenTK.Xwt.sln /t:BB74_Media_Native\BB74_Media_Interop_Impl:Build;BB74_Media_Native\BB74_Media_Interop:Build /verbosity:normal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:ProjectReferences=false /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%;Platform="Any CPU"
+- msbuild BB74.OpenTK.Xwt.sln /t:BB74_Media_Native\BB74_Media_Native:Build;BB74_Media_Native\BB74_Media_Interop_Impl:Build /verbosity:normal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:ProjectReferences=false /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%;Platform=x86
+- msbuild BB74.OpenTK.Xwt.sln /t:BB74_Media_Native\BB74_Media_Native:Bbuild;BB74_Media_Native\BB74_Media_Interop_Impl:Build /verbosity:normal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:ProjectReferences=false /p:TargetFrameworkVersion=v4.0;Configuration=%BB74_CONFIG%;Platform=x64
 
 - mkdir nuget
 - dir nuget
