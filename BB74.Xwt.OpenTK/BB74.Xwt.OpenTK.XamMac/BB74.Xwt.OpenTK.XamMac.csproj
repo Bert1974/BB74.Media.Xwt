@@ -52,7 +52,7 @@
       <HintPath>..\..\..\MovieEdit.Xwt\packages\OpenTK.3.1.0\lib\net20\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="Xwt">
-      <HintPath>..\..\..\MovieEdit.Xwt\packages\Xwt.0.2.181\lib\net40\Xwt.dll</HintPath>
+      <HintPath>..\..\..\MovieEdit.Xwt\packages\Xwt.0.2.182\lib\net40\Xwt.dll</HintPath>
     </Reference>
     <Reference Include="BB74.Media.Base">
       <HintPath>..\..\..\MovieEdit.Xwt\packages\BB74.Media.Base.1.2.2.163\lib\net40\BB74.Media.Base.dll</HintPath>
@@ -76,6 +76,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\src\xwt\Xwt.XamMac\Xwt.XamMac.csproj">
+      <Project>{b7c1673e-5124-4be5-8d21-ec8b12f85b6b}</Project>
+      <Name>Xwt.XamMac</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BB74.Xwt.OpenTK\BB74.Xwt.OpenTK.csproj">
       <Project>{D7CAD493-7F4B-4C83-A592-8D071B01CF28}</Project>
       <Name>BB74.Xwt.OpenTK</Name>

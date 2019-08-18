@@ -9,7 +9,7 @@ using BaseLib.Interop;
 
 namespace BaseLib.Media.Interop
 {
-    static class staticinit
+    public static class staticinit
     {
         private static object messagefunc;
         private static bool doinit = true;
